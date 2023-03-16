@@ -7,9 +7,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
@@ -20,31 +22,46 @@ public class MainWindowController implements Initializable {
     @FXML
     private Label nextEvenLabel;
 
+    private ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
+    private int currentVolume = 2;
+
+    private Stage stage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initEventsHBox();
-        setupHBoxListener();
+
         setNextEvent("Next Event");
     }
 
+    public void initialed() {
+        stage = (Stage) upcomingEventsHBox.getScene().getWindow();
+        setupHBoxListener();
+        stage.setMinWidth(1195);
+    }
+
     private void initEventsHBox() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/upcoming-event-view.fxml"));
             try {
                 AnchorPane anchorPane = fxmlLoader.load();
                 UpcomingEventController upcomingEventController = fxmlLoader.getController();
                 upcomingEventController.setEvent("Event " + i);
-                upcomingEventsHBox.getChildren().add(anchorPane);
+                upcomingEvents.add(anchorPane);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        upcomingEventsHBox.getChildren().addAll(upcomingEvents.subList(0, currentVolume));
     }
 
     private void setupHBoxListener(){
         upcomingEventsHBox.widthProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Width: " + newValue);
+            int volume = (int) (stage.getWidth()-40-2) / (550 + 20); //-40 padding 550 width 20 spacing -10 for scroll bar
+            if (volume != currentVolume) {
+                currentVolume = volume;
+                upcomingEventsHBox.getChildren().setAll(upcomingEvents.subList(0, currentVolume));
+            }
         });
     }
 
