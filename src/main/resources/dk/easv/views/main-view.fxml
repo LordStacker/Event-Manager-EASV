@@ -27,7 +27,7 @@
                   <AnchorPane>
                      <children>
                         <AnchorPane id="nextEventPane" fx:id="nextEventPane" layoutX="-1.0" prefHeight="330.0" prefWidth="1438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0" />
-                        <Label fx:id="nextEvenLabel" styleClass="eventTitle" text="very real event" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0" />
+                        <Label fx:id="nextEventLabel" styleClass="eventTitle" text="very real event" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0" />
                         <MFXButton alignment="CENTER" styleClass="outline-button" text="Action 1" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" />
                         <MFXButton styleClass="outline-button" text="Action 2" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="130.0" />
                      </children>
@@ -36,28 +36,24 @@
             </VBox>
             <VBox prefHeight="332.0" prefWidth="1438.0">
                <children>
-                  <Label styleClass="sectionTitle" text="Upcoming events">
-                     <font>
-                        <Font name="Roboto" size="20.0" />
-                     </font>
-                  </Label>
+                  <Label styleClass="sectionTitle" text="Upcoming events"/>
                   <HBox fx:id="upcomingEventsHBox" alignment="CENTER" prefHeight="315.0" prefWidth="1363.0" spacing="20.0" />
                </children>
             </VBox>
             <Label styleClass="sectionTitle" text="Other Events" />
-            <MFXLegacyTableView>
+            <MFXLegacyTableView fx:id="upcomingEventsTable">
                <columns>
-                  <TableColumn prefWidth="1144.0000122189522" text="Name" />
-                  <TableColumn minWidth="0.0" prefWidth="123.9998779296875" text="Date" />
-                  <TableColumn prefWidth="117.60009765625" text="Attendance" />
+                  <TableColumn fx:id="upcomingNameColumn" prefWidth="1100" text="Name" />
+                  <TableColumn fx:id="upcomingDateColumn" minWidth="0.0" prefWidth="120" text="Date" />
+                  <TableColumn fx:id="upcomingAttendanceColumn" prefWidth="120" text="Attendance" />
                </columns>
             </MFXLegacyTableView>
             <Label styleClass="sectionTitle" text="Past Events" />
-            <MFXLegacyTableView>
+            <MFXLegacyTableView fx:id="pastEventsTable">
                <columns>
-                  <TableColumn prefWidth="1144.0000122189522" text="Name" />
-                  <TableColumn minWidth="0.0" prefWidth="177.59991455078125" text="Date" />
-                  <TableColumn prefWidth="104.79986572265625" text="Attendance" />
+                  <TableColumn fx:id="pastNameColumn" prefWidth="1100" text="Name" />
+                  <TableColumn fx:id="pastDateColumn" minWidth="0.0" prefWidth="120" text="Date" />
+                  <TableColumn fx:id="pastAttendanceColumn" prefWidth="120" text="Attendance" />
                </columns>
             </MFXLegacyTableView>
          </children>

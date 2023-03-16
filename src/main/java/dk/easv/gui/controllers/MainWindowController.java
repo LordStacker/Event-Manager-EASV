@@ -2,10 +2,12 @@ package dk.easv.gui.controllers;
 
 import dk.easv.Main;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -20,8 +22,6 @@ public class MainWindowController implements Initializable {
     private HBox upcomingEventsHBox;
     @FXML
     private AnchorPane nextEventPane;
-    @FXML
-    private Label nextEvenLabel;
 
     private ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
     private int currentVolume = 2;
@@ -29,6 +29,16 @@ public class MainWindowController implements Initializable {
     private Stage stage;
     @FXML
     private MFXScrollPane mainPane;
+    @FXML
+    private TableColumn upcomingNameColumn, upcomingDateColumn, upcomingAttendanceColumn;
+    @FXML
+    private TableColumn pastNameColumn, pastDateColumn, pastAttendanceColumn;
+    @FXML
+    private MFXLegacyTableView upcomingEventsTable;
+    @FXML
+    private MFXLegacyTableView pastEventsTable;
+    @FXML
+    private Label nextEventLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,10 +51,6 @@ public class MainWindowController implements Initializable {
         stage = (Stage) upcomingEventsHBox.getScene().getWindow();
         setupHBoxListener();
         stage.setMinWidth(1195);
-        stage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            mainPane.setMinWidth(newValue.doubleValue());
-            mainPane.setMaxWidth(newValue.doubleValue());
-        });
     }
 
     private void initEventsHBox() {
@@ -68,7 +74,10 @@ public class MainWindowController implements Initializable {
             if (volume != currentVolume) {
                 currentVolume = volume;
                 upcomingEventsHBox.getChildren().setAll(upcomingEvents.subList(0, currentVolume));
+
             }
+            pastEventsTable.resizeColumn(pastNameColumn, newValue.doubleValue() - oldValue.doubleValue());
+            upcomingEventsTable.resizeColumn(upcomingNameColumn, newValue.doubleValue() - oldValue.doubleValue());
         });
     }
 
@@ -78,6 +87,6 @@ public class MainWindowController implements Initializable {
 
     public void setNextEvent(String s, String imageURL) {
         nextEventPane.setStyle(nextEventPane.getStyle() + "-fx-background-image: url('" + imageURL + "');");
-        nextEvenLabel.setText(s);
+        nextEventLabel.setText(s);
     }
 }
