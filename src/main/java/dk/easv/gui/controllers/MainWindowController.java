@@ -34,7 +34,7 @@ public class MainWindowController implements Initializable {
             try {
                 AnchorPane anchorPane = fxmlLoader.load();
                 UpcomingEventController upcomingEventController = fxmlLoader.getController();
-                upcomingEventController.setEventName("Event " + i);
+                upcomingEventController.setEvent("Event " + i);
                 upcomingEventsHBox.getChildren().add(anchorPane);
             } catch (IOException e) {
                 e.printStackTrace();

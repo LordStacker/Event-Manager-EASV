@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <MFXScrollPane fitToWidth="true" prefHeight="1040.0" prefWidth="1440.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
    <content>
       <VBox>
@@ -30,6 +29,8 @@
                      <children>
                         <AnchorPane id="nextEventPane" fx:id="nextEventPane" prefHeight="330.0" prefWidth="1438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <Label fx:id="nextEvenLabel" styleClass="eventTitle" text="very real event" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0" />
+                        <MFXButton alignment="CENTER" styleClass="outline-button" text="Action 1" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" />
+                        <MFXButton styleClass="outline-button" text="Action 2" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="130.0" />
                      </children>
                   </AnchorPane>
                </children>
