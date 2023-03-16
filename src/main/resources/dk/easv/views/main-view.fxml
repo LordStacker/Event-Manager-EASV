@@ -17,9 +17,9 @@
    <content>
       <VBox>
          <children>
-            <AnchorPane maxHeight="80.0" prefHeight="80.0" prefWidth="1470.0">
+            <AnchorPane maxHeight="220.0" prefHeight="80.0" prefWidth="1386.0">
                <children>
-                  <MFXTextField layoutX="388.0" layoutY="15.0" prefHeight="50.0" prefWidth="661.0" />
+                  <MFXTextField floatMode="BORDER" layoutX="388.0" layoutY="15.0" prefHeight="50.0" prefWidth="661.0" AnchorPane.rightAnchor="336.80000000000007" />
                   <MFXButton layoutX="14.0" layoutY="4.0" prefHeight="68.0" prefWidth="65.0" text="------" />
                </children>
             </AnchorPane>
@@ -29,7 +29,7 @@
                   <AnchorPane>
                      <children>
                         <AnchorPane id="nextEventPane" fx:id="nextEventPane" prefHeight="330.0" prefWidth="1438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <Label styleClass="eventTitle" text="very real event" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0" />
+                        <Label fx:id="nextEvenLabel" styleClass="eventTitle" text="very real event" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -41,7 +41,7 @@
                         <Font name="Roboto" size="20.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="315.0" prefWidth="1438.0" />
+                  <HBox fx:id="upcomingEventsHBox" alignment="CENTER" prefHeight="315.0" prefWidth="1438.0" spacing="20.0" />
                </children>
             </VBox>
             <Label styleClass="sectionTitle" text="Other Events" />
