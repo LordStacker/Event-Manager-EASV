@@ -77,7 +77,7 @@ public class MainWindowController implements Initializable {
 
             }
             pastEventsTable.resizeColumn(pastNameColumn, newValue.doubleValue() - oldValue.doubleValue());
-            upcomingEventsTable.resizeColumn(upcomingNameColumn, newValue.doubleValue() - oldValue.doubleValue());
+            upcomingEventsTable.resizeColumn(pastNameColumn, newValue.doubleValue() - oldValue.doubleValue());
         });
     }
 
