@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<MFXScrollPane fitToWidth="true" prefHeight="1040.0" prefWidth="1440.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
+   <content>
+      <VBox>
+         <children>
+            <AnchorPane maxHeight="80.0" prefHeight="80.0" prefWidth="1470.0">
+               <children>
+                  <MFXTextField layoutX="388.0" layoutY="15.0" prefHeight="50.0" prefWidth="661.0" />
+                  <MFXButton layoutX="14.0" layoutY="4.0" prefHeight="68.0" prefWidth="65.0" text="------" />
+               </children>
+            </AnchorPane>
+            <VBox prefHeight="347.0" prefWidth="1438.0">
+               <children>
+                  <Label styleClass="sectionTitle" text="Next event" />
+                  <AnchorPane>
+                     <children>
+                        <AnchorPane id="nextEventPane" fx:id="nextEventPane" prefHeight="330.0" prefWidth="1438.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label styleClass="eventTitle" text="very real event" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <VBox prefHeight="332.0" prefWidth="1438.0">
+               <children>
+                  <Label styleClass="sectionTitle" text="Upcoming events">
+                     <font>
+                        <Font name="Roboto" size="20.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="315.0" prefWidth="1438.0" />
+               </children>
+            </VBox>
+            <Label styleClass="sectionTitle" text="Other Events" />
+            <MFXLegacyTableView>
+               <columns>
+                  <TableColumn prefWidth="1144.0000122189522" text="Name" />
+                  <TableColumn minWidth="0.0" prefWidth="123.9998779296875" text="Date" />
+                  <TableColumn prefWidth="117.60009765625" text="Attendance" />
+               </columns>
+            </MFXLegacyTableView>
+            <Label styleClass="sectionTitle" text="Past Events" />
+            <MFXLegacyTableView>
+               <columns>
+                  <TableColumn prefWidth="1144.0000122189522" text="Name" />
+                  <TableColumn minWidth="0.0" prefWidth="177.59991455078125" text="Date" />
+                  <TableColumn prefWidth="104.79986572265625" text="Attendance" />
+               </columns>
+            </MFXLegacyTableView>
+         </children>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </VBox>
+   </content>
+</MFXScrollPane>
