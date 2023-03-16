@@ -1,6 +1,7 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +27,8 @@ public class MainWindowController implements Initializable {
     private int currentVolume = 2;
 
     private Stage stage;
+    @FXML
+    private MFXScrollPane mainPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,6 +41,10 @@ public class MainWindowController implements Initializable {
         stage = (Stage) upcomingEventsHBox.getScene().getWindow();
         setupHBoxListener();
         stage.setMinWidth(1195);
+        stage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            mainPane.setMinWidth(newValue.doubleValue());
+            mainPane.setMaxWidth(newValue.doubleValue());
+        });
     }
 
     private void initEventsHBox() {
