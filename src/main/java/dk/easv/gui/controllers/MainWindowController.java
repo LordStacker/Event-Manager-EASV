@@ -50,7 +50,7 @@ public class MainWindowController implements Initializable {
     public void initialed() {
         stage = (Stage) upcomingEventsHBox.getScene().getWindow();
         setupHBoxListener();
-        stage.setMinWidth(1195);
+        stage.setMinWidth(1210);
     }
 
     private void initEventsHBox() {
