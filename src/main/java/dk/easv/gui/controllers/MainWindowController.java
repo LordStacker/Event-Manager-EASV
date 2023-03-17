@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -42,14 +43,16 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initEventsHBox();
 
-        setNextEvent("Next Event");
+
+
     }
 
     public void initialed() {
         stage = (Stage) upcomingEventsHBox.getScene().getWindow();
         setupHBoxListener();
+        initEventsHBox();
+        setNextEvent("Next Event");
         stage.setMinWidth(1210);
     }
 
@@ -70,7 +73,7 @@ public class MainWindowController implements Initializable {
 
     private void setupHBoxListener(){
         stage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            int volume = (int) (newValue.doubleValue()-40-2) / (550 + 20); //-40 padding 550 width 20 spacing -10 for scroll bar
+            int volume = (int) ((newValue.doubleValue()-40-2) / (upcomingEvents.get(0).getWidth() + 20)); //-40 padding -2 for scroll bar 550 width 20 spacing
             if (volume != currentVolume) {
                 currentVolume = volume;
                 upcomingEventsHBox.getChildren().setAll(upcomingEvents.subList(0, currentVolume));
@@ -88,5 +91,21 @@ public class MainWindowController implements Initializable {
     public void setNextEvent(String s, String imageURL) {
         nextEventPane.setStyle(nextEventPane.getStyle() + "-fx-background-image: url('" + imageURL + "');");
         nextEventLabel.setText(s);
+
+        nextEventPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            Rectangle clip = new Rectangle(
+                    newValue.doubleValue(), nextEventPane.getHeight()
+            );
+            clip.setArcWidth(20);
+            clip.setArcHeight(20);
+            nextEventPane.setClip(clip);
+        });
+
+        Rectangle clip = new Rectangle(
+                nextEventPane.getWidth(), nextEventPane.getHeight()
+        );
+        clip.setArcWidth(20);
+        clip.setArcHeight(20);
+        nextEventPane.setClip(clip);
     }
 }
