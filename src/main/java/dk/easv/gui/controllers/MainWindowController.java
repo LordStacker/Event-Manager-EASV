@@ -69,15 +69,15 @@ public class MainWindowController implements Initializable {
     }
 
     private void setupHBoxListener(){
-        upcomingEventsHBox.widthProperty().addListener((observable, oldValue, newValue) -> {
-            int volume = (int) (stage.getWidth()-40-2) / (550 + 20); //-40 padding 550 width 20 spacing -10 for scroll bar
+        stage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            int volume = (int) (newValue.doubleValue()-40-2) / (550 + 20); //-40 padding 550 width 20 spacing -10 for scroll bar
             if (volume != currentVolume) {
                 currentVolume = volume;
                 upcomingEventsHBox.getChildren().setAll(upcomingEvents.subList(0, currentVolume));
 
             }
             pastEventsTable.resizeColumn(pastNameColumn, newValue.doubleValue() - oldValue.doubleValue());
-            upcomingEventsTable.resizeColumn(pastNameColumn, newValue.doubleValue() - oldValue.doubleValue());
+            upcomingEventsTable.resizeColumn(upcomingNameColumn, newValue.doubleValue() - oldValue.doubleValue());
         });
     }
 
