@@ -7,9 +7,9 @@ import java.math.BigInteger;
 
 public class Ticket extends Event { //I actually want to extend user as well
 
-    private BigInteger ticketUUID;
-    private String ticketType; //I want to make the types of the tickets
-    private Image ticketQrcode; //I guess we will post the QR code into a picture
+    private int ticketID;
+    private String eventName;
+    private int amountOfTicket;
 
 
 

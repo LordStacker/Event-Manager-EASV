@@ -5,10 +5,11 @@ import java.time.LocalDateTime;
 
 public class Event {
 
+    private int eventID;
     private String eventName;
     private LocalDateTime eventStartDate;
     private String eventNotes;
-    private Location eventLocation;
+    private String eventLocation;
 
     //Optional information (must be supported but may not be used for all events)
     private LocalDateTime eventEndDate;
