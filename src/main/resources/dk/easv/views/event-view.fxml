@@ -2,18 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="Main-Anchorpane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.EventViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="Main-Anchorpane" stylesheets="@../css/CreateEventStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.EventViewController">
    <children>
       <AnchorPane prefHeight="34.0" prefWidth="600.0" styleClass="TopScreen-Anchorpane" />
-      <ImageView fitHeight="369.0" fitWidth="600.0" layoutX="-1.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" styleClass="Background-Imageview" />
       <AnchorPane layoutX="167.0" layoutY="66.0" prefHeight="299.0" prefWidth="266.0" styleClass="InputFields-Anchorpane">
          <children>
-            <Text layoutX="92.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="CreateEvent-Heading" text="Create an event" />
+            <Text layoutX="64.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="CreateEvent-Heading" text="Create an event" />
             <TextField fx:id="eventNameField" layoutX="59.0" layoutY="50.0" promptText="Event name" />
             <TextField fx:id="eventLocationField" layoutX="59.0" layoutY="90.0" promptText="Event location" />
             <TextField fx:id="eventStartField" layoutX="58.0" layoutY="130.0" prefHeight="26.0" prefWidth="71.0" promptText="Start date" />
