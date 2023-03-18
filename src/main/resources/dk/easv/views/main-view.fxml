@@ -77,13 +77,13 @@
          <children>
             <HBox alignment="CENTER" prefHeight="26.0" prefWidth="288.0" spacing="20.0" styleClass="bottomBarHbox" GridPane.columnIndex="1">
                <children>
-                  <MFXButton buttonType="RAISED" prefHeight="26.0" prefWidth="108.0" text="Add Event" />
-                  <MFXButton buttonType="RAISED" prefHeight="26.0" prefWidth="108.0" text="Edit event" />
+                  <MFXButton buttonType="RAISED" prefHeight="26.0" prefWidth="108.0" text="Add Event" onAction="#addEventAction" />
+                  <MFXButton buttonType="RAISED" prefHeight="26.0" prefWidth="108.0" text="Edit event" onAction="#editEventAction" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" styleClass="bottomBarHbox">
                <children>
-                  <MFXButton buttonType="RAISED" text="Home" />
+                  <MFXButton buttonType="RAISED" text="Home" onAction="#homeAction"/>
                </children>
                <GridPane.margin>
                   <Insets />
@@ -94,7 +94,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" styleClass="bottomBarHbox" GridPane.columnIndex="2">
                <children>
-                  <MFXButton buttonType="RAISED" text="Log Out" />
+                  <MFXButton buttonType="RAISED" text="Log Out" onAction="#logOutAction"/>
                </children>
                <padding>
                   <Insets right="20.0" />

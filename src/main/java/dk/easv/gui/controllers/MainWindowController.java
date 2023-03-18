@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -107,5 +108,21 @@ public class MainWindowController implements Initializable {
         clip.setArcWidth(20);
         clip.setArcHeight(20);
         nextEventPane.setClip(clip);
+    }
+
+    @FXML
+    private void addEventAction(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void editEventAction(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void homeAction(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void logOutAction(ActionEvent actionEvent) {
     }
 }
