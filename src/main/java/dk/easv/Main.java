@@ -5,9 +5,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
     @Override
@@ -16,7 +18,8 @@ public class Main extends Application {
         Parent root = fxmlLoader.load();
         MainWindowController mainWindowController = fxmlLoader.getController();
         Scene scene = new Scene(root);
-        stage.setTitle("Hello!");
+        stage.setTitle("EASV Event Manager");
+        stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar.png"))));
         stage.setScene(scene);
         stage.show();
         mainWindowController.initialed();
