@@ -120,11 +120,13 @@ public class MainWindowController implements Initializable {
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
             Parent root = fxmlLoader.load();
+            AddEventViewController addEventViewController = fxmlLoader.getController();
             Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
             stage.setTitle("Add Event");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.show();
+            addEventViewController.initialed();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
