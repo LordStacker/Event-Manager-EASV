@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="Main-Anchorpane" stylesheets="@../css/CreateEventStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.EventViewController">
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddEventViewController">
    <children>
-      <AnchorPane prefHeight="34.0" prefWidth="600.0" styleClass="TopScreen-Anchorpane" />
-      <AnchorPane layoutX="167.0" layoutY="66.0" prefHeight="299.0" prefWidth="266.0" styleClass="InputFields-Anchorpane">
+      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="900.0" spacing="20.0" styleClass="Main-Anchorpane" stylesheets="@../css/CreateEventStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Text layoutX="64.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="CreateEvent-Heading" text="Create an event" />
-            <TextField fx:id="eventNameField" layoutX="59.0" layoutY="50.0" promptText="Event name" />
-            <TextField fx:id="eventLocationField" layoutX="59.0" layoutY="90.0" promptText="Event location" />
-            <TextField fx:id="eventStartField" layoutX="58.0" layoutY="130.0" prefHeight="26.0" prefWidth="71.0" promptText="Start date" />
-            <TextField fx:id="eventEndField" layoutX="139.0" layoutY="130.0" prefHeight="26.0" prefWidth="71.0" promptText="End date" />
-            <TextField fx:id="eventDirectionsField" layoutX="60.0" layoutY="170.0" promptText="How to get there?" />
-            <TextField fx:id="eventExtraNotesField" layoutX="61.0" layoutY="208.0" promptText="Extra notes" />
-            <Button fx:id="createEventSubmitButton" layoutX="160.0" layoutY="249.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="53.0" text="Submit" />
-            <Button fx:id="createEventCancelButton" layoutX="103.0" layoutY="250.0" mnemonicParsing="false" text="Cancel" />
+            <MFXTextField fx:id="eventNameField" floatMode="BORDER" promptText="Event name" styleClass="inputTextField" />
+            <MFXTextField fx:id="eventLocationField" floatMode="BORDER" promptText="Event location" styleClass="inputTextField" />
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <MFXDatePicker fx:id="startDatePicker" promptText="Start date" />
+                  <MFXDatePicker fx:id="endDatePicker" promptText="End date" />
+               </children>
+            </HBox>
+            <MFXTextField fx:id="eventDirectionsField" floatMode="BORDER" promptText="How to get there?" styleClass="inputTextField" />
+            <MFXTextField fx:id="eventExtraNotesField" alignment="TOP_LEFT" floatMode="BORDER" promptText="Extra notes" styleClass="inputTextField" />
          </children>
-      </AnchorPane>
+      </VBox>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="40.0">
+        <buttons>
+            <MFXButton fx:id="submitButton" text="Submit" />
+            <MFXButton fx:id="cancelButton" text="Cancel" />
+        </buttons>
+      </ButtonBar>
    </children>
 </AnchorPane>
