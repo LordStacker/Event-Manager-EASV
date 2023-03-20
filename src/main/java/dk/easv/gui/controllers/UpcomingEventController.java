@@ -1,10 +1,14 @@
 package dk.easv.gui.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class UpcomingEventController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class UpcomingEventController implements Initializable {
     @FXML
     private Label eventLabel;
     @FXML
@@ -18,4 +22,8 @@ public class UpcomingEventController {
         eventLabel.setText(s);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }
