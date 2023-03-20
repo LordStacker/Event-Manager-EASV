@@ -1,6 +1,5 @@
 package dk.easv;
 
-import dk.easv.gui.controllers.EventViewController;
 import dk.easv.gui.controllers.MainWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -27,7 +27,7 @@
       </VBox>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="40.0">
         <buttons>
-            <MFXButton fx:id="submitButton" text="Submit" />
+            <MFXButton fx:id="submitButton" onAction="#checkForInput" text="Submit" />
             <MFXButton fx:id="cancelButton" text="Cancel" />
         </buttons>
       </ButtonBar>
