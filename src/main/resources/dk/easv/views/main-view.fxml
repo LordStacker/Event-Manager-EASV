@@ -14,8 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane prefHeight="1040.0" prefWidth="1440.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
+<BorderPane prefHeight="900.0" prefWidth="1220.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
    <center>
       <MFXScrollPane fx:id="mainPane" fitToWidth="true" prefHeight="1040.0" prefWidth="1440.0">
          <content>
@@ -77,13 +76,13 @@
          <children>
             <HBox alignment="CENTER" prefHeight="26.0" prefWidth="288.0" spacing="20.0" styleClass="bottomBarHbox" GridPane.columnIndex="1">
                <children>
-                  <MFXButton buttonType="RAISED" prefHeight="26.0" prefWidth="108.0" text="Add Event" onAction="#addEventAction" />
-                  <MFXButton buttonType="RAISED" prefHeight="26.0" prefWidth="108.0" text="Edit event" onAction="#editEventAction" />
+                  <MFXButton buttonType="RAISED" onAction="#addEventAction" prefHeight="26.0" prefWidth="108.0" text="Add Event" />
+                  <MFXButton buttonType="RAISED" onAction="#editEventAction" prefHeight="26.0" prefWidth="108.0" text="Edit event" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" styleClass="bottomBarHbox">
                <children>
-                  <MFXButton buttonType="RAISED" text="Home" onAction="#homeAction"/>
+                  <MFXButton buttonType="RAISED" onAction="#homeAction" text="Home" />
                </children>
                <GridPane.margin>
                   <Insets />
@@ -94,7 +93,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" styleClass="bottomBarHbox" GridPane.columnIndex="2">
                <children>
-                  <MFXButton buttonType="RAISED" text="Log Out" onAction="#logOutAction"/>
+                  <MFXButton buttonType="RAISED" onAction="#logOutAction" text="Log Out" />
                </children>
                <padding>
                   <Insets right="20.0" />

@@ -118,7 +118,7 @@ public class MainWindowController implements Initializable {
     private void addEventAction(ActionEvent actionEvent) {
         try {
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/event-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
             stage.setTitle("Add Event");
