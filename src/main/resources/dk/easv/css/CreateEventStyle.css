@@ -1,0 +1,32 @@
+TextField{
+    -fx-background-color: #D9D9D9;
+    -fx-background-radius: 7px;
+    -fx-fill: #000000;
+    -fx-prompt-text-fill: #000000;
+}
+
+Button{
+    -fx-background-color: #D9D9D9;
+    -fx-background-radius: 7px;
+    -fx-fill: #000000;
+}
+
+.Main-Anchorpane{
+    -fx-background-image: url('../icons/CreateEventBackgroundImg.jpg');
+    -fx-background-size: 100% 100%;
+
+}
+
+.TopScreen-Anchorpane{
+    -fx-background-color: #172734;
+}
+
+.InputFields-Anchorpane{
+    -fx-background-color: #172734;
+    -fx-background-radius: 7px;
+}
+
+.CreateEvent-Heading{
+    -fx-fill: white;
+    -fx-font-size: 20;
+}
