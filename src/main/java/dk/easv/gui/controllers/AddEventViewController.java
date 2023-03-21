@@ -28,16 +28,21 @@ public class AddEventViewController implements Initializable {
     private MFXTextField eventLocationField;
     @FXML
     private MFXTextField eventNameField;
-
-
-    private EventModel model = new EventModel();
-    private Stage stage;
     @FXML
     private MFXTextField ticketsTextField;
+
+    private final EventModel model = new EventModel();
+    private Stage stage;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         submitButton.setOnAction(e -> submitButtonClicked());
+        cancelButton.setOnAction(e -> cancelButtonClicked());
+    }
+
+    private void cancelButtonClicked() {
+        stage.close();
     }
 
     private void submitButtonClicked() {
