@@ -1,5 +1,6 @@
 package dk.easv;
 
+import dk.easv.gui.controllers.AddEventViewController;
 import dk.easv.gui.controllers.MainWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +15,9 @@ import java.util.Objects;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/main-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
         Parent root = fxmlLoader.load();
-        MainWindowController mainWindowController = fxmlLoader.getController();
+        AddEventViewController mainWindowController = fxmlLoader.getController();
         Scene scene = new Scene(root);
         stage.setTitle("EASV Event Manager");
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar.png"))));
