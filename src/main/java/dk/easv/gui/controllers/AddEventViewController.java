@@ -31,7 +31,7 @@ public class AddEventViewController implements Initializable {
     @FXML
     private MFXTextField ticketsTextField;
 
-    private final EventModel model = new EventModel();
+    private EventModel model;
     private Stage stage;
 
 
@@ -51,7 +51,8 @@ public class AddEventViewController implements Initializable {
         stage.close();
     }
 
-    public void initialed(){
+    public void initialed(EventModel model){
+        this.model = model;
         this.stage = (Stage) submitButton.getScene().getWindow();
         stage.setMinWidth(600);
         stage.setMinHeight(450);

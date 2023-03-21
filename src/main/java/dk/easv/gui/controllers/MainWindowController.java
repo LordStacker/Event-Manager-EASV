@@ -146,7 +146,7 @@ public class MainWindowController implements Initializable {
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.show();
-            addEventViewController.initialed();
+            addEventViewController.initialed(model);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

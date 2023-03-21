@@ -23,6 +23,7 @@ public class EventModel {
     public void addEvent(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes, int numberOfTickets) {
         int eventId = bll.addEvent(new Event(name, location, startDate, endDate, directions, extraNotes));
         addTickets(numberOfTickets, eventId);
+        getAllEvents();
     }
 
     public void addTickets(int numberOfTickets, int eventId) {
@@ -31,6 +32,8 @@ public class EventModel {
 
     public void getAllEvents() {
         List<Event> events = bll.getAllEvents();
+        obsPastEvents.clear();
+        obsFutureEvents.clear();
         for (Event event : events) {
             if (event.getEventStartDate().isBefore(LocalDate.now())) {
                 obsPastEvents.add(event);
