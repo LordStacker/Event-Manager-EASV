@@ -55,6 +55,7 @@ public class LoginController implements Initializable {
             stage.centerOnScreen();
             controller.initialed();
 
+
         }
 
     }
