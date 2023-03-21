@@ -23,4 +23,8 @@ public class LogicManager {
     public int addEvent(Event event) {
         return eventDAO.createEvent(event);
     }
+
+    public List<Event> getAllEvents() {
+        return eventDAO.getAllEvents();
+    }
 }

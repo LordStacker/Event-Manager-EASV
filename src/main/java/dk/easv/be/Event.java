@@ -27,6 +27,16 @@ public class Event {
         this.eventGuidance = directions;
         this.eventNotes = extraNotes;
     }
+
+    public Event(int id, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes){
+        this.eventID = id;
+        this.eventName = name;
+        this.eventLocation = location;
+        this.eventStartDate = startDate;
+        this.eventEndDate = endDate;
+        this.eventGuidance = directions;
+        this.eventNotes = extraNotes;
+    }
     public int getEventID() {
         return eventID;
     }

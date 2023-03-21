@@ -1,8 +1,11 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Event;
+import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,26 +39,35 @@ public class MainWindowController implements Initializable {
     @FXML
     private MFXScrollPane mainPane;
     @FXML
-    private TableColumn upcomingNameColumn, upcomingDateColumn, upcomingAttendanceColumn;
+    private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn;
     @FXML
-    private TableColumn pastNameColumn, pastDateColumn, pastAttendanceColumn;
+    private TableColumn<Event, String> pastDateColumn, upcomingDateColumn;
     @FXML
-    private MFXLegacyTableView upcomingEventsTable;
+    private MFXLegacyTableView<Event> upcomingEventsTable;
     @FXML
-    private MFXLegacyTableView pastEventsTable;
+    private MFXLegacyTableView<Event> pastEventsTable;
     @FXML
     private Label nextEventLabel;
 
+    private final EventModel model = new EventModel();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setTables();
+    }
 
-
-
+    private void setTables() {
+        upcomingNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
+        upcomingDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
+        upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty("10"));
+        upcomingEventsTable.setItems(model.getObsEvents());
+        upcomingEventsTable.setMinHeight(200);
     }
 
     public void initialed() {
         stage = (Stage) upcomingEventsHBox.getScene().getWindow();
         setupHBoxListener();
+
         initEventsHBox();
         setNextEvent("Next Event");
         stage.setMinWidth(1210);
