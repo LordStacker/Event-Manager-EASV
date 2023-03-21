@@ -34,7 +34,9 @@ public class EventDAO {
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
         try (Connection con = cm.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Event ORDER BY event_start_date DESC");
+            PreparedStatement ps = con.prepareStatement("SELECT Event.id, Event.event_name, event_description, event_location, event_start_date, event_end_date, event_guidance, COUNT(ticket_UUID) as TotalTickets , COUNT(CASE WHEN customer_id IS NOT NULL THEN 1 END) AS SoldTickets " +
+                    "FROM Event INNER JOIN ticket_type ON Event.id = ticket_type.event_id " +
+                    "INNER JOIN Tickets ON ticket_type.type_id = Tickets.ticket_type_id GROUP BY Event.id, Event.event_name, event_description, event_location, event_start_date, event_end_date, event_guidance");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -44,7 +46,9 @@ public class EventDAO {
                 Date endDate = rs.getDate("event_end_date");
                 String location = rs.getString("event_location");
                 String guidance = rs.getString("event_guidance");
-                Event event = new Event(id, name, description, startDate.toLocalDate(), endDate == null ? null : endDate.toLocalDate(), location, guidance);
+                int totalTickets = rs.getInt("TotalTickets");
+                int soldTickets = rs.getInt("SoldTickets");
+                Event event = new Event(id, name, description, startDate.toLocalDate(), endDate == null ? null : endDate.toLocalDate(), location, guidance, totalTickets, soldTickets);
                 events.add(event);
             }
             return events;
