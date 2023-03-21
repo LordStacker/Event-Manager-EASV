@@ -39,7 +39,10 @@ public class AddEventViewController implements Initializable {
     }
 
     private void submitButtonClicked() {
-        model.addEvent("Test", "Test", startDatePicker.getValue(), endDatePicker.getValue(), "Test", "Test");
+        //TODO: Add number of tickets field
+        model.addEvent(eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
+                eventDirectionsField.getText(), eventExtraNotesField.getText(), 100);
+        stage.close();
     }
 
     public void initialed(){
