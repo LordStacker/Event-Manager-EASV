@@ -34,7 +34,7 @@ public class EventDAO {
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
         try (Connection con = cm.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Event");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Event ORDER BY event_start_date DESC");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");

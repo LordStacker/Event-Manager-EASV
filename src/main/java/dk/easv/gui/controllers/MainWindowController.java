@@ -60,8 +60,16 @@ public class MainWindowController implements Initializable {
         upcomingNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
         upcomingDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty("10"));
-        upcomingEventsTable.setItems(model.getObsEvents());
+
+        pastNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
+        pastDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
+        pastAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty("10"));
+
+        upcomingEventsTable.setItems(model.getObsFutureEvents());
+        pastEventsTable.setItems(model.getObsPastEvents());
+
         upcomingEventsTable.setMinHeight(200);
+        pastEventsTable.setMinHeight(200);
     }
 
     public void initialed() {

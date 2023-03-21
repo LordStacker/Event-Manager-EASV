@@ -6,13 +6,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class EventModel {
     private LogicManager bll = new LogicManager();
-    private final ObservableList<Event> obsEvents;
+    private final ObservableList<Event> obsFutureEvents;
+    private final ObservableList<Event> obsPastEvents;
 
     public EventModel() {
-        obsEvents = FXCollections.observableArrayList();
+        obsFutureEvents = FXCollections.observableArrayList();
+        obsPastEvents = FXCollections.observableArrayList();
+        getAllEvents();
     }
 
 
@@ -26,11 +30,21 @@ public class EventModel {
     }
 
     public void getAllEvents() {
-        obsEvents.setAll(bll.getAllEvents());
+        List<Event> events = bll.getAllEvents();
+        for (Event event : events) {
+            if (event.getEventStartDate().isBefore(LocalDate.now())) {
+                obsPastEvents.add(event);
+            } else {
+                obsFutureEvents.add(event);
+            }
+        }
     }
 
-    public ObservableList<Event> getObsEvents() {
-        getAllEvents();
-        return obsEvents;
+    public ObservableList<Event> getObsFutureEvents() {
+        return obsFutureEvents;
+    }
+
+    public ObservableList<Event> getObsPastEvents() {
+        return obsPastEvents;
     }
 }
