@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="394.0" prefWidth="454.0" style="-fx-background-radius: 0 " styleClass="Anchorpane" stylesheets="@../css/LoginStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.LoginController">
+<GridPane prefHeight="600.0" fx:id="loginGrid" prefWidth="800.0" style="-fx-background-radius: 0 " styleClass="Anchorpane" stylesheets="@../css/LoginStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.LoginController">
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
     </columnConstraints>
@@ -23,7 +23,7 @@
     <children>
         <Group GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
             <children>
-                <GridPane fx:id="loginGrid" alignment="CENTER" prefHeight="304.0" prefWidth="342.0" styleClass="background">
+                <GridPane alignment="CENTER" prefHeight="304.0" prefWidth="342.0" styleClass="background">
                     <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>

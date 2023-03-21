@@ -50,9 +50,8 @@ public class LoginController implements Initializable {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
             Parent newScene = loader.load();
             MainWindowController controller = loader.getController();
-            Scene scene = new Scene(newScene);
             controller.setStage(stage);
-            stage.setScene(scene);
+            stage.setScene(new Scene(newScene));
             stage.centerOnScreen();
             controller.initialed();
 
@@ -61,10 +60,12 @@ public class LoginController implements Initializable {
     }
     public void setStage(Stage stage) {
         this.stage = stage;
+
         stage.setHeight(loginGrid.getPrefHeight()+30); // +30 because of the title bar and window border
         stage.setWidth(loginGrid.getPrefWidth()+1);
         stage.setMinWidth(loginGrid.getPrefWidth());
         stage.setMinHeight(loginGrid.getPrefHeight() + 30); // +30 because of the title bar and window border
+
     }
 
 }
