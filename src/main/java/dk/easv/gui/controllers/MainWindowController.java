@@ -77,17 +77,17 @@ public class MainWindowController implements Initializable {
         setupHBoxListener();
 
         initEventsHBox();
-        setNextEvent("Next Event");
+        setNextEvent(model.getObsFutureEvents().get(0).getEventName());
         stage.setMinWidth(1210);
     }
 
     private void initEventsHBox() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < model.getObsFutureEvents().size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/upcoming-event-view.fxml"));
             try {
                 AnchorPane anchorPane = fxmlLoader.load();
                 UpcomingEventController upcomingEventController = fxmlLoader.getController();
-                upcomingEventController.setEvent("Event " + i);
+                upcomingEventController.setEvent(model.getObsFutureEvents().get(i).getEventName());
                 upcomingEvents.add(anchorPane);
             } catch (IOException e) {
                 e.printStackTrace();
