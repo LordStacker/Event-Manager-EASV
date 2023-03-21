@@ -32,6 +32,8 @@ public class AddEventViewController implements Initializable {
 
     private EventModel model = new EventModel();
     private Stage stage;
+    @FXML
+    private MFXTextField ticketsTextField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,9 +41,8 @@ public class AddEventViewController implements Initializable {
     }
 
     private void submitButtonClicked() {
-        //TODO: Add number of tickets field
         model.addEvent(eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
-                eventDirectionsField.getText(), eventExtraNotesField.getText(), 100);
+                eventDirectionsField.getText(), eventExtraNotesField.getText(), Integer.parseInt(ticketsTextField.getText()));
         stage.close();
     }
 
