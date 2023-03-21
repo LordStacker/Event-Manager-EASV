@@ -17,6 +17,8 @@ public class Event {
     //Optional information (must be supported but may not be used for all events)
     private LocalDate eventEndDate;
     private String eventGuidance;
+    private int eventTickets;
+    private int eventTicketsSold;
 
 
     public Event(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes){
@@ -36,6 +38,18 @@ public class Event {
         this.eventEndDate = endDate;
         this.eventGuidance = directions;
         this.eventNotes = extraNotes;
+    }
+
+    public Event(int id, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes, int tickets, int ticketsSold){
+        this.eventID = id;
+        this.eventName = name;
+        this.eventLocation = location;
+        this.eventStartDate = startDate;
+        this.eventEndDate = endDate;
+        this.eventGuidance = directions;
+        this.eventNotes = extraNotes;
+        this.eventTickets = tickets;
+        this.eventTicketsSold = ticketsSold;
     }
     public int getEventID() {
         return eventID;
@@ -93,4 +107,19 @@ public class Event {
         this.eventGuidance = eventGuidance;
     }
 
+    public int getEventTickets() {
+        return eventTickets;
+    }
+
+    public void setEventTickets(int eventTickets) {
+        this.eventTickets = eventTickets;
+    }
+
+    public int getEventTicketsSold() {
+        return eventTicketsSold;
+    }
+
+    public void setEventTicketsSold(int eventTicketsSold) {
+        this.eventTicketsSold = eventTicketsSold;
+    }
 }
