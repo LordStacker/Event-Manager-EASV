@@ -26,60 +26,31 @@ import java.util.ResourceBundle;
 public class MainWindowEventPController implements Initializable {
 
     @FXML
-    private MFXScrollPane mainPane;
-
-    @FXML
-    private Label nextEventLabel;
-
+    private HBox upcomingEventsHBox;
     @FXML
     private AnchorPane nextEventPane;
-
-    @FXML
-    private TableColumn<?, ?> pastAttendanceColumn;
-
-    @FXML
-    private TableColumn<?, ?> pastDateColumn;
-
-    @FXML
-    private MFXLegacyTableView<?> pastEventsTable;
-
-    @FXML
-    private TableColumn<?, ?> pastNameColumn;
-
-    @FXML
-    private TableColumn<?, ?> upcomingAttendanceColumn;
-
-    @FXML
-    private TableColumn<?, ?> upcomingDateColumn;
-
-    @FXML
-    private HBox upcomingEventsHBox;
-
-    @FXML
-    private MFXLegacyTableView<?> upcomingEventsTable;
-
-    @FXML
-    private TableColumn<?, ?> upcomingNameColumn;
 
     private ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
     private int currentVolume = 2;
 
     private Stage stage;
-
-
     @FXML
-    void editEventAction(ActionEvent event) {
-
-    }
-
+    private MFXScrollPane mainPane;
     @FXML
-    void homeAction(ActionEvent event) {
-
-    }
-
+    private TableColumn upcomingNameColumn, upcomingDateColumn, upcomingAttendanceColumn;
+    @FXML
+    private TableColumn pastNameColumn, pastDateColumn, pastAttendanceColumn;
+    @FXML
+    private MFXLegacyTableView upcomingEventsTable;
+    @FXML
+    private MFXLegacyTableView pastEventsTable;
+    @FXML
+    private Label nextEventLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
 
     }
 
@@ -106,9 +77,9 @@ public class MainWindowEventPController implements Initializable {
         upcomingEventsHBox.getChildren().addAll(upcomingEvents.subList(0, currentVolume));
     }
 
-    private void setupHBoxListener() {
+    private void setupHBoxListener(){
         stage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            int volume = (int) ((newValue.doubleValue() - 40 - 2) / (upcomingEvents.get(0).getWidth() + 20)); //-40 padding -2 for scroll bar 550 width 20 spacing
+            int volume = (int) ((newValue.doubleValue()-40-2) / (upcomingEvents.get(0).getWidth() + 20)); //-40 padding -2 for scroll bar 550 width 20 spacing
             if (volume != currentVolume) {
                 currentVolume = volume;
                 upcomingEventsHBox.getChildren().setAll(upcomingEvents.subList(0, currentVolume));
@@ -161,6 +132,14 @@ public class MainWindowEventPController implements Initializable {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @FXML
+    private void editEventAction(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void homeAction(ActionEvent actionEvent) {
     }
 
     @FXML

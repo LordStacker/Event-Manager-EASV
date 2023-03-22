@@ -52,27 +52,28 @@ public class LoginController implements Initializable {
         }
         if(user.size() >= 1){
             if(user.get(0).role() == Roles.EVENT_COORDINATOR){
-                executeFXML("view/main-view-event-planner.fxml");
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view-event-planner.fxml")));
+                Parent newScene = loader.load();
+                MainWindowEventPController controller = loader.getController();
+                controller.setStage(stage);
+                stage.setScene(new Scene(newScene));
+                stage.centerOnScreen();
+                controller.initialed();
             }
             if (user.get(0).role() == Roles.ADMIN){
-                executeFXML("view/main-view-admin.fxml");
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view-admin.fxml")));
+                Parent newScene = loader.load();
+                MainWindowController controller = loader.getController();
+                controller.setStage(stage);
+                stage.setScene(new Scene(newScene));
+                stage.centerOnScreen();
+                controller.initialed();
+
 
             }
         }
 
     }
-
-    private void executeFXML (String fxmlFile) throws IOException{
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("fxmlFile")));
-        Parent newScene = loader.load();
-        MainWindowController controller = loader.getController();
-        controller.setStage(stage);
-        stage.setScene(new Scene(newScene));
-        stage.centerOnScreen();
-        controller.initialed();
-        
-    }
-
 
     public void setStage(Stage stage) {
         this.stage = stage;
