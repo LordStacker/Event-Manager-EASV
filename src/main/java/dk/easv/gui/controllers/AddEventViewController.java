@@ -4,8 +4,14 @@ import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.enums.FloatMode;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Spinner;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -33,6 +39,8 @@ public class AddEventViewController implements Initializable {
 
     private EventModel model;
     private Stage stage;
+    @FXML
+    private VBox ticketTypesVBox;
 
 
     @Override
@@ -56,5 +64,26 @@ public class AddEventViewController implements Initializable {
         this.stage = (Stage) submitButton.getScene().getWindow();
         stage.setMinWidth(600);
         stage.setMinHeight(450);
+    }
+
+    @FXML
+    private void addTicketAction(ActionEvent actionEvent) {
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(10);
+        MFXTextField ticketNameField = new MFXTextField();
+        ticketNameField.setPromptText("Ticket name");
+        ticketNameField.setPrefWidth(200);
+        ticketNameField.setFloatMode(FloatMode.BORDER);
+        MFXTextField ticketPriceField = new MFXTextField();
+        ticketPriceField.setPromptText("Ticket price");
+        ticketPriceField.setPrefWidth(200);
+        ticketPriceField.setFloatMode(FloatMode.BORDER);
+        MFXTextField ticketAmountTextField = new MFXTextField();
+        ticketAmountTextField.setPromptText("Ticket amount");
+        ticketAmountTextField.setPrefWidth(200);
+        ticketAmountTextField.setFloatMode(FloatMode.BORDER);
+        hBox.getChildren().addAll(ticketNameField, ticketPriceField, ticketAmountTextField);
+        ticketTypesVBox.getChildren().add(hBox);
     }
 }
