@@ -153,6 +153,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void editEventAction(ActionEvent actionEvent) {
+        System.out.println(upcomingEventsTable.getSelectionModel().getSelectedItem().getEventID());
     }
 
     @FXML
