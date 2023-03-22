@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Spinner;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -53,6 +52,8 @@ public class AddEventViewController implements Initializable {
     private void submitButtonClicked() {
         int eventID = model.addEvent(eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
                 eventDirectionsField.getText(), eventExtraNotesField.getText());
+
+        // Loop through all the ticket types
         for (int i = 0; i < ticketTypesVBox.getChildren().size(); i++) {
             HBox hBox = (HBox) ticketTypesVBox.getChildren().get(i);
             MFXTextField ticketNameField = (MFXTextField) hBox.getChildren().get(0);
@@ -61,6 +62,7 @@ public class AddEventViewController implements Initializable {
             model.addTickets(eventID, ticketNameField.getText(), Double.parseDouble(ticketPriceField.getText()), Integer.parseInt(ticketAmountTextField.getText()));
         }
 
+        model.getAllEvents();
         stage.close();
     }
 
@@ -82,13 +84,15 @@ public class AddEventViewController implements Initializable {
         ticketNameField.setFloatMode(FloatMode.BORDER);
         MFXTextField ticketPriceField = new MFXTextField();
         ticketPriceField.setPromptText("Ticket price");
-        ticketPriceField.setPrefWidth(200);
+        ticketPriceField.setPrefWidth(50);
         ticketPriceField.setFloatMode(FloatMode.BORDER);
         MFXTextField ticketAmountTextField = new MFXTextField();
         ticketAmountTextField.setPromptText("Ticket amount");
-        ticketAmountTextField.setPrefWidth(200);
+        ticketAmountTextField.setPrefWidth(80);
         ticketAmountTextField.setFloatMode(FloatMode.BORDER);
-        hBox.getChildren().addAll(ticketNameField, ticketPriceField, ticketAmountTextField);
+        MFXButton removeButton = new MFXButton("\uD83D\uDDD1");
+        removeButton.setOnAction(e -> ticketTypesVBox.getChildren().remove(hBox));
+        hBox.getChildren().addAll(ticketNameField, ticketPriceField, ticketAmountTextField, removeButton);
         ticketTypesVBox.getChildren().add(hBox);
     }
 }

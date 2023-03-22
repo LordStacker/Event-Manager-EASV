@@ -21,9 +21,7 @@ public class EventModel {
 
 
     public int addEvent(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
-        int eventId = bll.addEvent(new Event(name, location, startDate, endDate, directions, extraNotes));
-        getAllEvents();
-        return eventId;
+        return bll.addEvent(new Event(name, location, startDate, endDate, directions, extraNotes));
     }
 
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
