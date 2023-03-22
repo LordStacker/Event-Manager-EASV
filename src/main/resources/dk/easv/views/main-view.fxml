@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="900.0" prefWidth="1220.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
+<BorderPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
    <center>
-      <MFXScrollPane fx:id="mainPane" fitToWidth="true" prefHeight="1040.0" prefWidth="1440.0">
+      <MFXScrollPane fx:id="mainPane" fitToWidth="true" prefHeight="1040.0" prefWidth="1440.0"  minHeight="800.0" minWidth="1440.0">
          <content>
             <VBox prefHeight="1690.0" prefWidth="1426.0">
                <children>
