@@ -2,6 +2,7 @@ package dk.easv.gui.controllers;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.Main;
+import dk.easv.be.Roles;
 import dk.easv.dal.dao.UserDAO;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -13,9 +14,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import dk.easv.be.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -29,6 +32,8 @@ public class LoginController implements Initializable {
     private GridPane loginGrid;
     private Stage stage;
 
+    private List<User> user;
+
     private UserDAO userDAO = new UserDAO();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,22 +45,21 @@ public class LoginController implements Initializable {
         if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
             System.out.println("HELP!");
         }
-        boolean userExist = false;
         if (usernameTextField.getText() != null && passwordTextField.getText() !=null)
         {
-            userExist = UserDAO.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
-            System.out.println(userExist); //Checking logic if works for exist or not user in DB
+            user = UserDAO.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
+            System.out.println(user); //Checking logic if works for exist or not user in DB
         }
-        if(userExist){
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
-            Parent newScene = loader.load();
-            MainWindowController controller = loader.getController();
-            controller.setStage(stage);
-            stage.setScene(new Scene(newScene));
-            stage.centerOnScreen();
-            controller.initialed();
-
-
+        if(user.size() >= 1){
+            if(user.get(0).role() == Roles.EVENT_COORDINATOR){
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
+                Parent newScene = loader.load();
+                MainWindowController controller = loader.getController();
+                controller.setStage(stage);
+                stage.setScene(new Scene(newScene));
+                stage.centerOnScreen();
+                controller.initialed();
+            }
         }
 
     }
