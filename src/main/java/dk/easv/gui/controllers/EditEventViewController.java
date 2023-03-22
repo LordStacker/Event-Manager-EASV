@@ -43,14 +43,15 @@ private MFXButton saveButton;
 private MFXDatePicker startDatePicker;
 
 @FXML
-    void chechForChange(ActionEvent event) {
-
-            }
+private void checkForChange(ActionEvent actionEvent) {
+    System.out.println("check");
+}
 
 @FXML
-    void closeStage(ActionEvent event) {
+private void closeStage(ActionEvent actionEvent) {
+    System.out.println("Close");
+}
 
-            }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

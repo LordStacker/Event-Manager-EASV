@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.">
+<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.EditEventViewController">
    <children>
       <VBox alignment="CENTER" prefHeight="600.0" prefWidth="900.0" spacing="20.0" styleClass="Main-Anchorpane" stylesheets="@../css/CreateEventStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -32,7 +32,7 @@
       </VBox>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="40.0">
         <buttons>
-            <MFXButton fx:id="saveButton" onAction="#chechForChange" text="Save" />
+            <MFXButton fx:id="saveButton" onAction="#checkForChange" text="Save" />
             <MFXButton fx:id="cancelButton" onAction="#closeStage" text="Cancel" />
         </buttons>
       </ButtonBar>
