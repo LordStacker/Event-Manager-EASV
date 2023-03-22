@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
+<BorderPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="">
    <center>
       <MFXScrollPane fx:id="mainPane" fitToWidth="true" minHeight="800.0" minWidth="1440.0" prefHeight="1040.0" prefWidth="1440.0">
          <content>
@@ -84,7 +84,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" styleClass="bottomBarHbox">
                <children>
                   <MFXButton buttonType="RAISED" onAction="#homeAction" text="Home" />
-                  <Label prefHeight="17.0" prefWidth="118.0" text="Admin" textFill="WHITE">
+                  <Label text="Event Coordinator" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
