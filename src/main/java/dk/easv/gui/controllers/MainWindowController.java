@@ -32,12 +32,10 @@ public class MainWindowController implements Initializable {
     @FXML
     private AnchorPane nextEventPane;
 
-    private ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
+    private final ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
     private int currentVolume = 2;
 
     private Stage stage;
-    @FXML
-    private MFXScrollPane mainPane;
     @FXML
     private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn;
     @FXML
@@ -141,7 +139,7 @@ public class MainWindowController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
             Parent root = fxmlLoader.load();
             AddEventViewController addEventViewController = fxmlLoader.getController();
-            Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+            Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
             stage.setTitle("Add Event");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
