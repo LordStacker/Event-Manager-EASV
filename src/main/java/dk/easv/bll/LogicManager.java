@@ -11,10 +11,10 @@ import java.util.List;
 public class LogicManager {
     private TicketDAO ticketDAO = new TicketDAO();
     private EventDAO eventDAO = new EventDAO();
-    public void addTickets(int numberOfTickets, int eventId) {
+    public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
         List<Ticket> tickets = new ArrayList<>();
         for (int i = 1; i <= numberOfTickets; i++) {
-            tickets.add(new Ticket("General", i, 100));
+            tickets.add(new Ticket(ticketType, i, price));
         }
 
         ticketDAO.addTickets(tickets, eventId);

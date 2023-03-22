@@ -20,14 +20,14 @@ public class EventModel {
     }
 
 
-    public void addEvent(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes, int numberOfTickets) {
+    public int addEvent(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
         int eventId = bll.addEvent(new Event(name, location, startDate, endDate, directions, extraNotes));
-        addTickets(numberOfTickets, eventId);
         getAllEvents();
+        return eventId;
     }
 
-    public void addTickets(int numberOfTickets, int eventId) {
-        bll.addTickets(numberOfTickets, eventId);
+    public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
+        bll.addTickets(eventId, ticketType, price, numberOfTickets);
     }
 
     public void getAllEvents() {

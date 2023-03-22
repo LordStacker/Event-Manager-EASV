@@ -34,9 +34,6 @@ public class AddEventViewController implements Initializable {
     private MFXTextField eventLocationField;
     @FXML
     private MFXTextField eventNameField;
-    @FXML
-    private MFXTextField ticketsTextField;
-
     private EventModel model;
     private Stage stage;
     @FXML
@@ -54,8 +51,16 @@ public class AddEventViewController implements Initializable {
     }
 
     private void submitButtonClicked() {
-        model.addEvent(eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
-                eventDirectionsField.getText(), eventExtraNotesField.getText(), Integer.parseInt(ticketsTextField.getText()));
+        int eventID = model.addEvent(eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
+                eventDirectionsField.getText(), eventExtraNotesField.getText());
+        for (int i = 0; i < ticketTypesVBox.getChildren().size(); i++) {
+            HBox hBox = (HBox) ticketTypesVBox.getChildren().get(i);
+            MFXTextField ticketNameField = (MFXTextField) hBox.getChildren().get(0);
+            MFXTextField ticketPriceField = (MFXTextField) hBox.getChildren().get(1);
+            MFXTextField ticketAmountTextField = (MFXTextField) hBox.getChildren().get(2);
+            model.addTickets(eventID, ticketNameField.getText(), Double.parseDouble(ticketPriceField.getText()), Integer.parseInt(ticketAmountTextField.getText()));
+        }
+
         stage.close();
     }
 
