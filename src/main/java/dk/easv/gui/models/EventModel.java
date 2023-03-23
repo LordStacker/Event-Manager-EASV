@@ -20,6 +20,11 @@ public class EventModel {
         getAllEvents();
     }
 
+    public int deleteEvent(int id){
+        int rowsAffected = bll.deleteEvent(id);
+        getAllEvents();
+        return rowsAffected;
+    }
 
     public int addEvent(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
         return bll.addEvent(new Event(name, location, startDate, endDate, directions, extraNotes));

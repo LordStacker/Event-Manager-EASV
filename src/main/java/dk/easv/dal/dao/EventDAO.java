@@ -75,4 +75,15 @@ public class EventDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public int deleteEvent(int id){
+        try (Connection con = cm.getConnection()){
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Event WHERE id = ? ");
+            ps.setInt(1, id);
+            return ps.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }
