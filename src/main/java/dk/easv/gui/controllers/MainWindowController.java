@@ -5,15 +5,16 @@ import dk.easv.be.Event;
 import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -37,7 +38,7 @@ public class MainWindowController implements Initializable {
 
     private Stage stage;
     @FXML
-    private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn;
+    private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn, colDel;
     @FXML
     private TableColumn<Event, String> pastDateColumn, upcomingDateColumn;
     @FXML
@@ -58,7 +59,14 @@ public class MainWindowController implements Initializable {
         upcomingNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
         upcomingDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
-
+        colDel.setCellValueFactory(cellData -> {
+            Button deleteButton = new Button("Delete");
+           //deleteButton.maxWidth(10);
+            deleteButton.setOnAction(event -> {
+                System.out.println(cellData.getValue().getEventID());
+            });
+            return new SimpleObjectProperty(deleteButton);
+        });
         pastNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
         pastDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         pastAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
@@ -70,13 +78,13 @@ public class MainWindowController implements Initializable {
         pastEventsTable.setMinHeight(400);
     }
 
-    public void initialed() {
-        stage = (Stage) upcomingEventsHBox.getScene().getWindow();
+    public void initialed(Stage stage) {
+        this.stage = stage;
         setupHBoxListener();
 
         initEventsHBox();
         setNextEvent(model.getObsFutureEvents().get(0).getEventName());
-        stage.setMinWidth(1210);
+        //stage.setMinWidth(900);
     }
 
     private void initEventsHBox() {
@@ -175,5 +183,12 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void logOutAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Login.fxml")));
+            Parent parent = fxmlLoader.load();
+            stage.setScene(new Scene(parent));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

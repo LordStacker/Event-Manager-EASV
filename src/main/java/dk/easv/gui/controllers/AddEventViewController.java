@@ -1,8 +1,8 @@
 package dk.easv.gui.controllers;
-
 import dk.easv.be.Event;
-import dk.easv.be.Ticket;
 import dk.easv.be.TicketType;
+import dk.easv.gui.models.EventEditModel;
+import dk.easv.util.AlertHelper;
 import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
@@ -11,14 +11,16 @@ import io.github.palexdev.materialfx.enums.FloatMode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import java.util.ResourceBundle;
 
 public class AddEventViewController implements Initializable {
@@ -34,6 +36,10 @@ public class AddEventViewController implements Initializable {
     private MFXDatePicker endDatePicker;
     @FXML
     private MFXDatePicker startDatePicker;
+    @FXML
+    private MFXTextField eventStartField;
+    @FXML
+    private MFXTextField eventEndField;
     @FXML
     private MFXTextField eventLocationField;
     @FXML
@@ -79,6 +85,66 @@ public class AddEventViewController implements Initializable {
         stage.setMinWidth(600);
         stage.setMinHeight(450);
     }
+
+    public void checkForInput(){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(eventStartField.getText());
+        } catch (ParseException e) {
+            AlertHelper.showDefaultAlert("Please follow the format instructions when setting time of event!", Alert.AlertType.WARNING);
+        }
+
+        if (eventNameField == null ||eventNameField.getText().trim().isEmpty()){
+            AlertHelper.showDefaultAlert("Please enter event name before submitting!", Alert.AlertType.WARNING);
+        } else if (eventLocationField == null ||eventLocationField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter event location before submitting!", Alert.AlertType.WARNING);
+        } else if (startDatePicker.getValue() == null) {
+            AlertHelper.showDefaultAlert("Please enter event start date before submitting!", Alert.AlertType.WARNING);
+        } else if (endDatePicker.getValue() == null) {
+            AlertHelper.showDefaultAlert("Please enter event end date before submitting!", Alert.AlertType.WARNING);
+        } else if (eventStartField == null || eventStartField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter event start hour before submitting!", Alert.AlertType.WARNING);
+        } else if (eventEndField == null || eventEndField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter event end hour before submitting!", Alert.AlertType.WARNING);
+        } else if (eventDirectionsField == null || eventDirectionsField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter event directions before submitting!", Alert.AlertType.WARNING);
+        } else if (eventExtraNotesField == null || eventExtraNotesField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter extra notes about the event before submitting!", Alert.AlertType.WARNING);
+        }
+    }
+
+    /*public void checkForInput(){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(eventStartField.getText());
+        } catch (ParseException e) {
+            AlertHelper.showDefaultAlert("Please follow the format instructions when setting time of event!", Alert.AlertType.WARNING);
+        }
+
+        if (eventNameField == null ||eventNameField.getText().trim().isEmpty()){
+            AlertHelper.showDefaultAlert("Please enter event name before submitting!", Alert.AlertType.WARNING);
+        } else if (eventLocationField == null ||eventLocationField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter event location before submitting!", Alert.AlertType.WARNING);
+        } else if (startDatePicker.getValue() == null) {
+            AlertHelper.showDefaultAlert("Please enter event start date before submitting!", Alert.AlertType.WARNING);
+        } else if (endDatePicker.getValue() == null) {
+            AlertHelper.showDefaultAlert("Please enter event end date before submitting!", Alert.AlertType.WARNING);
+        } else if (eventStartField == null || eventStartField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter event start hour before submitting!", Alert.AlertType.WARNING);
+        } else if (eventEndField == null || eventEndField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter event end hour before submitting!", Alert.AlertType.WARNING);
+        } else if (eventDirectionsField == null || eventDirectionsField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter event directions before submitting!", Alert.AlertType.WARNING);
+        } else if (eventExtraNotesField == null || eventExtraNotesField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter extra notes about the event before submitting!", Alert.AlertType.WARNING);
+        }
+    }
+
+     */
 
     @FXML
     private void addTicketAction(ActionEvent actionEvent) {
