@@ -13,7 +13,10 @@ Button{
 
 .Main-Anchorpane{
     -fx-background-image: url('../icons/CreateEventBackgroundImg.jpg');
-    -fx-background-size: 100% 100%;
+    -fx-background-size: 100% auto;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: black;
 
 }
 
@@ -29,4 +32,9 @@ Button{
 .CreateEvent-Heading{
     -fx-fill: white;
     -fx-font-size: 20;
+}
+
+.inputTextField {
+    -fx-pref-width: 520;
+    -fx-pref-height: 40;
 }

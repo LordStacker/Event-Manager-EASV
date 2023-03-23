@@ -149,8 +149,6 @@ public class MainWindowEventPController implements Initializable {
             Parent parent = fxmlLoader.load();
             LoginController loginController = fxmlLoader.getController();
             loginController.setStage(stage);
-            //TODO clear all existing variables
-            //NICOLA
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             throw new RuntimeException(e);
