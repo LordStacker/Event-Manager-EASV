@@ -52,16 +52,16 @@ public class LoginController implements Initializable {
         }
         if(user.size() >= 1){
             if(user.get(0).role() == Roles.EVENT_COORDINATOR){
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view-event-planner.fxml")));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
                 Parent newScene = loader.load();
-                MainWindowEventPController controller = loader.getController();
+                MainWindowController controller = loader.getController();
                 //controller.setStage(stage);
                 stage.setScene(new Scene(newScene));
                 stage.centerOnScreen();
                 controller.initialed();
             }
             if (user.get(0).role() == Roles.ADMIN){
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view-admin.fxml")));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
                 Parent newScene = loader.load();
                 MainWindowController controller = loader.getController();
                 //controller.setStage(stage);

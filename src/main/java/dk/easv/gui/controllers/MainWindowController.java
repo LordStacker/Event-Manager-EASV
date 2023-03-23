@@ -163,9 +163,9 @@ public class MainWindowController implements Initializable {
     private void editEventAction(ActionEvent actionEvent) {
         try {
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/edit-event-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
             Parent root = fxmlLoader.load();
-            EditEventViewController addEventViewController = fxmlLoader.getController();
+            AddEventViewController addEventViewController = fxmlLoader.getController();
             Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
             stage.setTitle("Edit Event");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
