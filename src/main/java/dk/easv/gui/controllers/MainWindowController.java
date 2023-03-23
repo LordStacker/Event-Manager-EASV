@@ -3,11 +3,10 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Event;
 import dk.easv.gui.models.EventModel;
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +37,7 @@ public class MainWindowController implements Initializable {
 
     private Stage stage;
     @FXML
-    private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn, colDel;
+    private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn, upcomingColDel, pastColDel;
     @FXML
     private TableColumn<Event, String> pastDateColumn, upcomingDateColumn;
     @FXML
@@ -50,6 +49,7 @@ public class MainWindowController implements Initializable {
 
     private final EventModel model = new EventModel();
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTables();
@@ -59,17 +59,31 @@ public class MainWindowController implements Initializable {
         upcomingNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
         upcomingDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
-        colDel.setCellValueFactory(cellData -> {
+        upcomingColDel.setCellValueFactory(cellData -> {
             Button deleteButton = new Button("Delete");
-           //deleteButton.maxWidth(10);
+            //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
-                System.out.println(cellData.getValue().getEventID());
+                var alert = AlertHelper.showOptionalAlertWindow("Sure to delete the next event: ", cellData.getValue().getEventName(), Alert.AlertType.CONFIRMATION);
+                if(alert.isPresent() && alert.get().equals(ButtonType.OK)){
+                    model.deleteEvent(cellData.getValue().getEventID());
+                }
             });
             return new SimpleObjectProperty(deleteButton);
         });
         pastNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
         pastDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         pastAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
+        pastColDel.setCellValueFactory(cellData -> {
+            Button deleteButton = new Button("Delete");
+            //deleteButton.maxWidth(10);
+            deleteButton.setOnAction(event -> {
+                var alert = AlertHelper.showOptionalAlertWindow("Sure to delete the next event: ", cellData.getValue().getEventName(), Alert.AlertType.CONFIRMATION);
+                if(alert.isPresent() && alert.get().equals(ButtonType.OK)){
+                    model.deleteEvent(cellData.getValue().getEventID());
+                }
+            });
+            return new SimpleObjectProperty(deleteButton);
+        });
 
         upcomingEventsTable.setItems(model.getObsFutureEvents());
         pastEventsTable.setItems(model.getObsPastEvents());
@@ -88,13 +102,15 @@ public class MainWindowController implements Initializable {
         pastEventsTable.setMinHeight(400);
     }
 
-    public void initialed() {
-        stage = (Stage) upcomingEventsHBox.getScene().getWindow();
+    public void initialed(Stage stage) {
+        this.stage = stage;
         setupHBoxListener();
 
         initEventsHBox();
+
         setNextEvent(model.getObsFutureEvents().get(0).getEventName(), model.getObsFutureEvents().get(0).getEventID());
         stage.setMinWidth(1210);
+
     }
 
     private void initEventsHBox() {
@@ -114,7 +130,7 @@ public class MainWindowController implements Initializable {
 
     private void setupHBoxListener(){
         stage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            int volume = (int) ((newValue.doubleValue()-40-2) / (upcomingEvents.get(0).getWidth() + 20)); //-40 padding -2 for scroll bar 550 width 20 spacing
+            int volume = (int) ((newValue.doubleValue()-40-2) / (570)); //-40 padding -2 for scroll bar 550 width 20 spacing
             if (volume != currentVolume) {
                 currentVolume = volume;
                 upcomingEventsHBox.getChildren().setAll(upcomingEvents.subList(0, currentVolume));
@@ -173,20 +189,18 @@ public class MainWindowController implements Initializable {
     private void editEventAction(ActionEvent actionEvent) {
         try {
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/edit-event-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
             Parent root = fxmlLoader.load();
-            EditEventViewController addEventViewController = fxmlLoader.getController();
+            AddEventViewController addEventViewController = fxmlLoader.getController();
             Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
-            stage.setTitle("Edit Event");
+            stage.setTitle("Add Event");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.show();
-            addEventViewController.initialed(model);
+            addEventViewController.editing(model, upcomingEventsTable.getSelectionModel().getSelectedItem());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @FXML
@@ -199,10 +213,8 @@ public class MainWindowController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Login.fxml")));
             Parent parent = fxmlLoader.load();
             LoginController loginController = fxmlLoader.getController();
-            loginController.setStage(stage);
-            //TODO clear all existing variables
-            //NICOLA
             stage.setScene(new Scene(parent));
+            loginController.setStage(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
