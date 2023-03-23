@@ -1,9 +1,6 @@
 package dk.easv.gui.controllers;
-
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.Main;
-import dk.easv.be.Roles;
-import dk.easv.dal.dao.UserDAO;
+import dk.easv.gui.models.UserModel;
 import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -36,7 +33,7 @@ public class LoginController implements Initializable {
 
     private List<User> user;
 
-    private UserDAO userDAO = new UserDAO();
+    private final UserModel userModel = new UserModel();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -49,7 +46,7 @@ public class LoginController implements Initializable {
         }
         if (usernameTextField.getText() != null && passwordTextField.getText() !=null)
         {
-            user = UserDAO.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
+            user = userModel.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
         }
         if(user.size() >= 1){
             if(user.get(0).role() != null){

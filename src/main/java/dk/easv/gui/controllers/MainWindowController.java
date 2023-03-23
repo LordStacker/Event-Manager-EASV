@@ -3,11 +3,9 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Event;
 import dk.easv.gui.models.EventModel;
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +36,7 @@ public class MainWindowController implements Initializable {
 
     private Stage stage;
     @FXML
-    private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn, colDel;
+    private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn, upcomingColDel, pastColDel;
     @FXML
     private TableColumn<Event, String> pastDateColumn, upcomingDateColumn;
     @FXML
@@ -50,6 +48,7 @@ public class MainWindowController implements Initializable {
 
     private final EventModel model = new EventModel();
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTables();
@@ -59,7 +58,7 @@ public class MainWindowController implements Initializable {
         upcomingNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
         upcomingDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
-        colDel.setCellValueFactory(cellData -> {
+        upcomingColDel.setCellValueFactory(cellData -> {
             Button deleteButton = new Button("Delete");
            //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
@@ -70,6 +69,14 @@ public class MainWindowController implements Initializable {
         pastNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
         pastDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         pastAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
+        pastColDel.setCellValueFactory(cellData -> {
+            Button deleteButton = new Button("Delete");
+            //deleteButton.maxWidth(10);
+            deleteButton.setOnAction(event -> {
+                System.out.println(cellData.getValue().getEventID());
+            });
+            return new SimpleObjectProperty(deleteButton);
+        });
 
         upcomingEventsTable.setItems(model.getObsFutureEvents());
         pastEventsTable.setItems(model.getObsPastEvents());
