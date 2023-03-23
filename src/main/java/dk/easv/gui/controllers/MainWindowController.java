@@ -63,7 +63,7 @@ public class MainWindowController implements Initializable {
             Button deleteButton = new Button("Delete");
            //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
-                System.out.println(cellData.getValue().getEventID());
+                model.deleteEvent(cellData.getValue().getEventID());
             });
             return new SimpleObjectProperty(deleteButton);
         });

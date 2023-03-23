@@ -1,5 +1,6 @@
 package dk.easv.dal.dao;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Event;
 import dk.easv.dal.ConnectionManager;
 
@@ -64,6 +65,17 @@ public class EventDAO {
             ps.executeUpdate();
             con.commit();
         } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int deleteEvent(int id){
+        try (Connection con = cm.getConnection()){
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Event WHERE id = ? ");
+            ps.setInt(1, id);
+            return ps.executeUpdate();
+        }
+        catch (SQLException e){
             throw new RuntimeException(e);
         }
     }

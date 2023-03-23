@@ -27,4 +27,8 @@ public class LogicManager {
     public List<Event> getAllEvents() {
         return eventDAO.getAllEvents();
     }
+
+    public int deleteEvent(int id) {
+        return eventDAO.deleteEvent(id);
+    }
 }
