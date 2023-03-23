@@ -1,6 +1,9 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.be.Event;
+import dk.easv.be.Ticket;
+import dk.easv.be.TicketType;
+import dk.easv.gui.models.EventEditModel;
 import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
@@ -15,6 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddEventViewController implements Initializable {
@@ -35,6 +40,7 @@ public class AddEventViewController implements Initializable {
     @FXML
     private MFXTextField eventNameField;
     private EventModel model;
+    private EventEditModel editModel;
     private Stage stage;
     @FXML
     private VBox ticketTypesVBox;
@@ -110,9 +116,28 @@ public class AddEventViewController implements Initializable {
         eventDirectionsField.setText(selectedItem.getEventGuidance());
         eventExtraNotesField.setText(selectedItem.getEventNotes());
 
+        editModel = new EventEditModel(selectedItem, model.getTicketTypes(selectedItem.getEventID()));
+        createTicketTypesFields(editModel.getTicketTypes());
         submitButton.setOnAction(e -> editButtonClicked(selectedItem));
     }
 
+    private void createTicketTypesFields(List<TicketType> ticketTypes) {
+        for (TicketType type : ticketTypes) {
+            addTicketAction(null);
+            HBox hBox = (HBox) ticketTypesVBox.getChildren().get(ticketTypesVBox.getChildren().size() - 1);
+            MFXTextField ticketNameField = (MFXTextField) hBox.getChildren().get(0);
+            MFXTextField ticketPriceField = (MFXTextField) hBox.getChildren().get(1);
+            MFXTextField ticketAmountTextField = (MFXTextField) hBox.getChildren().get(2);
+            ticketNameField.setText(type.getName());
+            ticketPriceField.setText(String.valueOf(type.getPrice()));
+            ticketAmountTextField.setText(String.valueOf(type.getTicketVolume()));
+        }
+    }
+
     private void editButtonClicked(Event selectedItem) {
+        model.editEvent(selectedItem.getEventID(), eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
+                eventDirectionsField.getText(), eventExtraNotesField.getText());
+        model.getAllEvents();
+        stage.close();
     }
 }

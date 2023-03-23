@@ -6,6 +6,7 @@ import dk.easv.be.TicketType;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +39,9 @@ public class LogicManager {
 
     public List<TicketType> getTicketTypes(int eventId) {
         return ticketDAO.getTicketTypes(eventId);
+    }
+
+    public void editEvent(int eventId, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
+        eventDAO.updateEvent(new Event(eventId, name, location, startDate, endDate, directions, extraNotes));
     }
 }
