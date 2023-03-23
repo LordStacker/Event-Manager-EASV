@@ -1,8 +1,11 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Event;
+import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,45 +32,60 @@ public class MainWindowController implements Initializable {
     @FXML
     private AnchorPane nextEventPane;
 
-    private ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
+    private final ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
     private int currentVolume = 2;
 
     private Stage stage;
     @FXML
-    private MFXScrollPane mainPane;
+    private TableColumn<Event, String> upcomingNameColumn, pastNameColumn, upcomingAttendanceColumn, pastAttendanceColumn;
     @FXML
-    private TableColumn upcomingNameColumn, upcomingDateColumn, upcomingAttendanceColumn;
+    private TableColumn<Event, String> pastDateColumn, upcomingDateColumn;
     @FXML
-    private TableColumn pastNameColumn, pastDateColumn, pastAttendanceColumn;
+    private MFXLegacyTableView<Event> upcomingEventsTable;
     @FXML
-    private MFXLegacyTableView upcomingEventsTable;
-    @FXML
-    private MFXLegacyTableView pastEventsTable;
+    private MFXLegacyTableView<Event> pastEventsTable;
     @FXML
     private Label nextEventLabel;
 
+    private final EventModel model = new EventModel();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setTables();
+    }
 
+    private void setTables() {
+        upcomingNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
+        upcomingDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
+        upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
 
+        pastNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventName()));
+        pastDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
+        pastAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
 
+        upcomingEventsTable.setItems(model.getObsFutureEvents());
+        pastEventsTable.setItems(model.getObsPastEvents());
+
+        upcomingEventsTable.setMinHeight(400);
+        pastEventsTable.setMinHeight(400);
     }
 
     public void initialed() {
         stage = (Stage) upcomingEventsHBox.getScene().getWindow();
         setupHBoxListener();
+
         initEventsHBox();
-        setNextEvent("Next Event");
+        setNextEvent(model.getObsFutureEvents().get(0).getEventName());
         stage.setMinWidth(1210);
     }
 
     private void initEventsHBox() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < model.getObsFutureEvents().size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/upcoming-event-view.fxml"));
             try {
                 AnchorPane anchorPane = fxmlLoader.load();
                 UpcomingEventController upcomingEventController = fxmlLoader.getController();
-                upcomingEventController.setEvent("Event " + i);
+                upcomingEventController.setEvent(model.getObsFutureEvents().get(i).getEventName());
                 upcomingEvents.add(anchorPane);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -121,12 +139,12 @@ public class MainWindowController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
             Parent root = fxmlLoader.load();
             AddEventViewController addEventViewController = fxmlLoader.getController();
-            Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+            Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
             stage.setTitle("Add Event");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.show();
-            addEventViewController.initialed();
+            addEventViewController.initialed(model);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
