@@ -78,7 +78,7 @@ public class AddEventViewController implements Initializable {
 
     }
 
-    public void checkForInput(){
+    /*public void checkForInput(){
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         dateFormat.setLenient(false);
@@ -106,6 +106,8 @@ public class AddEventViewController implements Initializable {
             AlertHelper.showDefaultAlert("Please enter extra notes about the event before submitting!", Alert.AlertType.WARNING);
         }
     }
+
+     */
 
     @FXML
     private void addTicketAction(ActionEvent actionEvent) {

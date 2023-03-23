@@ -58,10 +58,9 @@ public class LoginController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
                 Parent newScene = loader.load();
                 MainWindowController controller = loader.getController();
-                //controller.setStage(stage);
                 stage.setScene(new Scene(newScene));
                 stage.centerOnScreen();
-                controller.initialed();
+                controller.initialed(stage);
             }
         }
 

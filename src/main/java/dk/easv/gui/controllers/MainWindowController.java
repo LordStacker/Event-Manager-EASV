@@ -78,13 +78,13 @@ public class MainWindowController implements Initializable {
         pastEventsTable.setMinHeight(400);
     }
 
-    public void initialed() {
-        stage = (Stage) upcomingEventsHBox.getScene().getWindow();
+    public void initialed(Stage stage) {
+        this.stage = stage;
         setupHBoxListener();
 
         initEventsHBox();
         setNextEvent(model.getObsFutureEvents().get(0).getEventName());
-        stage.setMinWidth(1210);
+        stage.setMinWidth(900);
     }
 
     private void initEventsHBox() {
@@ -188,8 +188,6 @@ public class MainWindowController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Login.fxml")));
             Parent parent = fxmlLoader.load();
-            LoginController loginController = fxmlLoader.getController();
-            loginController.setStage(stage);
             stage.setScene(new Scene(parent));
         } catch (IOException e) {
             throw new RuntimeException(e);
