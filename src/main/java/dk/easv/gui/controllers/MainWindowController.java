@@ -91,8 +91,8 @@ public class MainWindowController implements Initializable {
 
         initEventsHBox();
         setNextEvent(model.getObsFutureEvents().get(0).getEventName());
-//        stage.setMinWidth(650);
-//        stage.setWidth(stage.getWidth()+1);
+        stage.setMinWidth(650);
+        stage.setWidth(650);
     }
 
     private void initEventsHBox() {
@@ -112,7 +112,7 @@ public class MainWindowController implements Initializable {
 
     private void setupHBoxListener(){
         stage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            int volume = (int) ((newValue.doubleValue()-40-2) / (upcomingEvents.get(0).getWidth() + 20)); //-40 padding -2 for scroll bar 550 width 20 spacing
+            int volume = (int) ((newValue.doubleValue()-40-2) / (570)); //-40 padding -2 for scroll bar 550 width 20 spacing
             if (volume != currentVolume) {
                 currentVolume = volume;
                 upcomingEventsHBox.getChildren().setAll(upcomingEvents.subList(0, currentVolume));
@@ -194,7 +194,9 @@ public class MainWindowController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Login.fxml")));
             Parent parent = fxmlLoader.load();
+            LoginController loginController = fxmlLoader.getController();
             stage.setScene(new Scene(parent));
+            loginController.setStage(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
