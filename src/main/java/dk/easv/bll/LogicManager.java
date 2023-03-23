@@ -15,7 +15,6 @@ import java.util.List;
 public class LogicManager {
     private final TicketDAO ticketDAO = new TicketDAO();
     private final EventDAO eventDAO = new EventDAO();
-
     private final UserDAO userDAO = new UserDAO();
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
         addTickets(eventId, ticketType, price, numberOfTickets, 1, 0);
@@ -30,7 +29,7 @@ public class LogicManager {
     }
 
     public List<User> checkUserLog(String username, String password){
-        return UserDAO.checkUserLog(username,password);
+        return userDAO.checkUserLog(username,password);
     }
 
     public int addEvent(Event event) {
