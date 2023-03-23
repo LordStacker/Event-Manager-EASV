@@ -35,7 +35,6 @@ public class UserDAO {
                 String dbRole = rs.getString("role");
                 User user = new User(Roles.valueOf(dbRole), dbId, dbUsername, dbPassword, dbEmail);
                 users.add(user);
-                System.out.println(user);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
