@@ -22,8 +22,11 @@ public class UserDAO {
         List<User> users = new ArrayList<>();
         try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("" +
-                    "select * from dbo.[User] WHERE " +
-                    "(username='"+ username +"' AND password='"+ password +"');");
+                    "select * from User WHERE " +
+                    "(username= ? AND password= ?;");
+            ps.setString(1, username);
+            ps.setString(2, password);
+
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int dbId = rs.getInt("id");
