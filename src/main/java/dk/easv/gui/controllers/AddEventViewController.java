@@ -3,7 +3,6 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Event;
 import dk.easv.be.Ticket;
 import dk.easv.be.TicketType;
-import dk.easv.gui.models.EventEditModel;
 import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
@@ -40,10 +39,11 @@ public class AddEventViewController implements Initializable {
     @FXML
     private MFXTextField eventNameField;
     private EventModel model;
-    private EventEditModel editModel;
     private Stage stage;
     @FXML
     private VBox ticketTypesVBox;
+    @FXML
+    private MFXButton addTicketButton;
 
 
     @Override
@@ -115,10 +115,9 @@ public class AddEventViewController implements Initializable {
         endDatePicker.setValue(selectedItem.getEventEndDate());
         eventDirectionsField.setText(selectedItem.getEventGuidance());
         eventExtraNotesField.setText(selectedItem.getEventNotes());
-
-        editModel = new EventEditModel(selectedItem, model.getTicketTypes(selectedItem.getEventID()));
-        createTicketTypesFields(editModel.getTicketTypes());
+        createTicketTypesFields(model.getTicketTypes(selectedItem.getEventID()));
         submitButton.setOnAction(e -> editButtonClicked(selectedItem));
+        submitButton.setText("Edit");
     }
 
     private void createTicketTypesFields(List<TicketType> ticketTypes) {
@@ -131,6 +130,13 @@ public class AddEventViewController implements Initializable {
             ticketNameField.setText(type.getName());
             ticketPriceField.setText(String.valueOf(type.getPrice()));
             ticketAmountTextField.setText(String.valueOf(type.getTicketVolume()));
+            ticketNameField.setEditable(false);
+            ticketPriceField.setEditable(false);
+            ticketAmountTextField.setEditable(false);
+            MFXButton deleteButton = (MFXButton) hBox.getChildren().get(3);
+            deleteButton.setVisible(false);
+
+            addTicketButton.setVisible(false);
         }
     }
 
