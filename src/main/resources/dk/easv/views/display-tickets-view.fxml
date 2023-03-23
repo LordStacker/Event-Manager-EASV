@@ -5,20 +5,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.displayTicketsViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="background-img-big" stylesheets="@../css/display-tickets-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DisplayTicketsViewController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="298.0" />
+      <AnchorPane prefHeight="400.0" prefWidth="298.0" styleClass="background-img-left" />
       <AnchorPane layoutX="76.0" layoutY="51.0" prefHeight="298.0" prefWidth="446.0">
          <children>
-            <MFXTableView layoutX="-3.0" layoutY="-3.0" prefHeight="306.0" prefWidth="458.0" />
-            <MFXTableColumn layoutX="14.0" minWidth="32.0" prefHeight="41.0" prefWidth="32.0" text=" ID" />
-            <MFXTableColumn layoutX="56.0" text="Customer Name" />
-            <MFXTableColumn layoutX="189.0" layoutY="1.0" text="Customer Email" />
-            <MFXTableColumn layoutX="329.0" layoutY="1.0" text="Ticket Amount" />
+            <MFXTableView fx:id="ticketTableView" layoutX="-3.0" layoutY="-3.0" prefHeight="306.0" prefWidth="458.0" />
+            <MFXTableColumn fx:id="idColumn" layoutX="14.0" layoutY="-1.0" minWidth="32.0" prefHeight="41.0" prefWidth="32.0" text=" ID" />
+            <MFXTableColumn fx:id="nameColumn" layoutX="95.0" layoutY="-1.0" text="Customer Name" />
+            <MFXTableColumn fx:id="emailColumn" layoutX="253.0" layoutY="-1.0" text="Customer Email" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="31.0" prefWidth="600.0">
+      <AnchorPane prefHeight="31.0" prefWidth="620.0" styleClass="topBar-pane">
          <children>
             <Label layoutX="14.0" layoutY="7.0" prefHeight="18.0" prefWidth="174.0" text="Event Name" />
          </children>
