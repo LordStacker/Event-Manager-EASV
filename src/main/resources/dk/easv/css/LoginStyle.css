@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    -light-shades: #FCFAFB;
+    -light-accent: #D98F85;
+    -main-color: #76ABD4;
+    -dark-accent: #74B2BB;
+    -dark-shades: #1F5D78;
+    -bs-primary: #0d6efd;
+    -bs-secondary: #6c757d;
+    -bs-success: #198754;
+    -bs-info: #0dcaf0;
+    -bs-warning: #ffc107;
+    -bs-danger: #dc3545;
+    -main-color: #EC9D18;
+    -roboto: 'Roboto', sans-serif;
+}
+
+MFXTextField, MFXPasswordField {
+    -fx-text-fill: -dark-shades;
+    -fx-prompt-text-fill: -light-accent;
+    -fx-background-color: -light-shades;
+    -fx-background-radius: 5 5 0 0;
+    -fx-border-color: -dark-accent;
+    -fx-border-width: 1;
+    -fx-border-radius: 5 5 0 0;
+    -fx-font-size: 1.2em;
+    -fx-font-family: -roboto;
+}
+
+MFXButton {
+    -fx-background-color: -dark-accent;
+    -fx-text-fill: -light-shades;
+    -fx-font-size: 1.2em;
+    -fx-border-radius: 15;
+}
+
+.Anchorpane {
+    -fx-background-image: url('../icons/CreateEventBackgroundImg.jpg');
+    -fx-background-size: 100% auto;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: black;
+}
+
+.background {
+    -fx-background-color: #172734;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.2, 2, 3);
+}
+
+.buttonLog{
+    -fx-background-radius: 50px;
+    -fx-background-color: -main-color;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.2, 2, 3);
+}
+
