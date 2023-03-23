@@ -1,0 +1,21 @@
+Label{
+    -fx-text-fill: #FFFFFF;
+}
+
+.background-img-big{
+    -fx-background-image: url("../icons/bg-image.jpg");
+    -fx-background-size: 100% auto;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.background-img-left{
+    -fx-background-image: url("../icons/background-img-left.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.topBar-pane{
+    -fx-background-color: #172734;
+}

@@ -1,6 +1,7 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.Ticket;
+import dk.easv.be.TicketType;
 import dk.easv.dal.ConnectionManager;
 
 import java.sql.Connection;
@@ -64,5 +65,25 @@ public class TicketDAO {
             throw new RuntimeException(e);
         }
         return tickets;
+    }
+
+    public List<TicketType> getTicketTypes(int eventId){
+        List<TicketType> ticketTypes = new ArrayList<>();
+        try (Connection con = cm.getConnection()){
+            PreparedStatement ps = con.prepareStatement("SELECT ticket_price, ticket_type, type_id, COUNT(ticket_UUID) AS TicketVolume FROM ticket_type INNER JOIN Tickets ON ticket_type.type_id = Tickets.ticket_type_id WHERE event_id = ? GROUP BY ticket_price, ticket_type, type_id");
+            ps.setInt(1, eventId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt("type_id");
+                String type = rs.getString("ticket_type");
+                double price = rs.getDouble("ticket_price");
+                int volume = rs.getInt("TicketVolume");
+                TicketType ticketType = new TicketType(id, type, price, volume);
+                ticketTypes.add(ticketType);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ticketTypes;
     }
 }

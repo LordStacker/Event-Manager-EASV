@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="900.0" prefWidth="1220.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
+<BorderPane prefHeight="900.0" prefWidth="1220.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
    <center>
       <MFXScrollPane fx:id="mainPane" fitToWidth="true" prefHeight="1040.0" prefWidth="1440.0">
          <content>
@@ -42,9 +42,10 @@
                   <Label styleClass="sectionTitle" text="Other Events" />
                   <MFXLegacyTableView fx:id="upcomingEventsTable">
                      <columns>
-                        <TableColumn fx:id="upcomingNameColumn" prefWidth="900" text="Name" />
-                        <TableColumn fx:id="upcomingDateColumn" minWidth="0.0" prefWidth="120" text="Date" />
-                        <TableColumn fx:id="upcomingAttendanceColumn" prefWidth="120" text="Attendance" />
+                        <TableColumn fx:id="upcomingNameColumn" prefWidth="500.0" text="Name" />
+                        <TableColumn fx:id="upcomingDateColumn" prefWidth="300.0" text="Date" />
+                        <TableColumn fx:id="upcomingAttendanceColumn" prefWidth="300.0" text="Attendance" />
+                        <TableColumn fx:id="upcomingColDel" prefWidth="65.0" />
                      </columns>
                   </MFXLegacyTableView>
                   <Label styleClass="sectionTitle" text="Past Events" />
@@ -53,6 +54,7 @@
                         <TableColumn fx:id="pastNameColumn" prefWidth="900" text="Name" />
                         <TableColumn fx:id="pastDateColumn" minWidth="0.0" prefWidth="120" text="Date" />
                         <TableColumn fx:id="pastAttendanceColumn" prefWidth="120" text="Attendance" />
+                        <TableColumn fx:id="pastColDel" prefWidth="65.0" />
                      </columns>
                   </MFXLegacyTableView>
                </children>

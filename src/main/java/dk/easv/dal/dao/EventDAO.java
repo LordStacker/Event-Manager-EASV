@@ -4,6 +4,7 @@ import dk.easv.be.Event;
 import dk.easv.dal.ConnectionManager;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,9 +62,27 @@ public class EventDAO {
             con.setAutoCommit(false);
             con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             PreparedStatement ps = con.prepareStatement("UPDATE Event SET event_name = ?, event_description = ?, event_start_date = ?, event_end_date = ?, event_location = ?, event_guidance = ? WHERE id = ?");
+            ps.setString(1, event.getEventName());
+            ps.setString(2, event.getEventNotes());
+            ps.setDate(3, Date.valueOf(event.getEventStartDate()));
+            ps.setDate(4, event.getEventEndDate() == null ? null : Date.valueOf(event.getEventEndDate()));
+            ps.setString(5, event.getEventLocation());
+            ps.setString(6, event.getEventGuidance());
+            ps.setInt(7, event.getEventID());
             ps.executeUpdate();
             con.commit();
         } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int deleteEvent(int id){
+        try (Connection con = cm.getConnection()){
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Event WHERE id = ? ");
+            ps.setInt(1, id);
+            return ps.executeUpdate();
+        }
+        catch (SQLException e){
             throw new RuntimeException(e);
         }
     }

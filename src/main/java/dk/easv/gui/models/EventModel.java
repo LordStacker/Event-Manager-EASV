@@ -1,6 +1,7 @@
 package dk.easv.gui.models;
 
 import dk.easv.be.Event;
+import dk.easv.be.TicketType;
 import dk.easv.bll.LogicManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,17 +20,22 @@ public class EventModel {
         getAllEvents();
     }
 
+    public int deleteEvent(int id){
+        int rowsAffected = bll.deleteEvent(id);
+        getAllEvents();
+        return rowsAffected;
+    }
 
     public int addEvent(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
         return bll.addEvent(new Event(name, location, startDate, endDate, directions, extraNotes));
     }
 
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
-        bll.addTickets(eventId, ticketType, price, numberOfTickets, 1);
+        bll.addTickets(eventId, ticketType, price, numberOfTickets);
     }
 
-    public void addTickets(int eventId, String ticketType, double price, int numberOfTickets, int startingNumber) {
-        bll.addTickets(eventId, ticketType, price, numberOfTickets, startingNumber);
+    public void addTickets(int eventId, String ticketType, double price, int numberOfTickets, int startingNumber, int ticketTypeId) {
+        bll.addTickets(eventId, ticketType, price, numberOfTickets, startingNumber, ticketTypeId);
     }
 
     public void getAllEvents() {
@@ -51,5 +57,13 @@ public class EventModel {
 
     public ObservableList<Event> getObsPastEvents() {
         return obsPastEvents;
+    }
+
+    public List<TicketType> getTicketTypes(int eventID) {
+        return bll.getTicketTypes(eventID);
+    }
+
+    public void editEvent(int eventId, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
+        bll.editEvent(eventId, name, location, startDate, endDate, directions, extraNotes);
     }
 }
