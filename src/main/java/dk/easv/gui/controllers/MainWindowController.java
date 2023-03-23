@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Event;
 import dk.easv.gui.models.EventModel;
+import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -60,9 +61,12 @@ public class MainWindowController implements Initializable {
         upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
         upcomingColDel.setCellValueFactory(cellData -> {
             Button deleteButton = new Button("Delete");
-           //deleteButton.maxWidth(10);
+            //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
-                model.deleteEvent(cellData.getValue().getEventID());
+                var alert = AlertHelper.showOptionalAlertWindow("Sure to delete the next event: ", cellData.getValue().getEventName(), Alert.AlertType.CONFIRMATION);
+                if(alert.isPresent() && alert.get().equals(ButtonType.OK)){
+                    model.deleteEvent(cellData.getValue().getEventID());
+                }
             });
             return new SimpleObjectProperty(deleteButton);
         });
@@ -73,7 +77,10 @@ public class MainWindowController implements Initializable {
             Button deleteButton = new Button("Delete");
             //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
-                 model.deleteEvent(cellData.getValue().getEventID());
+                var alert = AlertHelper.showOptionalAlertWindow("Sure to delete the next event: ", cellData.getValue().getEventName(), Alert.AlertType.CONFIRMATION);
+                if(alert.isPresent() && alert.get().equals(ButtonType.OK)){
+                    model.deleteEvent(cellData.getValue().getEventID());
+                }
             });
             return new SimpleObjectProperty(deleteButton);
         });
