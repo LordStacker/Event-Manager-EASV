@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="550.0" minHeight="300" minWidth="550" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.UpcomingEventController">
+   <children>
+      <Pane id="eventImagePane" fx:id="imgPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label fx:id="eventLabel" styleClass="eventTitle" text="Label" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0" />
+      <MFXButton styleClass="outline-button" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+      <MFXButton layoutX="10.0" layoutY="10.0" styleClass="outline-button" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" />
+   </children>
+</AnchorPane>

@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogicManager {
-    private final TicketDAO ticketDAO = new TicketDAO();
-    private final EventDAO eventDAO = new EventDAO();
-    public void addTickets(int eventId, String ticketType, double price, int numberOfTickets, int startingNumber) {
+    private TicketDAO ticketDAO = new TicketDAO();
+    private EventDAO eventDAO = new EventDAO();
+    public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
         List<Ticket> tickets = new ArrayList<>();
-        for (int i = startingNumber; i <= numberOfTickets; i++) {
+        for (int i = 1; i <= numberOfTickets; i++) {
             tickets.add(new Ticket(ticketType, i, price));
         }
 

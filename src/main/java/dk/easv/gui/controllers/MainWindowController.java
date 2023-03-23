@@ -185,16 +185,5 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void logOutAction(ActionEvent actionEvent) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Login.fxml")));
-            Parent parent = fxmlLoader.load();
-            LoginController loginController = fxmlLoader.getController();
-            loginController.setStage(stage);
-            //TODO clear all existing variables
-            //NICOLA
-            stage.setScene(new Scene(parent));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

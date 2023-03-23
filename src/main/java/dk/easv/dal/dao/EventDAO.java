@@ -55,16 +55,4 @@ public class EventDAO {
             throw new RuntimeException(e);
         }
     }
-
-    public void updateEvent(Event event){
-        try (Connection con = cm.getConnection()){
-            con.setAutoCommit(false);
-            con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            PreparedStatement ps = con.prepareStatement("UPDATE Event SET event_name = ?, event_description = ?, event_start_date = ?, event_end_date = ?, event_location = ?, event_guidance = ? WHERE id = ?");
-            ps.executeUpdate();
-            con.commit();
-        } catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
 }
