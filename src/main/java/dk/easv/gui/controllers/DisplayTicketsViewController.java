@@ -45,6 +45,7 @@ public class DisplayTicketsViewController implements Initializable {
         stage.setMinWidth(600);
         stage.setMinHeight(450);
         model.getAllTickets(eventId);
+        populateTable();
         cancelButton.setOnAction(e -> cancelButtonClicked());
     }
 
@@ -55,7 +56,9 @@ public class DisplayTicketsViewController implements Initializable {
         ticketTableView.setItems(model.getObsTickets());
     }
 
-    public void setEventId(int newEventId){eventId = newEventId;}
+    public void setEventId(int newEventId){
+        this.eventId = newEventId;
+    }
 
     private void cancelButtonClicked() {
         stage.close();
