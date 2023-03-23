@@ -43,9 +43,9 @@
                   <MFXLegacyTableView fx:id="upcomingEventsTable">
                      <columns>
                         <TableColumn fx:id="upcomingNameColumn" prefWidth="500.0" text="Name" />
-                        <TableColumn fx:id="upcomingDateColumn" minWidth="0.0" prefWidth="300.0" text="Date" />
+                        <TableColumn fx:id="upcomingDateColumn" prefWidth="300.0" text="Date" />
                         <TableColumn fx:id="upcomingAttendanceColumn" prefWidth="300.0" text="Attendance" />
-                        <TableColumn fx:id="colDel" prefWidth="75.0" />
+                        <TableColumn fx:id="upcomingColDel" prefWidth="65.0" />
                      </columns>
                   </MFXLegacyTableView>
                   <Label styleClass="sectionTitle" text="Past Events" />
@@ -54,6 +54,7 @@
                         <TableColumn fx:id="pastNameColumn" prefWidth="900" text="Name" />
                         <TableColumn fx:id="pastDateColumn" minWidth="0.0" prefWidth="120" text="Date" />
                         <TableColumn fx:id="pastAttendanceColumn" prefWidth="120" text="Attendance" />
+                        <TableColumn fx:id="pastColDel" prefWidth="65.0" />
                      </columns>
                   </MFXLegacyTableView>
                </children>
