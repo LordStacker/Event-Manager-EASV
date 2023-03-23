@@ -4,6 +4,7 @@ import dk.easv.be.Event;
 import dk.easv.be.Ticket;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.gui.models.EventModel;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.List;
@@ -23,13 +26,26 @@ public class DisplayTicketsViewController implements Initializable {
     MFXLegacyTableView ticketTableView;
     @FXML
     private TableColumn<Ticket, String> ticketId, ticketNumber, ticketType;
+    @FXML
+    private MFXButton cancelButton;
+    @FXML
+    private BorderPane borderPane;
 
     private EventModel model = new EventModel();
     private int eventId;
+    private Stage stage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    }
+
+    public void initialed(EventModel model){
+        this.model = model;
+        this.stage = (Stage) cancelButton.getScene().getWindow();
+        stage.setMinWidth(600);
+        stage.setMinHeight(450);
         model.getAllTickets(eventId);
+        cancelButton.setOnAction(e -> cancelButtonClicked());
     }
 
     public void populateTable(){
@@ -40,4 +56,8 @@ public class DisplayTicketsViewController implements Initializable {
     }
 
     public void setEventId(int newEventId){eventId = newEventId;}
+
+    private void cancelButtonClicked() {
+        stage.close();
+    }
 }

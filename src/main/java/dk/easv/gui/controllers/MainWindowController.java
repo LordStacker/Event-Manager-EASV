@@ -210,11 +210,16 @@ public class MainWindowController implements Initializable {
 
     public void openDisplayTicket(int eventId){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/display-tickets-view.fxml")));
-            Parent parent = fxmlLoader.load();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/display-tickets-view.fxml"));
+            Parent root = fxmlLoader.load();
             DisplayTicketsViewController displayTicketsViewController = fxmlLoader.getController();
-            displayTicketsViewController.setEventId(eventId);
-            stage.setScene(new Scene(parent));
+            Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
+            stage.setTitle("Tickets");
+            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
+            stage.setScene(scene);
+            stage.show();
+            displayTicketsViewController.initialed(model);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
