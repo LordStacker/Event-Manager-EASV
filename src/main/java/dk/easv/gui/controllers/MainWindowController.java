@@ -62,7 +62,6 @@ public class MainWindowController implements Initializable {
         upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
         upcomingColDel.setCellValueFactory(cellData -> {
             MFXButton deleteButton = new MFXButton("Delete");
-            //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
                 var alert = AlertHelper.showOptionalAlertWindow("Sure to delete the next event: ", cellData.getValue().getEventName(), Alert.AlertType.CONFIRMATION);
                 if(alert.isPresent() && alert.get().equals(ButtonType.OK)){
@@ -76,7 +75,6 @@ public class MainWindowController implements Initializable {
         pastAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
         pastColDel.setCellValueFactory(cellData -> {
             MFXButton deleteButton = new MFXButton("Delete");
-            //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
                 var alert = AlertHelper.showOptionalAlertWindow("Sure to delete the next event: ", cellData.getValue().getEventName(), Alert.AlertType.CONFIRMATION);
                 if(alert.isPresent() && alert.get().equals(ButtonType.OK)){
