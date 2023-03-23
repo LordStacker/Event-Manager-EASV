@@ -51,7 +51,10 @@ public class LoginController implements Initializable {
             System.out.println(user); //Checking logic if works for exist or not user in DB
         }
         if(user.size() >= 1){
-            if(user.get(0).role() == Roles.EVENT_COORDINATOR){
+            if(user.get(0).role() != null){
+                /**
+                 * Leaving like only Role while we define the view for each Role
+                 */
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
                 Parent newScene = loader.load();
                 MainWindowController controller = loader.getController();
@@ -59,17 +62,6 @@ public class LoginController implements Initializable {
                 stage.setScene(new Scene(newScene));
                 stage.centerOnScreen();
                 controller.initialed();
-            }
-            if (user.get(0).role() == Roles.ADMIN){
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
-                Parent newScene = loader.load();
-                MainWindowController controller = loader.getController();
-                //controller.setStage(stage);
-                stage.setScene(new Scene(newScene));
-                stage.centerOnScreen();
-                controller.initialed();
-
-
             }
         }
 
