@@ -97,9 +97,16 @@ public class MainWindowController implements Initializable {
         setupHBoxListener();
 
         initEventsHBox();
-        setNextEvent(model.getObsFutureEvents().get(0).getEventName());
+        String nextEventName;
+        if (model.getObsFutureEvents().size() > 0) {
+            nextEventName = model.getObsFutureEvents().get(0).getEventName();
+        } else {
+            nextEventName = "No upcoming events";
+        }
+        setNextEvent(nextEventName);
         stage.setMinWidth(650);
         stage.setWidth(650);
+        stage.setTitle("Event Manager");
     }
 
     private void initEventsHBox() {
@@ -122,6 +129,9 @@ public class MainWindowController implements Initializable {
             int volume = (int) ((newValue.doubleValue()-40-2) / (570)); //-40 padding -2 for scroll bar 550 width 20 spacing
             if (volume != currentVolume) {
                 currentVolume = volume;
+                if (currentVolume > upcomingEvents.size()) {
+                    currentVolume = upcomingEvents.size();
+                }
                 upcomingEventsHBox.getChildren().setAll(upcomingEvents.subList(0, currentVolume));
 
             }

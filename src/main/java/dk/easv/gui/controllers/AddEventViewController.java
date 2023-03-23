@@ -90,26 +90,35 @@ public class AddEventViewController implements Initializable {
 
     public boolean isInputValid(){
 
-
-
-
         if (eventNameField == null || eventNameField.getText().trim().isEmpty()){
             AlertHelper.showDefaultAlert("Please enter event name before submitting!", Alert.AlertType.WARNING);
         } else if (eventLocationField == null ||eventLocationField.getText().trim().isEmpty()) {
             AlertHelper.showDefaultAlert("Please enter event location before submitting!", Alert.AlertType.WARNING);
         } else if (startDatePicker.getValue() == null) {
             AlertHelper.showDefaultAlert("Please enter event start date before submitting!", Alert.AlertType.WARNING);
-        } else if (endDatePicker.getValue() == null) {
-            AlertHelper.showDefaultAlert("Please enter event end date before submitting!", Alert.AlertType.WARNING);
         } else if (eventStartField == null || eventStartField.getText().trim().isEmpty()) {
             AlertHelper.showDefaultAlert("Please enter event start hour before submitting!", Alert.AlertType.WARNING);
-        } else if (eventEndField == null || eventEndField.getText().trim().isEmpty()) {
-            AlertHelper.showDefaultAlert("Please enter event end hour before submitting!", Alert.AlertType.WARNING);
         } else if (eventDirectionsField == null || eventDirectionsField.getText().trim().isEmpty()) {
             AlertHelper.showDefaultAlert("Please enter event directions before submitting!", Alert.AlertType.WARNING);
         } else if (eventExtraNotesField == null || eventExtraNotesField.getText().trim().isEmpty()) {
             AlertHelper.showDefaultAlert("Please enter extra notes about the event before submitting!", Alert.AlertType.WARNING);
         } else {
+            for (int i = 0; i < ticketTypesVBox.getChildren().size(); i++) {
+                HBox hBox = (HBox) ticketTypesVBox.getChildren().get(i);
+                MFXTextField ticketNameField = (MFXTextField) hBox.getChildren().get(0);
+                MFXTextField ticketPriceField = (MFXTextField) hBox.getChildren().get(1);
+                MFXTextField ticketAmountTextField = (MFXTextField) hBox.getChildren().get(2);
+                if (ticketNameField == null || ticketNameField.getText().trim().isEmpty()) {
+                    AlertHelper.showDefaultAlert("Please enter ticket name before submitting!", Alert.AlertType.WARNING);
+                    return false;
+                } else if (ticketPriceField == null || ticketPriceField.getText().trim().isEmpty()) {
+                    AlertHelper.showDefaultAlert("Please enter ticket price before submitting!", Alert.AlertType.WARNING);
+                    return false;
+                } else if (ticketAmountTextField == null || ticketAmountTextField.getText().trim().isEmpty()) {
+                    AlertHelper.showDefaultAlert("Please enter ticket amount before submitting!", Alert.AlertType.WARNING);
+                    return false;
+                }
+            }
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
             dateFormat.setLenient(false);
             try {
