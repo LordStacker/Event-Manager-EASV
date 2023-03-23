@@ -22,6 +22,13 @@ public class Ticket { //I actually want to extend user as well
         this.price = price;
     }
 
+    public Ticket(UUID ticketID, String ticketType, int ticketNumber, double price) {
+        this.ticketType = ticketType;
+        this.ticketNumber = ticketNumber;
+        this.ticketID = ticketID;
+        this.price = price;
+    }
+
     public UUID getTicketID() {
         return ticketID;
     }
