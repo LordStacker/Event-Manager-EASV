@@ -91,7 +91,8 @@ public class MainWindowController implements Initializable {
 
         initEventsHBox();
         setNextEvent(model.getObsFutureEvents().get(0).getEventName());
-        //stage.setMinWidth(900);
+//        stage.setMinWidth(650);
+//        stage.setWidth(stage.getWidth()+1);
     }
 
     private void initEventsHBox() {
