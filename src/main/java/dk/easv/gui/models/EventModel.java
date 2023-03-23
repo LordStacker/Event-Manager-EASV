@@ -25,11 +25,11 @@ public class EventModel {
     }
 
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
-        bll.addTickets(eventId, ticketType, price, numberOfTickets, 1);
+        bll.addTickets(eventId, ticketType, price, numberOfTickets);
     }
 
-    public void addTickets(int eventId, String ticketType, double price, int numberOfTickets, int startingNumber) {
-        bll.addTickets(eventId, ticketType, price, numberOfTickets, startingNumber);
+    public void addTickets(int eventId, String ticketType, double price, int numberOfTickets, int startingNumber, int ticketTypeId) {
+        bll.addTickets(eventId, ticketType, price, numberOfTickets, startingNumber, ticketTypeId);
     }
 
     public void getAllEvents() {
