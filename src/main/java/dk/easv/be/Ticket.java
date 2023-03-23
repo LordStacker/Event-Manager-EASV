@@ -14,12 +14,21 @@ public class Ticket { //I actually want to extend user as well
     private int eventId;
 
     private double price;
+    private int ticketTypeId;
 
     public Ticket(String ticketType, int ticketNumber, double price) {
         this.ticketType = ticketType;
         this.ticketNumber = ticketNumber;
         ticketID = UUID.randomUUID();
         this.price = price;
+    }
+
+    public Ticket(UUID ticketID, String ticketType, int ticketNumber, double price, int ticketTypeId) {
+        this.ticketType = ticketType;
+        this.ticketNumber = ticketNumber;
+        this.ticketID = ticketID;
+        this.price = price;
+        this.ticketTypeId = ticketTypeId;
     }
 
     public UUID getTicketID() {
@@ -62,5 +71,12 @@ public class Ticket { //I actually want to extend user as well
         this.price = price;
     }
 
+    public int getTicketTypeId() {
+        return ticketTypeId;
+    }
+
+    public void setTicketTypeId(int ticketTypeId) {
+        this.ticketTypeId = ticketTypeId;
+    }
 }
 
