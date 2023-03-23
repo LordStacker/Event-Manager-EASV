@@ -74,6 +74,16 @@ public class MainWindowController implements Initializable {
         upcomingEventsTable.setItems(model.getObsFutureEvents());
         pastEventsTable.setItems(model.getObsPastEvents());
 
+        upcomingEventsTable.setRowFactory(tv -> {TableRow<Event> row = new TableRow<>();
+        row.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {openDisplayTicket(row.getItem().getEventID());});
+        return row;
+        });
+
+        pastEventsTable.setRowFactory(tv -> {TableRow<Event> row = new TableRow<>();
+            row.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {openDisplayTicket(row.getItem().getEventID());});
+            return row;
+        });
+
         upcomingEventsTable.setMinHeight(400);
         pastEventsTable.setMinHeight(400);
     }

@@ -1,9 +1,9 @@
 Label{
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #000000;
 }
 
-TableColumn{
-    -fx-text-fill: #000000;
+.event-name{
+    -fx-text-fill: #FFFFFF;
 }
 
 .background-img-big{

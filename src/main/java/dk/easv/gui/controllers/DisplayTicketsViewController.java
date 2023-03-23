@@ -29,6 +29,7 @@ public class DisplayTicketsViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        model.getAllTickets(eventId);
     }
 
     public void populateTable(){
