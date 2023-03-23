@@ -1,7 +1,8 @@
 package dk.easv;
 
+
 import dk.easv.gui.controllers.LoginController;
-import dk.easv.gui.controllers.MainWindowController;
+import dk.easv.gui.controllers.DisplayTicketsViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/Login.fxml"));
         Parent root = fxmlLoader.load();
         LoginController loginController = fxmlLoader.getController();
