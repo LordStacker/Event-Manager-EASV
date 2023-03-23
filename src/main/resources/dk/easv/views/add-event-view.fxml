@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
-
-
+<?import javafx.scene.control.Label?>
 <BorderPane prefHeight="538.0" prefWidth="830.0" styleClass="backgroundPane" stylesheets="@../css/add-event-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddEventViewController">
    <center>
       <MFXScrollPane fitToHeight="true" fitToWidth="true" prefHeight="554.0" prefWidth="830.0" style="-fx-background-color: transparent;">
@@ -31,9 +30,10 @@
                       </HBox>
                       <MFXTextField fx:id="eventLocationField" floatMode="BORDER" promptText="Event location" styleClass="inputTextField" />
                       <MFXTextField fx:id="eventDirectionsField" floatMode="BORDER" promptText="How to get there?" styleClass="inputTextField" />
+                      <Label text="Ticket types" styleClass="editEventLabel"/>
                       <VBox fx:id="ticketTypesVBox" spacing="20">
                 </VBox>
-                      <MFXButton onAction="#addTicketAction" text="Add ticket type" />
+                      <MFXButton fx:id="addTicketButton" onAction="#addTicketAction" text="Add ticket type" />
                   </children>
               </VBox>
           </content>
@@ -62,7 +62,6 @@
                   </ButtonBar>
                   <MFXButton text="Delete" />
                </children>
-
                <padding>
                   <Insets left="20.0" right="20.0" />
                </padding>
@@ -71,4 +70,3 @@
           </HBox>
    </bottom>
 </BorderPane>
-
