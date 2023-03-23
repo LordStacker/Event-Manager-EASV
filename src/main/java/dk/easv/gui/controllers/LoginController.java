@@ -43,7 +43,7 @@ public class LoginController implements Initializable {
 
     public void loginButton(ActionEvent actionEvent) throws SQLServerException, IOException {
         if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
-            System.out.println("HELP!");
+            System.out.println("Alert here");
         }
         if (usernameTextField.getText() != null && passwordTextField.getText() !=null)
         {
