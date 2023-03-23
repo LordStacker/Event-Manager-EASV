@@ -4,6 +4,7 @@ import dk.easv.Main;
 import dk.easv.be.Event;
 import dk.easv.gui.models.EventModel;
 import dk.easv.util.AlertHelper;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -60,7 +61,7 @@ public class MainWindowController implements Initializable {
         upcomingDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
         upcomingColDel.setCellValueFactory(cellData -> {
-            Button deleteButton = new Button("Delete");
+            MFXButton deleteButton = new MFXButton("Delete");
             //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
                 var alert = AlertHelper.showOptionalAlertWindow("Sure to delete the next event: ", cellData.getValue().getEventName(), Alert.AlertType.CONFIRMATION);
@@ -74,7 +75,7 @@ public class MainWindowController implements Initializable {
         pastDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventStartDate().toString()));
         pastAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
         pastColDel.setCellValueFactory(cellData -> {
-            Button deleteButton = new Button("Delete");
+            MFXButton deleteButton = new MFXButton("Delete");
             //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
                 var alert = AlertHelper.showOptionalAlertWindow("Sure to delete the next event: ", cellData.getValue().getEventName(), Alert.AlertType.CONFIRMATION);
@@ -92,7 +93,7 @@ public class MainWindowController implements Initializable {
         pastEventsTable.setMinHeight(400);
     }
 
-    public void initialed(Stage stage) {
+    public void initialed(Stage stage, int stageWidth, int stageHeight) {
         this.stage = stage;
         setupHBoxListener();
 
@@ -105,7 +106,7 @@ public class MainWindowController implements Initializable {
         }
         setNextEvent(nextEventName);
         stage.setMinWidth(650);
-        stage.setWidth(650);
+        stage.setWidth(stageWidth);
         stage.setTitle("Event Manager");
     }
 

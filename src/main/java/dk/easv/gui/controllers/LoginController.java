@@ -57,10 +57,12 @@ public class LoginController implements Initializable {
                 Parent newScene = loader.load();
                 MainWindowController controller = loader.getController();
                 stage.setScene(new Scene(newScene));
+                int stageWidth = (int) stage.getWidth();
+                int stageHeight = (int) stage.getHeight();
 //                stage.centerOnScreen();
                 stage.close();
                 stage.show();
-                controller.initialed(stage);
+                controller.initialed(stage, stageWidth, stageHeight);
             }
         }
 
