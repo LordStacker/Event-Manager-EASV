@@ -1,10 +1,18 @@
 package dk.easv.gui.controllers;
 
+<<<<<<< HEAD
 import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.enums.FloatMode;
+=======
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.dal.dao.EventDAO;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
+import io.github.palexdev.materialfx.controls.MFXTextField;
+>>>>>>> f85fa414073047443e669844bd5e45b9bd3220cf
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +25,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddEventViewController implements Initializable {
+
+    private EventDAO eventDAO = new EventDAO();
     @FXML
     private MFXButton submitButton;
     @FXML
@@ -73,6 +83,7 @@ public class AddEventViewController implements Initializable {
         stage.setMinHeight(450);
     }
 
+<<<<<<< HEAD
     @FXML
     private void addTicketAction(ActionEvent actionEvent) {
         HBox hBox = new HBox();

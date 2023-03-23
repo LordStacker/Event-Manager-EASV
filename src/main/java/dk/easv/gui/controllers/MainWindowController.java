@@ -61,7 +61,6 @@ public class MainWindowController implements Initializable {
         upcomingAttendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEventTicketsSold() + "/" + cellData.getValue().getEventTickets()));
         colDel.setCellValueFactory(cellData -> {
             Button deleteButton = new Button("Delete");
-           //deleteButton.maxWidth(10);
             deleteButton.setOnAction(event -> {
                 System.out.println(cellData.getValue().getEventID());
             });
@@ -185,5 +184,24 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void logOutAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Login.fxml")));
+            Parent parent = fxmlLoader.load();
+            LoginController loginController = fxmlLoader.getController();
+            loginController.setStage(stage);
+            //TODO clear all existing variables
+            //NICOLA
+            stage.setScene(new Scene(parent));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setStage(Stage oldStage) {
+        this.stage = oldStage;
+        //stage.setMinHeight(mainPane.getPrefHeight());
+        //stage.setMinWidth(mainPane.getMinWidth());
+        stage.setHeight(oldStage.getHeight());
+        stage.setWidth(oldStage.getWidth());
     }
 }
