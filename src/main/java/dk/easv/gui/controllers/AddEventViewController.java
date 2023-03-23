@@ -1,5 +1,6 @@
 package dk.easv.gui.controllers;
 
+import dk.easv.be.Event;
 import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
@@ -94,5 +95,24 @@ public class AddEventViewController implements Initializable {
         removeButton.setOnAction(e -> ticketTypesVBox.getChildren().remove(hBox));
         hBox.getChildren().addAll(ticketNameField, ticketPriceField, ticketAmountTextField, removeButton);
         ticketTypesVBox.getChildren().add(hBox);
+    }
+
+    public void editing(EventModel model, Event selectedItem) {
+        this.model = model;
+        this.stage = (Stage) submitButton.getScene().getWindow();
+        stage.setMinWidth(600);
+        stage.setMinHeight(450);
+
+        eventNameField.setText(selectedItem.getEventName());
+        eventLocationField.setText(selectedItem.getEventLocation());
+        startDatePicker.setValue(selectedItem.getEventStartDate());
+        endDatePicker.setValue(selectedItem.getEventEndDate());
+        eventDirectionsField.setText(selectedItem.getEventGuidance());
+        eventExtraNotesField.setText(selectedItem.getEventNotes());
+
+        submitButton.setOnAction(e -> editButtonClicked(selectedItem));
+    }
+
+    private void editButtonClicked(Event selectedItem) {
     }
 }
