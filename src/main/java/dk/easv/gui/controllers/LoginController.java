@@ -48,7 +48,7 @@ public class LoginController implements Initializable {
         if (usernameTextField.getText() != null && passwordTextField.getText() !=null)
         {
             user = UserDAO.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
-            System.out.println(user); //Checking logic if works for exist or not user in DB
+            //System.out.println(user); //Checking logic if works for exist or not user in DB
         }
         if(user.size() >= 1){
             if(user.get(0).role() != null){

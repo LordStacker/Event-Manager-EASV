@@ -84,7 +84,7 @@ public class MainWindowController implements Initializable {
 
         initEventsHBox();
         setNextEvent(model.getObsFutureEvents().get(0).getEventName());
-        stage.setMinWidth(900);
+        //stage.setMinWidth(900);
     }
 
     private void initEventsHBox() {
@@ -167,16 +167,14 @@ public class MainWindowController implements Initializable {
             Parent root = fxmlLoader.load();
             AddEventViewController addEventViewController = fxmlLoader.getController();
             Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
-            stage.setTitle("Edit Event");
+            stage.setTitle("Add Event");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.show();
-            addEventViewController.initialed(model);
+            addEventViewController.editing(model, upcomingEventsTable.getSelectionModel().getSelectedItem());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @FXML

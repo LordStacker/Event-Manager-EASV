@@ -1,5 +1,9 @@
 package dk.easv.gui.controllers;
 
+import dk.easv.be.Event;
+import dk.easv.be.Ticket;
+import dk.easv.be.TicketType;
+import dk.easv.gui.models.EventEditModel;
 import dk.easv.gui.models.EventModel;
 import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -10,14 +14,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddEventViewController implements Initializable {
@@ -38,6 +41,7 @@ public class AddEventViewController implements Initializable {
     @FXML
     private MFXTextField eventNameField;
     private EventModel model;
+    private EventEditModel editModel;
     private Stage stage;
     @FXML
     private VBox ticketTypesVBox;
@@ -130,5 +134,43 @@ public class AddEventViewController implements Initializable {
         removeButton.setOnAction(e -> ticketTypesVBox.getChildren().remove(hBox));
         hBox.getChildren().addAll(ticketNameField, ticketPriceField, ticketAmountTextField, removeButton);
         ticketTypesVBox.getChildren().add(hBox);
+    }
+
+    public void editing(EventModel model, Event selectedItem) {
+        this.model = model;
+        this.stage = (Stage) submitButton.getScene().getWindow();
+        stage.setMinWidth(600);
+        stage.setMinHeight(450);
+
+        eventNameField.setText(selectedItem.getEventName());
+        eventLocationField.setText(selectedItem.getEventLocation());
+        startDatePicker.setValue(selectedItem.getEventStartDate());
+        endDatePicker.setValue(selectedItem.getEventEndDate());
+        eventDirectionsField.setText(selectedItem.getEventGuidance());
+        eventExtraNotesField.setText(selectedItem.getEventNotes());
+
+        editModel = new EventEditModel(selectedItem, model.getTicketTypes(selectedItem.getEventID()));
+        createTicketTypesFields(editModel.getTicketTypes());
+        submitButton.setOnAction(e -> editButtonClicked(selectedItem));
+    }
+
+    private void createTicketTypesFields(List<TicketType> ticketTypes) {
+        for (TicketType type : ticketTypes) {
+            addTicketAction(null);
+            HBox hBox = (HBox) ticketTypesVBox.getChildren().get(ticketTypesVBox.getChildren().size() - 1);
+            MFXTextField ticketNameField = (MFXTextField) hBox.getChildren().get(0);
+            MFXTextField ticketPriceField = (MFXTextField) hBox.getChildren().get(1);
+            MFXTextField ticketAmountTextField = (MFXTextField) hBox.getChildren().get(2);
+            ticketNameField.setText(type.getName());
+            ticketPriceField.setText(String.valueOf(type.getPrice()));
+            ticketAmountTextField.setText(String.valueOf(type.getTicketVolume()));
+        }
+    }
+
+    private void editButtonClicked(Event selectedItem) {
+        model.editEvent(selectedItem.getEventID(), eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
+                eventDirectionsField.getText(), eventExtraNotesField.getText());
+        model.getAllEvents();
+        stage.close();
     }
 }
