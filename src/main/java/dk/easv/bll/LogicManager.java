@@ -27,4 +27,6 @@ public class LogicManager {
     public List<Event> getAllEvents() {
         return eventDAO.getAllEvents();
     }
+
+    public List<Ticket> getAllTickets(int eventId){return ticketDAO.getAllTickets(eventId);}
 }

@@ -2,6 +2,10 @@ Label{
     -fx-text-fill: #FFFFFF;
 }
 
+TableColumn{
+    -fx-text-fill: #000000;
+}
+
 .background-img-big{
     -fx-background-image: url("../icons/bg-image.jpg");
     -fx-background-size: 100% auto;

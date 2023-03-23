@@ -12,7 +12,6 @@ public class Ticket { //I actually want to extend user as well
     private String ticketType;
     private int ticketNumber;
     private int eventId;
-
     private double price;
     private int ticketTypeId;
 
