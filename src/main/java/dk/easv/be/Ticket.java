@@ -16,12 +16,14 @@ public class Ticket { //I actually want to extend user as well
     private double price;
     private int ticketTypeId;
 
-    public Ticket(String ticketType, int ticketNumber, double price) {
+    public Ticket(String ticketType, int ticketNumber, double price, int ticketTypeId) {
         this.ticketType = ticketType;
         this.ticketNumber = ticketNumber;
         ticketID = UUID.randomUUID();
         this.price = price;
+        this.ticketTypeId = ticketTypeId;
     }
+
 
     public Ticket(UUID ticketID, String ticketType, int ticketNumber, double price, int ticketTypeId) {
         this.ticketType = ticketType;

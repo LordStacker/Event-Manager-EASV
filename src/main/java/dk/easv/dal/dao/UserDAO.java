@@ -5,10 +5,7 @@ import dk.easv.be.Roles;
 import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,21 +18,23 @@ public class UserDAO {
         cm = new ConnectionManager();
     }
 
-    public static List<User> checkUserLog(String username, String password) throws SQLServerException {
+    public static List<User> checkUserLog(String username, String password){
         List<User> users = new ArrayList<>();
         try (Connection connection = cm.getConnection()) {
-            String sql = "SET ANSI_WARNINGS OFF select * from dbo.[User] WHERE (username='"+ username +"' AND password='"+ password +"') SET ANSI_WARNINGS ON;";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            if (resultSet.next()) {
-                int dbId = resultSet.getInt("id");
-                String dbUsername = resultSet.getString("username");
-                String dbPassword = resultSet.getString("password");
-                String dbEmail = resultSet.getString("email");
-                String dbRole = resultSet.getString("role");
+            PreparedStatement ps = connection.prepareStatement("" +
+                    "select * from dbo.[User] WHERE " +
+                    "(username= ? AND password= ?);");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int dbId = rs.getInt("id");
+                String dbUsername = rs.getString("username");
+                String dbPassword = rs.getString("password");
+                String dbEmail = rs.getString("email");
+                String dbRole = rs.getString("role");
                 User user = new User(Roles.valueOf(dbRole), dbId, dbUsername, dbPassword, dbEmail);
                 users.add(user);
-                System.out.println(user);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

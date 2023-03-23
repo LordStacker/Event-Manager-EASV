@@ -1,9 +1,7 @@
 package dk.easv.gui.controllers;
-
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.Main;
-import dk.easv.be.Roles;
-import dk.easv.dal.dao.UserDAO;
+import dk.easv.gui.models.UserModel;
+import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
@@ -12,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import dk.easv.be.User;
@@ -34,42 +33,32 @@ public class LoginController implements Initializable {
 
     private List<User> user;
 
-    private UserDAO userDAO = new UserDAO();
+    private final UserModel userModel = new UserModel();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
 
-    public void loginButton(ActionEvent actionEvent) throws SQLServerException, IOException {
+    public void loginButton(ActionEvent actionEvent) throws IOException {
         if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
-            System.out.println("HELP!");
+            AlertHelper.showDefaultAlert("Fill the next fields "+ (usernameTextField.getText().isEmpty() ? "username" : passwordTextField.getText().isEmpty() ? "password" : " "), Alert.AlertType.WARNING );
         }
         if (usernameTextField.getText() != null && passwordTextField.getText() !=null)
         {
-            user = UserDAO.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
-            System.out.println(user); //Checking logic if works for exist or not user in DB
+            user = userModel.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
         }
         if(user.size() >= 1){
-            if(user.get(0).role() == Roles.EVENT_COORDINATOR){
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view-event-planner.fxml")));
-                Parent newScene = loader.load();
-                MainWindowEventPController controller = loader.getController();
-                //controller.setStage(stage);
-                stage.setScene(new Scene(newScene));
-                stage.centerOnScreen();
-                controller.initialed();
-            }
-            if (user.get(0).role() == Roles.ADMIN){
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view-admin.fxml")));
+            if(user.get(0).role() != null){
+                /**
+                 * Leaving like only Role while we define the view for each Role
+                 */
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/main-view.fxml")));
                 Parent newScene = loader.load();
                 MainWindowController controller = loader.getController();
-                //controller.setStage(stage);
                 stage.setScene(new Scene(newScene));
                 stage.centerOnScreen();
-                controller.initialed();
-
-
+                controller.initialed(stage);
             }
         }
 
