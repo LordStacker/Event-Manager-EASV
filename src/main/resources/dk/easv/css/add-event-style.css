@@ -1,0 +1,22 @@
+.backgroundPane{
+    -fx-background-image: url('../icons/bg-image.jpg');
+    -fx-background-size: 100% auto;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: black;
+}
+
+.inputTextField {
+    -fx-pref-width: 520;
+    -fx-pref-height: 40;
+}
+
+.submitButton{
+    -fx-background-color: #006dcb;
+    -fx-text-fill: white;
+}
+
+.editEventLabel {
+    -fx-font-size: 30;
+    -fx-text-fill: white;
+}

@@ -1,0 +1,11 @@
+Label{
+    -fx-text-fill: #000000;
+}
+
+.backgroundPane{
+    -fx-background-image: url('../icons/bg-image.jpg');
+    -fx-background-size: 100% auto;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: black;
+}

@@ -1,0 +1,55 @@
+* {
+    -bs-warning: #ffc107;
+    -light-shades: #FCFAFB;
+    -bs-success: #198754;
+    -roboto: 'Roboto', sans-serif;
+}
+
+
+
+.dialog-alert-style .label {
+    -fx-text-fill: -light-shades;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+.dialog-alert-style .header-panel {
+    -fx-text-fill: -light-shades;
+    -fx-background-color: #172734;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial Rounded MT Bold";
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
+}
+
+.dialog-alert-style .button .CANCEL {
+    -fx-background-color: warning;
+}
+
+.dialog-alert-style .button .OK {
+    -fx-background-color: warning;
+}
+
+.dialog-alert-style .ok-button {
+    -fx-background-color: -bs-success;
+}
+
+.dialog-alert-style {
+    -fx-background-color: #172734;
+}
+
+.ok-button {
+    -fx-background-color: #172734;
+}
+
+.custom-button {
+    -fx-background-color: #172734;
+    -fx-font-size: 1.2em;
+    -fx-border-radius: 15;
+}
+
+.custom-button:hover {
+    -fx-background-color: #172734;
+    -fx-border-color: transparent;
+}

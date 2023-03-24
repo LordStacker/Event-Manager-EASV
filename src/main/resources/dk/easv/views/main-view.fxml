@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="900.0" prefWidth="1220.0" stylesheets="@../css/main-css.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainWindowController">
+   <center>
+      <MFXScrollPane fx:id="mainPane" fitToWidth="true" prefHeight="1040.0" prefWidth="1440.0">
+         <content>
+            <VBox prefWidth="1426.0">
+               <children>
+                  <VBox prefHeight="347.0" prefWidth="1438.0">
+                     <children>
+                        <Label styleClass="sectionTitle" text="Next event" />
+                        <AnchorPane>
+                           <children>
+                              <AnchorPane id="nextEventPane" fx:id="nextEventPane" layoutX="-1.0" prefHeight="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Label fx:id="nextEventLabel" styleClass="eventTitle" text="very real event" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0" />
+                              <MFXButton alignment="CENTER" styleClass="outline-button" text="Action 1" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" />
+                              <MFXButton styleClass="outline-button" text="Action 2" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="130.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="332.0" prefWidth="1438.0">
+                     <children>
+                        <Label styleClass="sectionTitle" text="Upcoming events" />
+                        <HBox fx:id="upcomingEventsHBox" alignment="CENTER" prefHeight="315.0" prefWidth="1363.0" spacing="20.0" />
+                     </children>
+                  </VBox>
+                  <Label styleClass="sectionTitle" text="Other Events" />
+                  <MFXLegacyTableView fx:id="upcomingEventsTable">
+                     <columns>
+                        <TableColumn fx:id="upcomingNameColumn" prefWidth="500.0" text="Name" />
+                        <TableColumn fx:id="upcomingDateColumn" prefWidth="300.0" text="Date" />
+                        <TableColumn fx:id="upcomingAttendanceColumn" prefWidth="300.0" text="Attendance" />
+                        <TableColumn fx:id="upcomingColDel" prefWidth="65.0" />
+                     </columns>
+                  </MFXLegacyTableView>
+                  <Label styleClass="sectionTitle" text="Past Events" />
+                  <MFXLegacyTableView fx:id="pastEventsTable">
+                     <columns>
+                        <TableColumn fx:id="pastNameColumn" prefWidth="900" text="Name" />
+                        <TableColumn fx:id="pastDateColumn" minWidth="0.0" prefWidth="120" text="Date" />
+                        <TableColumn fx:id="pastAttendanceColumn" prefWidth="120" text="Attendance" />
+                        <TableColumn fx:id="pastColDel" prefWidth="65.0" />
+                     </columns>
+                  </MFXLegacyTableView>
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </VBox>
+         </content>
+      </MFXScrollPane>
+   </center>
+   <bottom>
+      <GridPane id="bottomBar">
+        <columnConstraints>
+          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="288.0" spacing="20.0" styleClass="bottomBarHbox" GridPane.columnIndex="1">
+               <children>
+                  <MFXButton buttonType="RAISED" onAction="#addEventAction" prefHeight="26.0" prefWidth="108.0" text="Add Event" />
+                  <MFXButton buttonType="RAISED" onAction="#editEventAction" prefHeight="26.0" prefWidth="108.0" text="Edit event" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" styleClass="bottomBarHbox">
+               <children>
+                  <MFXButton buttonType="RAISED" onAction="#homeAction" text="Home" />
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" styleClass="bottomBarHbox" GridPane.columnIndex="2">
+               <children>
+                  <MFXButton buttonType="RAISED" onAction="#logOutAction" text="Log Out" />
+               </children>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </GridPane>
+   </bottom>
+</BorderPane>

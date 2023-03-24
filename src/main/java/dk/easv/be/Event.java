@@ -1,30 +1,56 @@
 package dk.easv.be;
 
 import javax.xml.stream.Location;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Event {
 
     private int eventID;
+
+
     private String eventName;
-    private LocalDateTime eventStartDate;
+    private LocalDate eventStartDate;
     private String eventNotes;
     private String eventLocation;
 
     //Optional information (must be supported but may not be used for all events)
-    private LocalDateTime eventEndDate;
+    private LocalDate eventEndDate;
     private String eventGuidance;
+    private int eventTickets;
+    private int eventTicketsSold;
 
-    public Event(int eventID, String eventName, LocalDateTime eventStartDate, String eventNotes, String eventLocation, LocalDateTime eventEndDate, String eventGuidance) {
-        this.eventID = eventID;
-        this.eventName = eventName;
-        this.eventStartDate = eventStartDate;
-        this.eventNotes = eventNotes;
-        this.eventLocation = eventLocation;
-        this.eventEndDate = eventEndDate;
-        this.eventGuidance = eventGuidance;
+
+    public Event(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes){
+        this.eventName = name;
+        this.eventLocation = location;
+        this.eventStartDate = startDate;
+        this.eventEndDate = endDate;
+        this.eventGuidance = directions;
+        this.eventNotes = extraNotes;
     }
 
+    public Event(int id, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes){
+        this.eventID = id;
+        this.eventName = name;
+        this.eventLocation = location;
+        this.eventStartDate = startDate;
+        this.eventEndDate = endDate;
+        this.eventGuidance = directions;
+        this.eventNotes = extraNotes;
+    }
+
+    public Event(int id, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes, int tickets, int ticketsSold){
+        this.eventID = id;
+        this.eventName = name;
+        this.eventLocation = location;
+        this.eventStartDate = startDate;
+        this.eventEndDate = endDate;
+        this.eventGuidance = directions;
+        this.eventNotes = extraNotes;
+        this.eventTickets = tickets;
+        this.eventTicketsSold = ticketsSold;
+    }
     public int getEventID() {
         return eventID;
     }
@@ -41,11 +67,11 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public LocalDateTime getEventStartDate() {
+    public LocalDate getEventStartDate() {
         return eventStartDate;
     }
 
-    public void setEventStartDate(LocalDateTime eventStartDate) {
+    public void setEventStartDate(LocalDate eventStartDate) {
         this.eventStartDate = eventStartDate;
     }
 
@@ -65,11 +91,11 @@ public class Event {
         this.eventLocation = eventLocation;
     }
 
-    public LocalDateTime getEventEndDate() {
+    public LocalDate getEventEndDate() {
         return eventEndDate;
     }
 
-    public void setEventEndDate(LocalDateTime eventEndDate) {
+    public void setEventEndDate(LocalDate eventEndDate) {
         this.eventEndDate = eventEndDate;
     }
 
@@ -81,5 +107,19 @@ public class Event {
         this.eventGuidance = eventGuidance;
     }
 
-}
+    public int getEventTickets() {
+        return eventTickets;
+    }
 
+    public void setEventTickets(int eventTickets) {
+        this.eventTickets = eventTickets;
+    }
+
+    public int getEventTicketsSold() {
+        return eventTicketsSold;
+    }
+
+    public void setEventTicketsSold(int eventTicketsSold) {
+        this.eventTicketsSold = eventTicketsSold;
+    }
+}
