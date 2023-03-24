@@ -170,6 +170,7 @@ public class AddEventViewController implements Initializable {
         createTicketTypesFields(model.getTicketTypes(selectedItem.getEventID()));
         submitButton.setOnAction(e -> editButtonClicked(selectedItem));
         submitButton.setText("Edit");
+        addTicketButton.setVisible(false);
     }
 
     private void createTicketTypesFields(List<TicketType> ticketTypes) {
@@ -187,8 +188,6 @@ public class AddEventViewController implements Initializable {
             ticketAmountTextField.setEditable(false);
             MFXButton deleteButton = (MFXButton) hBox.getChildren().get(3);
             deleteButton.setVisible(false);
-
-            addTicketButton.setVisible(false);
         }
     }
 

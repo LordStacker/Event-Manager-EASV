@@ -96,8 +96,19 @@ public class MainWindowController implements Initializable {
         setupHBoxListener();
 
         initEventsHBox();
-        setNextEvent(model.getObsFutureEvents().get(0).getEventName(), model.getObsFutureEvents().get(0).getEventID());
-        stage.setMinWidth(1210);
+        String nextEventName;
+        int nextEventId = 0;
+        if (model.getObsFutureEvents().size() > 0) {
+            nextEventName = model.getObsFutureEvents().get(0).getEventName();
+            nextEventId = model.getObsFutureEvents().get(0).getEventID();
+        } else {
+            nextEventName = "No upcoming events";
+        }
+        setNextEvent(nextEventName, nextEventId);
+        stage.setMinWidth(650);
+        stage.setWidth(stageWidth);
+        stage.setHeight(stageHeight);
+        stage.setTitle("Event Manager");
     }
 
     private void initEventsHBox() {
@@ -138,7 +149,9 @@ public class MainWindowController implements Initializable {
     public void setNextEvent(String s, String imageURL, int eventId) {
         nextEventPane.setStyle(nextEventPane.getStyle() + "-fx-background-image: url('" + imageURL + "');");
         nextEventLabel.setText(s);
-        nextEventPane.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {openDisplayTicket(eventId);});
+        if (eventId != 0) {
+            nextEventPane.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> openDisplayTicket(eventId));
+        }
         nextEventPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             Rectangle clip = new Rectangle(
                     newValue.doubleValue(), nextEventPane.getHeight()
@@ -226,6 +239,14 @@ public class MainWindowController implements Initializable {
             displayTicketsViewController.initialed(model);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void futureEventsTableClick(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() == 2 && (upcomingEventsTable.getSelectionModel().getSelectedItem() != null) ) {
+            System.out.println();
+            openDisplayTicket(upcomingEventsTable.getSelectionModel().getSelectedItem().getEventID());
         }
     }
 }

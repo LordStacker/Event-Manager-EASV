@@ -49,7 +49,7 @@ public class TicketDAO {
         try (Connection con = cm.getConnection()){
             PreparedStatement ps = con.prepareStatement("SELECT Tickets.ticket_UUID, Tickets.ticket_number, ticket_type.ticket_type, ticket_type.ticket_price, ticket_type.type_id\n" +
                     "FROM Tickets INNER JOIN ticket_type ON Tickets.ticket_type_id = ticket_type.type_id\n" +
-                    "WHERE ticket_type.event_id = ?");
+                    "WHERE ticket_type.event_id = ? ORDER BY Tickets.ticket_number");
             ps.setInt(1, eventId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
