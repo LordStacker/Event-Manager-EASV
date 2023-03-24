@@ -7,6 +7,8 @@ import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,9 +25,11 @@ import java.util.ResourceBundle;
 public class DisplayTicketsViewController implements Initializable {
 
     @FXML
-    MFXLegacyTableView ticketTableView;
+    MFXLegacyTableView<Ticket> ticketTableView;
     @FXML
-    private TableColumn<Ticket, String> ticketId, ticketNumber, ticketType;
+    private TableColumn<Ticket, String> ticketId, ticketType;
+    @FXML
+    private TableColumn<Ticket, Integer> ticketNumber;
     @FXML
     private MFXButton cancelButton;
     @FXML
@@ -51,7 +55,7 @@ public class DisplayTicketsViewController implements Initializable {
 
     public void populateTable(){
         ticketId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTicketID().toString()));
-        ticketNumber.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getTicketNumber())));
+        ticketNumber.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTicketNumber()).asObject());
         ticketType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTicketType()));
         ticketTableView.setItems(model.getObsTickets());
     }
