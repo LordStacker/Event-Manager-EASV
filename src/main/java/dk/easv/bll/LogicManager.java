@@ -39,7 +39,10 @@ public class LogicManager {
     public List<Event> getAllEvents() {
         return eventDAO.getAllEvents();
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1c5ddf66714c96674340ef75ebd931892a509df4
     public int deleteEvent(int id) {
         return eventDAO.deleteEvent(id);
     }
