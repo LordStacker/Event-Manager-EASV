@@ -39,7 +39,7 @@ public class LogicManager {
     public List<Event> getAllEvents() {
         return eventDAO.getAllEvents();
     }
-	   public int deleteEvent(int id) {
+    public int deleteEvent(int id) {
         return eventDAO.deleteEvent(id);
     }
 
@@ -54,4 +54,5 @@ public class LogicManager {
     public void editEvent(int eventId, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
         eventDAO.updateEvent(new Event(eventId, name, location, startDate, endDate, directions, extraNotes));
     }
+
 }

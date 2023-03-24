@@ -1,21 +1,11 @@
 Label{
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #000000;
 }
 
-.background-img-big{
-    -fx-background-image: url("../icons/bg-image.jpg");
+.backgroundPane{
+    -fx-background-image: url('../icons/bg-image.jpg');
     -fx-background-size: 100% auto;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
-}
-
-.background-img-left{
-    -fx-background-image: url("../icons/background-img-left.jpg");
-    -fx-background-size: cover;
-    -fx-background-position: center;
-    -fx-background-repeat: no-repeat;
-}
-
-.topBar-pane{
-    -fx-background-color: #172734;
+    -fx-background-color: black;
 }

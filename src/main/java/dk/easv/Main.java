@@ -16,7 +16,6 @@ import java.util.Objects;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/Login.fxml"));
         Parent root = fxmlLoader.load();
         LoginController loginController = fxmlLoader.getController();
