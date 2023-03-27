@@ -1,5 +1,6 @@
 package dk.easv.gui.models;
 
+import dk.easv.be.Roles;
 import dk.easv.be.User;
 import dk.easv.bll.LogicManager;
 
@@ -12,5 +13,9 @@ public class UserModel {
 
     public List<User> checkUserLog(String username, String password){
         return bll.checkUserLog(username, password);
+    }
+
+    public List<User> usersPlanners(Roles roles){
+        return bll.usersPlanners(roles);
     }
 }

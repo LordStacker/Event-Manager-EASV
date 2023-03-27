@@ -76,7 +76,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="288.0" spacing="20.0" styleClass="bottomBarHbox" GridPane.columnIndex="1">
+            <HBox alignment="CENTER" fx:id="viewRole" prefHeight="26.0" prefWidth="288.0" spacing="20.0" styleClass="bottomBarHbox" GridPane.columnIndex="1">
                <children>
                   <MFXButton buttonType="RAISED" onAction="#addEventAction" prefHeight="26.0" prefWidth="108.0" text="Add Event" />
                   <MFXButton buttonType="RAISED" onAction="#editEventAction" prefHeight="26.0" prefWidth="108.0" text="Edit event" />

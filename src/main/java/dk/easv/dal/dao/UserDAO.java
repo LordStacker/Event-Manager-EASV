@@ -41,4 +41,27 @@ public class UserDAO {
         }
         return users;
     }
+
+    public static List<User> usersPlanners(Roles roles){
+        List<User> usersPlanners = new ArrayList<>();
+        try (Connection connection = cm.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("" +
+                    "select * from dbo.[User] WHERE " +
+                    "(role= ?);");
+            ps.setString(1, roles.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int dbId = rs.getInt("id");
+                String dbUsername = rs.getString("username");
+                String dbPassword = rs.getString("password");
+                String dbEmail = rs.getString("email");
+                String dbRole = rs.getString("role");
+                User user = new User(Roles.valueOf(dbRole), dbId, dbUsername, dbPassword, dbEmail);
+                usersPlanners.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return usersPlanners;
+    }
 }

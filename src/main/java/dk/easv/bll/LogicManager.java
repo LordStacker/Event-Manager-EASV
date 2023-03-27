@@ -1,9 +1,6 @@
 package dk.easv.bll;
 
-import dk.easv.be.Event;
-import dk.easv.be.Ticket;
-import dk.easv.be.TicketType;
-import dk.easv.be.User;
+import dk.easv.be.*;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
@@ -32,6 +29,7 @@ public class LogicManager {
         return userDAO.checkUserLog(username,password);
     }
 
+    public List<User> usersPlanners(Roles roles){return userDAO.usersPlanners(roles); }
     public int addEvent(Event event) {
         return eventDAO.createEvent(event);
     }

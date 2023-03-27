@@ -62,7 +62,7 @@ public class LoginController implements Initializable {
                 stage.centerOnScreen();
                 stage.close();
                 stage.show();
-                controller.initialed(stage, stageWidth, stageHeight);
+                controller.initialed(stage, stageWidth, stageHeight, user.get(0));
             }
         }
 
