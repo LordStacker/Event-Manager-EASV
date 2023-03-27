@@ -40,21 +40,21 @@
                      </children>
                   </VBox>
                   <Label styleClass="sectionTitle" text="Other Events" />
-                  <MFXLegacyTableView fx:id="upcomingEventsTable">
+                  <MFXLegacyTableView fx:id="upcomingEventsTable" onMouseClicked="#futureEventsTableClick">
                      <columns>
                         <TableColumn fx:id="upcomingNameColumn" prefWidth="500.0" text="Name" />
-                        <TableColumn fx:id="upcomingDateColumn" prefWidth="300.0" text="Date" />
-                        <TableColumn fx:id="upcomingAttendanceColumn" prefWidth="300.0" text="Attendance" />
-                        <TableColumn fx:id="upcomingColDel" prefWidth="65.0" />
+                        <TableColumn fx:id="upcomingDateColumn" prefWidth="163.0" text="Date" />
+                        <TableColumn fx:id="upcomingAttendanceColumn" prefWidth="171.0" text="Attendance" />
+                        <TableColumn fx:id="upcomingColDel" prefWidth="100.0" />
                      </columns>
                   </MFXLegacyTableView>
                   <Label styleClass="sectionTitle" text="Past Events" />
                   <MFXLegacyTableView fx:id="pastEventsTable">
                      <columns>
-                        <TableColumn fx:id="pastNameColumn" prefWidth="900" text="Name" />
-                        <TableColumn fx:id="pastDateColumn" minWidth="0.0" prefWidth="120" text="Date" />
-                        <TableColumn fx:id="pastAttendanceColumn" prefWidth="120" text="Attendance" />
-                        <TableColumn fx:id="pastColDel" prefWidth="65.0" />
+                        <TableColumn fx:id="pastNameColumn" prefWidth="500" text="Name" />
+                        <TableColumn fx:id="pastDateColumn" minWidth="0.0" prefWidth="163" text="Date" />
+                        <TableColumn fx:id="pastAttendanceColumn" prefWidth="171" text="Attendance" />
+                        <TableColumn fx:id="pastColDel" prefWidth="100" />
                      </columns>
                   </MFXLegacyTableView>
                </children>
