@@ -13,17 +13,17 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" prefHeight="538.0" prefWidth="830.0" styleClass="backgroundPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DisplayTicketsViewController">
+<BorderPane fx:id="borderPane" prefHeight="538.0" prefWidth="830.0" styleClass="backgroundPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.manageUsersController">
     <center>
         <MFXScrollPane fitToHeight="true" fitToWidth="true" prefHeight="554.0" prefWidth="830.0" style="-fx-background-color: transparent;">
             <content>
                 <VBox alignment="CENTER" prefHeight="534.0" prefWidth="990.0" spacing="20.0">
                     <children>
-                        <MFXLegacyTableView fx:id="ticketTableView" prefHeight="300.0" prefWidth="500.0">
+                        <MFXLegacyTableView fx:id="usersTableView" prefHeight="300.0" prefWidth="500.0">
                             <columns>
-                                <TableColumn fx:id="ticketId" prefWidth="84.80001485347748" text="Ticket ID" />
-                                <TableColumn fx:id="ticketNumber" minWidth="0.0" prefWidth="291.19996643066406" text="Ticket Number" />
-                                <TableColumn fx:id="ticketType" prefWidth="431.9999633789063" text="Ticket Type" />
+                                <TableColumn fx:id="username" prefWidth="84.80001485347748" text="Username" />
+                                <TableColumn fx:id="roles" minWidth="0.0" prefWidth="291.19996643066406" text="Role" />
+                                <TableColumn fx:id="email" prefWidth="431.9999633789063" text="Email" />
                             </columns>
                         </MFXLegacyTableView>
                     </children>
