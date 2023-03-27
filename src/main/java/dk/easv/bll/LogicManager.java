@@ -1,5 +1,6 @@
 package dk.easv.bll;
 
+import dk.easv.Main;
 import dk.easv.be.Event;
 import dk.easv.be.Ticket;
 import dk.easv.be.TicketType;
@@ -7,10 +8,18 @@ import dk.easv.be.User;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
+import javafx.scene.image.Image;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LogicManager {
     private final TicketDAO ticketDAO = new TicketDAO();
@@ -55,4 +64,21 @@ public class LogicManager {
         eventDAO.updateEvent(new Event(eventId, name, location, startDate, endDate, directions, extraNotes));
     }
 
+    public Image generateTicketImage(Ticket ticket) {
+        try {
+            BufferedImage image = ImageIO.read(Objects.requireNonNull(Main.class.getResource("ticket.png")).openStream());
+            int width = image.getWidth();
+            int height = image.getHeight();
+
+            BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = bufferedImage.createGraphics();
+            graphics.drawImage(image, 0, 0, null);
+
+            ImageIO.write(bufferedImage, "png", new File("ticket.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
 }
