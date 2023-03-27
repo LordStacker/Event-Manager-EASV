@@ -4,6 +4,8 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Roles;
 import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -42,8 +44,8 @@ public class UserDAO {
         return users;
     }
 
-    public static List<User> usersPlanners(Roles roles){
-        List<User> usersPlanners = new ArrayList<>();
+    public static ObservableList<User> usersPlanners(Roles roles){
+        ObservableList<User> usersPlanners = FXCollections.observableArrayList();
         try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("" +
                     "select * from dbo.[User] WHERE " +

@@ -11,6 +11,7 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,7 +60,7 @@ public class MainWindowController implements Initializable {
 
     private final UserModel userModel = new UserModel();
 
-    private List<User> userPlanners;
+    private ObservableList<User> userPlanners;
 
 
     @Override
@@ -151,25 +152,25 @@ public class MainWindowController implements Initializable {
             if(user.role() == Roles.ADMIN){
                 Button button = new MFXButton("Manage Users");
                 viewRole.getChildren().add(button);
-                button.setOnAction(e -> {
+                button.minWidth(26.0);
+                button.minHeight(108.0);
+                button.setOnAction(event -> {
                     userPlanners = userModel.usersPlanners(Roles.EVENT_COORDINATOR);
-                    System.out.println(userPlanners.size());
-                    /*
-                                try {
+                    try {
                         Stage stage = new Stage();
-                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/manage-users-view.fxml"));
                         Parent root = fxmlLoader.load();
-                        AddEventViewController addEventViewController = fxmlLoader.getController();
+                        manageUsersController manageUsersController = fxmlLoader.getController();
                         Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
-                        stage.setTitle("Add Event");
+                        stage.setTitle("Manage Users");
                         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
                         stage.setScene(scene);
                         stage.show();
-                        addEventViewController.initialed(model);
+                        manageUsersController.initialed(userPlanners);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                     */
+
                 });
             }
         }

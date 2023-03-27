@@ -4,6 +4,7 @@ import dk.easv.be.*;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class LogicManager {
         return userDAO.checkUserLog(username,password);
     }
 
-    public List<User> usersPlanners(Roles roles){return userDAO.usersPlanners(roles); }
+    public ObservableList<User> usersPlanners(Roles roles){return userDAO.usersPlanners(roles); }
     public int addEvent(Event event) {
         return eventDAO.createEvent(event);
     }
