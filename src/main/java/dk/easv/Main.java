@@ -2,7 +2,6 @@ package dk.easv;
 
 
 import dk.easv.gui.controllers.LoginController;
-import dk.easv.gui.controllers.DisplayTicketsViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -25,6 +26,11 @@ public class Main extends Application {
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar.png"))));
         stage.setScene(scene);
         stage.show();
+
+        Path path = Path.of("src/main/resources/dk/easv/tmp");
+        if (!Files.exists(path)){
+            Files.createDirectory(path);
+        }
     }
 
     public static void main(String[] args) {
