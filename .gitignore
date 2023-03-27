@@ -123,3 +123,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 src/main/resources/dk/easv/config.cfg
+!/src/main/resources/dk/easv/tmp/

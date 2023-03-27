@@ -8,6 +8,7 @@ import dk.easv.be.User;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
@@ -16,8 +17,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,12 +77,15 @@ public class LogicManager {
             BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics = bufferedImage.createGraphics();
             graphics.drawImage(image, 0, 0, null);
+            graphics.setFont(new Font("Arial", Font.PLAIN, 20));
+            graphics.setColor(Color.BLACK);
+            graphics.drawString(ticket.getTicketType(), 100, 100);
 
-            ImageIO.write(bufferedImage, "png", new File("ticket.png"));
+            ImageIO.write(bufferedImage, "png", new File("src/main/resources/dk/easv/tmp/tmp-ticket.png"));
+
+            return SwingFXUtils.toFXImage(bufferedImage, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 }
