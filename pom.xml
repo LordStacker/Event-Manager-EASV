@@ -12,6 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.9.1</junit.version>
+        <itext.version>7.2.5</itext.version>
     </properties>
 
     <dependencies>
@@ -37,6 +38,13 @@
             <artifactId>materialfx</artifactId>
             <version>11.13.9</version>
         </dependency>
+            <!-- add all iText 7 modules -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>itext7-core</artifactId>
+                <version>${itext.version}</version>
+                <type>pom</type>
+            </dependency>
     </dependencies>
 
     <build>
