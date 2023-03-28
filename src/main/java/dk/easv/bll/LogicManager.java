@@ -1,10 +1,9 @@
 package dk.easv.bll;
 
 import dk.easv.Main;
+import dk.easv.be.*;
 import dk.easv.be.Event;
-import dk.easv.be.Ticket;
-import dk.easv.be.TicketType;
-import dk.easv.be.User;
+import dk.easv.dal.dao.CustomerDAO;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
@@ -28,6 +27,7 @@ public class LogicManager {
     private final TicketDAO ticketDAO = new TicketDAO();
     private final EventDAO eventDAO = new EventDAO();
     private final UserDAO userDAO = new UserDAO();
+    private final CustomerDAO customerDAO = new CustomerDAO();
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
         addTickets(eventId, ticketType, price, numberOfTickets, 1, 0);
     }
@@ -120,5 +120,9 @@ public class LogicManager {
 
     public void assignTicketToCustomer(String name, String email, Ticket ticket) {
         ticketDAO.assignTicketToCustomer(name, email, ticket);
+    }
+
+    public Customer getCustomer(int customerId) {
+        return customerDAO.getCustomer(customerId);
     }
 }

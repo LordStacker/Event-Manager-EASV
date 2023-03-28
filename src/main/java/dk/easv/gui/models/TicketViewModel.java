@@ -1,5 +1,6 @@
 package dk.easv.gui.models;
 
+import dk.easv.be.Customer;
 import dk.easv.be.Ticket;
 import dk.easv.be.TicketType;
 import dk.easv.bll.LogicManager;
@@ -14,5 +15,9 @@ public class TicketViewModel {
 
     public void assignTicketToCustomer(String name, String email, Ticket ticket) {
         bll.assignTicketToCustomer(name, email, ticket);
+    }
+
+    public Customer getCustomer(int customerId) {
+        return bll.getCustomer(customerId);
     }
 }

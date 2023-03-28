@@ -47,7 +47,7 @@ public class TicketDAO {
     public List<Ticket> getAllTickets(int eventId){
         List<Ticket> tickets = new ArrayList<>();
         try (Connection con = cm.getConnection()){
-            PreparedStatement ps = con.prepareStatement("SELECT Tickets.ticket_UUID, Tickets.ticket_number, ticket_type.ticket_type, ticket_type.ticket_price, ticket_type.type_id\n" +
+            PreparedStatement ps = con.prepareStatement("SELECT Tickets.ticket_UUID, Tickets.ticket_number, ticket_type.ticket_type, ticket_type.ticket_price, ticket_type.type_id, Tickets.customer_id\n" +
                     "FROM Tickets INNER JOIN ticket_type ON Tickets.ticket_type_id = ticket_type.type_id\n" +
                     "WHERE ticket_type.event_id = ? ORDER BY Tickets.ticket_number");
             ps.setInt(1, eventId);
@@ -58,7 +58,8 @@ public class TicketDAO {
                 String ticketType = rs.getString("ticket_type");
                 int typeId = rs.getInt("type_id");
                 double price = rs.getDouble("ticket_price");
-                Ticket ticket = new Ticket(ticketID, ticketType, ticketNumber, price, typeId);
+                int customerId = rs.getInt("customer_id");
+                Ticket ticket = new Ticket(ticketID, ticketType, ticketNumber, price, typeId, customerId);
                 tickets.add(ticket);
             }
         } catch (SQLException e) {

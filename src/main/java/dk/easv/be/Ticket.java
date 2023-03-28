@@ -88,5 +88,13 @@ public class Ticket { //I actually want to extend user as well
     public void setTicketTypeId(int ticketTypeId) {
         this.ticketTypeId = ticketTypeId;
     }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
 }
 
