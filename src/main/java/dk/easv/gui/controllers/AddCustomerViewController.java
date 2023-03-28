@@ -2,7 +2,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.be.Ticket;
-import dk.easv.dal.dao.CustomerDAO;
+import dk.easv.gui.models.EventModel;
 import dk.easv.gui.models.TicketViewModel;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
@@ -21,10 +21,12 @@ public class AddCustomerViewController implements Initializable {
     private Ticket ticket;
     private Stage stage;
     private TicketViewModel model = new TicketViewModel();
+    private EventModel eventModel;
 
     @FXML
     private void submitButtonAction(ActionEvent actionEvent) {
         model.assignTicketToCustomer(nameTextField.getText(), emailTextField.getText(), ticket);
+        eventModel.getAllTickets(ticket.getEventId());
         stage.close();
     }
 
@@ -33,8 +35,9 @@ public class AddCustomerViewController implements Initializable {
         stage.close();
     }
 
-    public void setTicket(Ticket ticket) {
+    public void initialed(Ticket ticket, EventModel eventModel) {
         this.ticket = ticket;
+        this.eventModel = eventModel;
         if (ticket.getCustomerId() != 0) {
             Customer customer = model.getCustomer(ticket.getCustomerId());
             nameTextField.setText(customer.getCustomerName());

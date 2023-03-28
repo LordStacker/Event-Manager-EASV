@@ -44,6 +44,8 @@ public class DisplayTicketsViewController implements Initializable {
     private TableColumn<Ticket, MFXButton> viewTicketColumn;
     @FXML
     private TableColumn<Ticket, MFXButton> assignTicketColumn;
+    @FXML
+    private TableColumn<Ticket, String > assignedTicketColumn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,6 +79,13 @@ public class DisplayTicketsViewController implements Initializable {
             });
             return new SimpleObjectProperty(viewButton);
         });
+        assignedTicketColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getCustomerId() != 0) {
+                return new SimpleStringProperty("Assigned");
+            } else {
+                return new SimpleStringProperty("Not assigned");
+            }
+        });
         ticketTableView.setItems(model.getObsTickets());
     }
 
@@ -91,7 +100,8 @@ public class DisplayTicketsViewController implements Initializable {
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
-            controller.setTicket(value);
+            value.setEventId(eventId);
+            controller.initialed(value, model);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

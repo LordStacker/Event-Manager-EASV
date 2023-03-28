@@ -26,6 +26,7 @@
                         <TableColumn fx:id="ticketType" prefWidth="122.39987182617188" text="Ticket Type" />
                          <TableColumn fx:id="assignTicketColumn" prefWidth="220.80001220703127" />
                         <TableColumn fx:id="viewTicketColumn" prefWidth="220.80001220703127" />
+                         <TableColumn fx:id="assignedTicketColumn" prefWidth="220.80001220703127" />
                      </columns>
                   </MFXLegacyTableView>
                </children>
