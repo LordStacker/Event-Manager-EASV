@@ -10,11 +10,16 @@ import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.scene.image.Image;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -77,9 +82,24 @@ public class LogicManager {
             BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics = bufferedImage.createGraphics();
             graphics.drawImage(image, 0, 0, null);
-            graphics.setFont(new Font("Arial", Font.PLAIN, 20));
+            graphics.setFont(new Font("Arial", Font.PLAIN, 50));
             graphics.setColor(Color.BLACK);
-            graphics.drawString(ticket.getTicketType(), 100, 100);
+            graphics.drawString(ticket.getTicketType(), 120, 350);
+            AffineTransform defaultTransform = graphics.getTransform();
+            AffineTransform at = new AffineTransform();
+            at.rotate(-Math.PI / 2);
+
+            graphics.setTransform(at);
+            graphics.drawString(ticket.getTicketNumber() + "", -325, 1900);
+
+            // add a barcode here
+            ByteArrayInputStream qr = new ByteArrayInputStream(QRCode.from(ticket.getTicketID().toString()).to(ImageType.PNG).withSize(200, 200).stream().toByteArray());
+            image = ImageIO.read(qr);
+            graphics.drawImage(image, -325, 1600, null);
+            graphics.setFont(new Font("Arial", Font.PLAIN, 20));
+            graphics.drawString(ticket.getTicketID().toString(), -500, 1800);
+            graphics.setTransform(defaultTransform);
+
 
             ImageIO.write(bufferedImage, "png", new File("src/main/resources/dk/easv/tmp/tmp-ticket.png"));
 

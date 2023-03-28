@@ -34,7 +34,7 @@ public class MainWindowController implements Initializable {
     private AnchorPane nextEventPane;
 
     private final ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
-    private int currentVolume = 2;
+    private int currentVolume = 1;
 
     private Stage stage;
     @FXML
