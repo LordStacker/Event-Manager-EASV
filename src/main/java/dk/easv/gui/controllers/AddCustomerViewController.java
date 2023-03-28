@@ -35,6 +35,11 @@ public class AddCustomerViewController implements Initializable {
         stage.close();
     }
 
+    @FXML
+    private void removeCustomerData(ActionEvent actionEvent){
+        model.deassignTicket(ticket.getTicketID());
+    }
+
     public void initialed(Ticket ticket, EventModel eventModel) {
         this.ticket = ticket;
         this.eventModel = eventModel;
