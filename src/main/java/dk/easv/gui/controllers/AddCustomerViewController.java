@@ -4,10 +4,12 @@ import dk.easv.be.Customer;
 import dk.easv.be.Ticket;
 import dk.easv.gui.models.EventModel;
 import dk.easv.gui.models.TicketViewModel;
+import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -25,11 +27,23 @@ public class AddCustomerViewController implements Initializable {
 
     @FXML
     private void submitButtonAction(ActionEvent actionEvent) {
-        model.assignTicketToCustomer(nameTextField.getText(), emailTextField.getText(), ticket);
-        eventModel.getAllTickets(ticket.getEventId());
-        stage.close();
+        if (isInputValid()) {
+            model.assignTicketToCustomer(nameTextField.getText(), emailTextField.getText(), ticket);
+            eventModel.getAllTickets(ticket.getEventId());
+
+            stage.close();
+        }
     }
 
+    private boolean isInputValid(){
+        if (emailTextField == null || emailTextField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter customer E-mail before submitting!", Alert.AlertType.WARNING);
+        } else if (nameTextField == null || nameTextField.getText().trim().isEmpty()) {
+            AlertHelper.showDefaultAlert("Please enter customer name before submitting!", Alert.AlertType.WARNING);
+        } else
+            return true;
+        return false;
+    }
     @FXML
     private void cancelButtonAction(ActionEvent actionEvent) {
         stage.close();
@@ -38,6 +52,8 @@ public class AddCustomerViewController implements Initializable {
     @FXML
     private void removeCustomerData(ActionEvent actionEvent){
         model.deassignTicket(ticket.getTicketID());
+        nameTextField.setText("");
+        emailTextField.setText("");
     }
 
     public void initialed(Ticket ticket, EventModel eventModel) {
