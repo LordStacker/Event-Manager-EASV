@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -133,6 +134,14 @@ public class DisplayTicketsViewController implements Initializable {
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.centerOnScreen();
+            stage.onCloseRequestProperty().setValue(e -> {
+                System.out.println("Exit");
+                File file = new File("src/main/resources/dk/easv/tmp/tmp-ticket.png");
+                System.out.println(file.exists());
+                if (file.exists()) {
+                    file.delete();
+                }
+            });
             stage.show();
             ticketViewController.initialed(ticket, eventId);
         } catch (IOException e) {
