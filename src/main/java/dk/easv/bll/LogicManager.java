@@ -81,8 +81,12 @@ public class LogicManager {
             graphics.setFont(new Font("Arial", Font.PLAIN, 30));
             graphics.setColor(Color.BLACK);
             Customer customer = customerDAO.getCustomer(ticket.getCustomerId());
-            graphics.drawString(customer.getCustomerName(), 30, 30);
-            graphics.drawString(customer.getCustomerEmail(), 30, 70);
+            if (customer != null) {
+                graphics.drawString(customer.getCustomerName(), 30, 40);
+                graphics.drawString(customer.getCustomerEmail(), 30, 80);
+            } else {
+                graphics.drawString("Not assigned", 30, 40);
+            }
             ByteArrayInputStream qr = new ByteArrayInputStream(QRCode.from(ticket.getTicketID().toString()).to(ImageType.PNG).withSize(400, 400).stream().toByteArray());
             image = ImageIO.read(qr);
             graphics.drawImage(image, 30, 110, null);
