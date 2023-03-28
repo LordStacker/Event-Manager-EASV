@@ -42,6 +42,8 @@ public class DisplayTicketsViewController implements Initializable {
     private Stage stage;
     @FXML
     private TableColumn<Ticket, MFXButton> viewTicketColumn;
+    @FXML
+    private TableColumn<Ticket, MFXButton> assignTicketColumn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,7 +70,31 @@ public class DisplayTicketsViewController implements Initializable {
             });
             return new SimpleObjectProperty(viewButton);
         });
+        assignTicketColumn.setCellValueFactory(cellData -> {
+            MFXButton viewButton = new MFXButton("Assign");
+            viewButton.setOnAction(event -> {
+                assignTicket(cellData.getValue());
+            });
+            return new SimpleObjectProperty(viewButton);
+        });
         ticketTableView.setItems(model.getObsTickets());
+    }
+
+    private void assignTicket(Ticket value) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/addCustomerView.fxml"));
+            Parent root = fxmlLoader.load();
+            AddCustomerViewController controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+            controller.setTicket(value);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setEventId(int newEventId) {

@@ -11,4 +11,8 @@ public class TicketViewModel {
     public Image getTicketImage(Ticket ticket, int eventId) {
         return bll.generateTicketImage(ticket, eventId);
     }
+
+    public void assignTicketToCustomer(String name, String email, Ticket ticket) {
+        bll.assignTicketToCustomer(name, email, ticket);
+    }
 }

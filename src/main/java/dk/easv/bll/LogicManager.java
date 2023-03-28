@@ -117,4 +117,8 @@ public class LogicManager {
             throw new RuntimeException(e);
         }
     }
+
+    public void assignTicketToCustomer(String name, String email, Ticket ticket) {
+        ticketDAO.assignTicketToCustomer(name, email, ticket);
+    }
 }
