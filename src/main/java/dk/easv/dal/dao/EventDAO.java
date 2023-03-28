@@ -1,6 +1,5 @@
 package dk.easv.dal.dao;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Event;
 import dk.easv.dal.ConnectionManager;
 
@@ -88,5 +87,30 @@ public class EventDAO {
         }
     }
 
+    public Event getEvent(int eventId) {
+        try (Connection con = cm.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT Event.id,Event.event_name,event_description,event_location,event_start_date,event_end_date,event_guidance, COUNT(CASE WHEN ticket_UUID IS NOT NULL THEN 1 END) as TotalTickets ,COUNT(CASE WHEN customer_id IS NOT NULL THEN 1 END) AS SoldTickets\n" +
+                    "FROM Event LEFT OUTER JOIN ticket_type ON Event.id = ticket_type.event_id\n" +
+                    "LEFT OUTER JOIN Tickets ON ticket_type.type_id = Tickets.ticket_type_id\n" +
+                    "WHERE Event.id = ?\n" +
+                    "GROUP BY Event.id, Event.event_name, event_description, event_location, event_start_date, event_end_date, event_guidance ORDER BY event_start_date ASC");
+            ps.setInt(1, eventId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("event_name");
+                String description = rs.getString("event_description");
+                Date startDate = rs.getDate("event_start_date");
+                Date endDate = rs.getDate("event_end_date");
+                String location = rs.getString("event_location");
+                String guidance = rs.getString("event_guidance");
+                int totalTickets = rs.getInt("TotalTickets");
+                int soldTickets = rs.getInt("SoldTickets");
+                return new Event(id, name, description, startDate.toLocalDate(), endDate == null ? null : endDate.toLocalDate(), location, guidance, totalTickets, soldTickets);
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
-

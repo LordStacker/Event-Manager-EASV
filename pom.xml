@@ -38,13 +38,20 @@
             <artifactId>materialfx</artifactId>
             <version>11.13.9</version>
         </dependency>
-            <!-- add all iText 7 modules -->
-            <dependency>
-                <groupId>com.itextpdf</groupId>
-                <artifactId>itext7-core</artifactId>
-                <version>${itext.version}</version>
-                <type>pom</type>
-            </dependency>
+        <!-- https://mvnrepository.com/artifact/net.glxn/qrgen -->
+        <dependency>
+            <groupId>net.glxn</groupId>
+            <artifactId>qrgen</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <!-- add all iText 7 modules -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext7-core</artifactId>
+            <version>${itext.version}</version>
+            <type>pom</type>
+        </dependency>
+
     </dependencies>
 
     <build>

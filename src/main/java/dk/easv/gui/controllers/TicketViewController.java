@@ -27,10 +27,9 @@ public class TicketViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void initialed(Ticket ticket){
-        model.setTicket(ticket);
+    public void initialed(Ticket ticket, int eventId){
         Stage stage = (Stage) bgAnchor.getScene().getWindow();
-        Image image = model.getTicketImage();
+        Image image = model.getTicketImage(ticket, eventId);
         stage.setMinWidth(image.getWidth());
         stage.setMinHeight(image.getHeight()+30);
         imgView.setImage(image);

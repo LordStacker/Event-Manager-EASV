@@ -47,7 +47,7 @@ public class TicketDAO {
     public List<Ticket> getAllTickets(int eventId){
         List<Ticket> tickets = new ArrayList<>();
         try (Connection con = cm.getConnection()){
-            PreparedStatement ps = con.prepareStatement("SELECT Tickets.ticket_UUID, Tickets.ticket_number, ticket_type.ticket_type, ticket_type.ticket_price, ticket_type.type_id\n" +
+            PreparedStatement ps = con.prepareStatement("SELECT Tickets.ticket_UUID, Tickets.ticket_number, ticket_type.ticket_type, ticket_type.ticket_price, ticket_type.type_id, Tickets.customer_id\n" +
                     "FROM Tickets INNER JOIN ticket_type ON Tickets.ticket_type_id = ticket_type.type_id\n" +
                     "WHERE ticket_type.event_id = ? ORDER BY Tickets.ticket_number");
             ps.setInt(1, eventId);
@@ -58,7 +58,8 @@ public class TicketDAO {
                 String ticketType = rs.getString("ticket_type");
                 int typeId = rs.getInt("type_id");
                 double price = rs.getDouble("ticket_price");
-                Ticket ticket = new Ticket(ticketID, ticketType, ticketNumber, price, typeId);
+                int customerId = rs.getInt("customer_id");
+                Ticket ticket = new Ticket(ticketID, ticketType, ticketNumber, price, typeId, customerId);
                 tickets.add(ticket);
             }
         } catch (SQLException e) {
@@ -85,5 +86,33 @@ public class TicketDAO {
             throw new RuntimeException(e);
         }
         return ticketTypes;
+    }
+
+    public void assignTicketToCustomer(String name, String email, Ticket ticket) {
+        try (Connection con = cm.getConnection()){
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Customer WHERE email = ?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                int customerId = rs.getInt("id");
+                PreparedStatement ps1 = con.prepareStatement("UPDATE Tickets SET customer_id = ? WHERE ticket_UUID = ?");
+                ps1.setInt(1, customerId);
+                ps1.setString(2, ticket.getTicketID().toString());
+                ps1.executeUpdate();
+            } else {
+                PreparedStatement ps2 = con.prepareStatement("INSERT INTO Customer(name, email) OUTPUT inserted.id VALUES (?, ?)");
+                ps2.setString(1, name);
+                ps2.setString(2, email);
+                ResultSet rs1 = ps2.executeQuery();
+                rs1.next();
+                int customerId = rs1.getInt(1);
+                PreparedStatement ps3 = con.prepareStatement("UPDATE Tickets SET customer_id = ? WHERE ticket_UUID = ?");
+                ps3.setInt(1, customerId);
+                ps3.setString(2, ticket.getTicketID().toString());
+                ps3.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
