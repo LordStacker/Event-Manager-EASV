@@ -64,7 +64,7 @@ public class DisplayTicketsViewController implements Initializable {
         viewTicketColumn.setCellValueFactory(cellData -> {
             MFXButton viewButton = new MFXButton("View");
             viewButton.setOnAction(event -> {
-                showTicket(cellData.getValue());
+                showTicket(cellData.getValue(), eventId);
             });
             return new SimpleObjectProperty(viewButton);
         });
@@ -83,11 +83,11 @@ public class DisplayTicketsViewController implements Initializable {
     private void tableMouseClicked(MouseEvent mouseEvent) {
         Ticket ticket = ticketTableView.getSelectionModel().getSelectedItem();
         if (mouseEvent.getClickCount() == 2 && (ticket != null)) {
-            showTicket(ticket);
+            showTicket(ticket, eventId);
         }
     }
 
-    private void showTicket(Ticket ticket){
+    private void showTicket(Ticket ticket, int eventId) {
         try {
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/ticket-view.fxml"));
@@ -98,7 +98,7 @@ public class DisplayTicketsViewController implements Initializable {
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
-            ticketViewController.initialed(ticket);
+            ticketViewController.initialed(ticket, eventId);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

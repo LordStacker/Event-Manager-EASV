@@ -14,19 +14,13 @@ import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,7 +67,7 @@ public class LogicManager {
         eventDAO.updateEvent(new Event(eventId, name, location, startDate, endDate, directions, extraNotes));
     }
 
-    public Image generateTicketImage(Ticket ticket) {
+    public Image generateTicketImage(Ticket ticket, int eventId) {
         try {
             BufferedImage image = ImageIO.read(Objects.requireNonNull(Main.class.getResource("ticket.png")).openStream());
             int width = image.getWidth();
@@ -81,25 +75,40 @@ public class LogicManager {
 
             BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics = bufferedImage.createGraphics();
+            graphics.addRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
             graphics.drawImage(image, 0, 0, null);
-            graphics.setFont(new Font("Arial", Font.PLAIN, 50));
+            graphics.setBackground(Color.WHITE);
+            graphics.setFont(new Font("Arial", Font.PLAIN, 30));
             graphics.setColor(Color.BLACK);
-            graphics.drawString(ticket.getTicketType(), 120, 350);
-            AffineTransform defaultTransform = graphics.getTransform();
-            AffineTransform at = new AffineTransform();
-            at.rotate(-Math.PI / 2);
-
-            graphics.setTransform(at);
-            graphics.drawString(ticket.getTicketNumber() + "", -325, 1900);
-
-            // add a barcode here
-            ByteArrayInputStream qr = new ByteArrayInputStream(QRCode.from(ticket.getTicketID().toString()).to(ImageType.PNG).withSize(200, 200).stream().toByteArray());
+            graphics.drawString("Name Surname", 30, 30);
+            graphics.drawString("mail@mail.com", 30, 70);
+            ByteArrayInputStream qr = new ByteArrayInputStream(QRCode.from(ticket.getTicketID().toString()).to(ImageType.PNG).withSize(400, 400).stream().toByteArray());
             image = ImageIO.read(qr);
-            graphics.drawImage(image, -325, 1600, null);
+            graphics.drawImage(image, 30, 110, null);
             graphics.setFont(new Font("Arial", Font.PLAIN, 20));
-            graphics.drawString(ticket.getTicketID().toString(), -500, 1800);
-            graphics.setTransform(defaultTransform);
+            graphics.drawString(ticket.getTicketID().toString(), 30, 510);
+            graphics.setFont(new Font("Arial", Font.PLAIN, 30));
+            graphics.drawString("Ticket number: " + ticket.getTicketNumber(), 30, 580);
+            graphics.drawString(ticket.getTicketType(), 30, 620);
 
+
+            Event event = eventDAO.getEvent(eventId);
+            graphics.setColor(Color.WHITE);
+            graphics.setFont(new Font("Arial", Font.PLAIN, 50));
+            graphics.drawString(event.getEventName(), 600, 80);
+            graphics.setFont(new Font("Arial", Font.PLAIN, 30));
+            graphics.drawString(event.getEventNotes(), 620, 140);
+
+            graphics.drawString("Start date: " + event.getEventStartDate().toString(), 600, 530);
+            LocalDate endDate = event.getEventEndDate();
+            if (endDate != null) {
+                graphics.drawString("End date: " + endDate, 600, 570);
+            } else {
+                graphics.drawString("End date: ", 600, 570);
+            }
+
+            graphics.drawString("Location: " + event.getEventLocation(), 1100, 530);
+            graphics.drawString("Directions: " + event.getEventGuidance(), 1100, 570);
 
             ImageIO.write(bufferedImage, "png", new File("src/main/resources/dk/easv/tmp/tmp-ticket.png"));
 
