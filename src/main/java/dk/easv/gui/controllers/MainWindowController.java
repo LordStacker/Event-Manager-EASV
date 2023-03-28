@@ -245,7 +245,6 @@ public class MainWindowController implements Initializable {
     @FXML
     private void futureEventsTableClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2 && (upcomingEventsTable.getSelectionModel().getSelectedItem() != null) ) {
-            System.out.println();
             openDisplayTicket(upcomingEventsTable.getSelectionModel().getSelectedItem().getEventID());
         }
     }
