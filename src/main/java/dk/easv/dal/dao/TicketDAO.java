@@ -1,5 +1,6 @@
 package dk.easv.dal.dao;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Ticket;
 import dk.easv.be.TicketType;
 import dk.easv.dal.ConnectionManager;
@@ -111,6 +112,16 @@ public class TicketDAO {
                 ps3.setString(2, ticket.getTicketID().toString());
                 ps3.executeUpdate();
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deassignTicket(UUID ticketId) {
+        try (Connection con = cm.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE Tickets SET customer_id = NULL WHERE ticket_UUID = ?");
+            ps.setString(1, ticketId.toString());
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

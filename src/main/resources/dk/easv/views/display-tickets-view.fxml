@@ -27,6 +27,7 @@
                         <TableColumn fx:id="qrCodeColumn" prefWidth="90.0" />
                          <TableColumn fx:id="assignTicketColumn" prefWidth="220.80001220703127" />
                         <TableColumn fx:id="viewTicketColumn" prefWidth="220.80001220703127" />
+                         <TableColumn fx:id="assignedTicketColumn" prefWidth="220.80001220703127" />
                      </columns>
                   </MFXLegacyTableView>
                </children>

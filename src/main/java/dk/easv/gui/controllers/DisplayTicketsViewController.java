@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Ticket;
 import dk.easv.gui.models.EventModel;
+import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -167,11 +169,11 @@ public class DisplayTicketsViewController implements Initializable {
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.onCloseRequestProperty().setValue(e -> {
-                System.out.println("Exit");
                 File file = new File("src/main/resources/dk/easv/tmp/tmp-ticket.png");
-                System.out.println(file.exists());
                 if (file.exists()) {
-                    file.delete();
+                    if (!file.delete()) {
+                        AlertHelper.showDefaultAlert("Could not delete file", Alert.AlertType.ERROR);
+                    }
                 }
             });
             stage.show();

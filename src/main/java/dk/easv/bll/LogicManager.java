@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class LogicManager {
     private final TicketDAO ticketDAO = new TicketDAO();
@@ -129,5 +130,9 @@ public class LogicManager {
 
     public Customer getCustomer(int customerId) {
         return customerDAO.getCustomer(customerId);
+    }
+
+    public void deassignTicket(UUID ticketId){
+        ticketDAO.deassignTicket(ticketId);
     }
 }
