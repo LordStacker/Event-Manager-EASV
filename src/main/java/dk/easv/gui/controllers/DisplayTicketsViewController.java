@@ -19,6 +19,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -46,6 +51,10 @@ public class DisplayTicketsViewController implements Initializable {
     private TableColumn<Ticket, MFXButton> assignTicketColumn;
     @FXML
     private TableColumn<Ticket, String > assignedTicketColumn;
+
+    @FXML
+    private TableColumn<Ticket, String> printTicketColumn;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -86,8 +95,53 @@ public class DisplayTicketsViewController implements Initializable {
                 return new SimpleStringProperty("Not assigned");
             }
         });
+        printTicketColumn.setCellValueFactory(cellData -> {
+            MFXButton viewButton = new MFXButton("Print");
+            viewButton.setOnAction(event -> {
+                printTicket(cellData.getValue());
+            });
+            return new SimpleObjectProperty(viewButton);
+        });
         ticketTableView.setItems(model.getObsTickets());
     }
+
+    /*private void printTicket(Ticket value) {
+        PrinterJob job = PrinterJob.getPrinterJob();
+        if (job.printDialog()) {
+            try {
+                job.print();
+            } catch (Exception ex) {
+
+            }
+        }
+    }
+
+
+     */
+
+    public void printTicket(Ticket panel) {
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(new Printable() {
+            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+                if (pageIndex > 0) {
+                    return Printable.NO_SUCH_PAGE;
+                }
+                graphics.translate((int) pageFormat.getImageableX(), (int) pageFormat.getImageableY());
+                panel.printAll(graphics);
+                return Printable.PAGE_EXISTS;
+            }
+        });
+        if (job.printDialog()) {
+            try {
+                job.print();
+            } catch (Exception ex) {
+
+            }
+        }
+    }
+
+
+
 
     private void assignTicket(Ticket value) {
         try {

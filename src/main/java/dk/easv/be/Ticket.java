@@ -2,6 +2,7 @@ package dk.easv.be;
 
 import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.util.UUID;
@@ -95,6 +96,9 @@ public class Ticket { //I actually want to extend user as well
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public void printAll(Graphics graphics) {
     }
 }
 
