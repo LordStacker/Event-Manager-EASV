@@ -27,6 +27,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +41,7 @@ public class MainWindowController implements Initializable {
     private AnchorPane nextEventPane;
 
     private final ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
-    private int currentVolume = 2;
+    private int currentVolume = 1;
 
     private Stage stage;
     @FXML
@@ -66,6 +68,16 @@ public class MainWindowController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTables();
+
+        // check for tmp folder
+        Path path = Path.of("src/main/resources/dk/easv/tmp");
+        if (!Files.exists(path)){
+            try {
+                Files.createDirectory(path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void setTables() {
@@ -287,7 +299,6 @@ public class MainWindowController implements Initializable {
     @FXML
     private void futureEventsTableClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2 && (upcomingEventsTable.getSelectionModel().getSelectedItem() != null) ) {
-            System.out.println();
             openDisplayTicket(upcomingEventsTable.getSelectionModel().getSelectedItem().getEventID());
         }
     }

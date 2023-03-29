@@ -14,7 +14,7 @@ public class Ticket { //I actually want to extend user as well
     private int eventId;
     private double price;
     private int ticketTypeId;
-
+    private int customerId;
     public Ticket(String ticketType, int ticketNumber, double price, int ticketTypeId) {
         this.ticketType = ticketType;
         this.ticketNumber = ticketNumber;
@@ -23,6 +23,15 @@ public class Ticket { //I actually want to extend user as well
         this.ticketTypeId = ticketTypeId;
     }
 
+
+    public Ticket(UUID ticketID, String ticketType, int ticketNumber, double price, int ticketTypeId, int customerId) {
+        this.ticketType = ticketType;
+        this.ticketNumber = ticketNumber;
+        this.ticketID = ticketID;
+        this.price = price;
+        this.ticketTypeId = ticketTypeId;
+        this.customerId = customerId;
+    }
 
     public Ticket(UUID ticketID, String ticketType, int ticketNumber, double price, int ticketTypeId) {
         this.ticketType = ticketType;
@@ -78,6 +87,14 @@ public class Ticket { //I actually want to extend user as well
 
     public void setTicketTypeId(int ticketTypeId) {
         this.ticketTypeId = ticketTypeId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 }
 
