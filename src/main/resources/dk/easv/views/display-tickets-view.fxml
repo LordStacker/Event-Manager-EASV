@@ -24,9 +24,9 @@
                         <TableColumn fx:id="ticketId" prefWidth="313.59999310970306" text="Ticket ID" />
                         <TableColumn fx:id="ticketNumber" minWidth="0.0" prefWidth="152.0" text="Ticket Number" />
                         <TableColumn fx:id="ticketType" prefWidth="122.39987182617188" text="Ticket Type" />
+                        <TableColumn fx:id="qrCodeColumn" prefWidth="90.0" />
                          <TableColumn fx:id="assignTicketColumn" prefWidth="220.80001220703127" />
                         <TableColumn fx:id="viewTicketColumn" prefWidth="220.80001220703127" />
-                         <TableColumn fx:id="assignedTicketColumn" prefWidth="220.80001220703127" />
                      </columns>
                   </MFXLegacyTableView>
                </children>

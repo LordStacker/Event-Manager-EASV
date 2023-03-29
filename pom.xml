@@ -44,13 +44,6 @@
             <artifactId>qrgen</artifactId>
             <version>1.4</version>
         </dependency>
-        <!-- add all iText 7 modules -->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext7-core</artifactId>
-            <version>${itext.version}</version>
-            <type>pom</type>
-        </dependency>
 
     </dependencies>
 
