@@ -52,6 +52,7 @@
                                 <MFXButton fx:id="cancelButton" cancelButton="true" text="Cancel" />
                             </buttons>
                         </ButtonBar>
+                  <MFXButton text="Create user" />
                     </children>
 
                     <padding>

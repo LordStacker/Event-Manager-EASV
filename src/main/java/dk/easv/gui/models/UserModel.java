@@ -16,6 +16,10 @@ public class UserModel {
         return bll.checkUserLog(username, password);
     }
 
+    public int createUser(User user){
+        return bll.createUser(user);
+    }
+
     public ObservableList<User> usersPlanners(Roles roles){
         return bll.usersPlanners(roles);
     }

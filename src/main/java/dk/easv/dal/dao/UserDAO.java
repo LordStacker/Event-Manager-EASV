@@ -44,6 +44,24 @@ public class UserDAO {
         return users;
     }
 
+    public int createUser(User user){
+        try (Connection con = cm.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO dbo.[User]  " +
+                            "(username, password, email, role ) " +
+                            "OUTPUT inserted.id VALUES (?, ?, ?, ?)");
+            ps.setString(1, user.userName());
+            ps.setString(2, user.userPassword());
+            ps.setString(3, user.userEmail());
+            ps.setString(4, user.role().toString());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static ObservableList<User> usersPlanners(Roles roles){
         ObservableList<User> usersPlanners = FXCollections.observableArrayList();
         try (Connection connection = cm.getConnection()) {

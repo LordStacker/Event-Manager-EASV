@@ -49,6 +49,10 @@ public class LogicManager {
         return userDAO.checkUserLog(username,password);
     }
 
+    public int createUser(User user){
+        return userDAO.createUser(user);
+    }
+
     public ObservableList<User> usersPlanners(Roles roles){return userDAO.usersPlanners(roles); }
     public int addEvent(Event event) {
         return eventDAO.createEvent(event);
