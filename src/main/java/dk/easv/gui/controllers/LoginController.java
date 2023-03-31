@@ -18,8 +18,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -64,17 +62,6 @@ public class LoginController extends RootController implements Initializable {
                 stage.close();
                 stage.show();
                 controller.initialed(stage, stageWidth, stageHeight);
-
-                stage.setOnCloseRequest(e -> {
-                    Path file = Path.of("src/main/resources/dk/easv/tmp");
-                    if (Files.exists(file)) {
-                        try {
-                            Files.delete(file);
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
-                    }
-                });
             }
         }
 

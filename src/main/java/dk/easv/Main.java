@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -36,6 +37,19 @@ public class Main extends Application {
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar.png"))));
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void stop(){
+        System.out.println("Closing application");
+        Path file = Path.of("src/main/resources/dk/easv/tmp");
+        if (Files.exists(file)) {
+            try {
+                Files.delete(file);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
     }
 
     public static void main(String[] args) {
