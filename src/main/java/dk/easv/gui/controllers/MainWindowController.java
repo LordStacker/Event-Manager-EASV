@@ -2,12 +2,16 @@ package dk.easv.gui.controllers;
 
 import dk.easv.Main;
 import dk.easv.be.Event;
+import dk.easv.be.Roles;
+import dk.easv.be.User;
 import dk.easv.gui.models.EventModel;
+import dk.easv.gui.models.UserModel;
 import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +30,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -50,7 +55,14 @@ public class MainWindowController implements Initializable {
     @FXML
     private Label nextEventLabel;
 
+    @FXML
+    private HBox viewRole;
+
     private final EventModel model = new EventModel();
+
+    private final UserModel userModel = new UserModel();
+
+    private ObservableList<User> userPlanners;
 
 
     @Override
@@ -103,10 +115,10 @@ public class MainWindowController implements Initializable {
         pastEventsTable.setMinHeight(400);
     }
 
-    public void initialed(Stage stage, int stageWidth, int stageHeight) {
+    public void initialed(Stage stage, int stageWidth, int stageHeight, User user) {
         this.stage = stage;
         setupHBoxListener();
-
+        renderConditionalView(user);
         initEventsHBox();
         String nextEventName;
         int nextEventId = 0;
@@ -124,7 +136,7 @@ public class MainWindowController implements Initializable {
     }
 
     private void initEventsHBox() {
-        for (int i = 1; i < model.getObsFutureEvents().size(); i++) {
+        for (int i = 0; i < model.getObsFutureEvents().size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/upcoming-event-view.fxml"));
             try {
                 AnchorPane anchorPane = fxmlLoader.load();
@@ -156,6 +168,37 @@ public class MainWindowController implements Initializable {
 
     public void setNextEvent(String s, int eventID) {
         this.setNextEvent(s, "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80", eventID);
+    }
+
+    public void renderConditionalView(User user){
+        if(user != null){
+            if(user.role() == Roles.ADMIN){
+                Button button = new MFXButton("Manage Users");
+                viewRole.getChildren().add(button);
+                button.minWidth(26.0);
+                button.minHeight(108.0);
+                button.setOnAction(event -> {
+                    userPlanners = userModel.usersPlanners(Roles.EVENT_COORDINATOR);
+                    //TODO Refactor @Patrik Factory manegement
+                    try {
+                        Stage stage = new Stage();
+                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/manage-users-view.fxml"));
+                        Parent root = fxmlLoader.load();
+                        manageUsersController manageUsersController = fxmlLoader.getController();
+                        Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
+                        stage.setTitle("Manage Users");
+                        stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
+                        stage.setScene(scene);
+                        stage.show();
+                        manageUsersController.initialed(userPlanners);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                });
+            }
+        }
+
     }
 
     public void setNextEvent(String s, String imageURL, int eventId) {

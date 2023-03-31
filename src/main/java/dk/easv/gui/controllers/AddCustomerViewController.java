@@ -2,6 +2,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.be.Ticket;
+import dk.easv.bll.LogicManager;
 import dk.easv.gui.models.EventModel;
 import dk.easv.gui.models.TicketViewModel;
 import dk.easv.util.AlertHelper;

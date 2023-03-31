@@ -64,7 +64,6 @@ public class LoginController implements Initializable {
                 stage.centerOnScreen();
                 stage.close();
                 stage.show();
-                controller.initialed(stage, stageWidth, stageHeight);
 
                 stage.setOnCloseRequest(e -> {
                     Path file = Path.of("src/main/resources/dk/easv/tmp");
@@ -76,6 +75,7 @@ public class LoginController implements Initializable {
                         }
                     }
                 });
+                controller.initialed(stage, stageWidth, stageHeight, user.get(0));
             }
         }
 
