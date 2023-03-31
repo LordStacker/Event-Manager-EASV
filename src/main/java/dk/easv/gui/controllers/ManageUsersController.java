@@ -1,7 +1,7 @@
 package dk.easv.gui.controllers;
 
-import dk.easv.Main;
 import dk.easv.be.User;
+import dk.easv.gui.controllers.abstractController.RootController;
 import dk.easv.gui.models.UserModel;
 import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -9,27 +9,20 @@ import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class manageUsersController implements Initializable {
+public class ManageUsersController extends RootController implements Initializable {
     @FXML
-    private MFXLegacyTableView usersTableView;
+    private MFXLegacyTableView<User> usersTableView;
     @FXML
     private TableColumn<User, String> username, roles, email, actionsUser;
 
@@ -41,7 +34,7 @@ public class manageUsersController implements Initializable {
 
     private Stage stage;
 
-    private UserModel model = new UserModel();
+    private final UserModel model = new UserModel();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -61,7 +54,7 @@ public class manageUsersController implements Initializable {
 
 
     public void populateTable(ObservableList<User> userPlanners){
-        username.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().userName().toString()));
+        username.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().userName()));
         roles.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().role())));
         email.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().userEmail()));
         actionsUser.setCellValueFactory(cellData -> {

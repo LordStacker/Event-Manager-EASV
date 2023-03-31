@@ -2,11 +2,11 @@ package dk.easv.gui.controllers;
 
 import dk.easv.Main;
 import dk.easv.be.Event;
+import dk.easv.be.Roles;
+import dk.easv.be.User;
 import dk.easv.bll.helpers.ViewType;
 import dk.easv.gui.controllers.abstractController.RootController;
 import dk.easv.gui.controllers.controllerFactory.ControllerFactory;
-import dk.easv.be.Roles;
-import dk.easv.be.User;
 import dk.easv.gui.models.EventModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.util.AlertHelper;
@@ -35,7 +35,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -182,19 +181,16 @@ public class MainWindowController extends RootController implements Initializabl
     public void renderConditionalView(User user){
         if(user != null){
             if(user.role() == Roles.ADMIN){
-                Button button = new MFXButton("Manage Users");
+                MFXButton button = new MFXButton("Manage Users");
                 viewRole.getChildren().add(button);
                 button.minWidth(26.0);
                 button.minHeight(108.0);
                 button.setOnAction(event -> {
                     userPlanners = userModel.usersPlanners(Roles.EVENT_COORDINATOR);
-                    //TODO Refactor @Patrik Factory manegement
                     try {
                         Stage stage = new Stage();
-                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/manage-users-view.fxml"));
-                        Parent root = fxmlLoader.load();
-                        manageUsersController manageUsersController = fxmlLoader.getController();
-                        Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
+                        ManageUsersController manageUsersController = (ManageUsersController) controllerFactory.loadFxmlFile(ViewType.MANAGE_USERS);
+                        Scene scene = new Scene(manageUsersController.getView(), this.stage.getWidth(), this.stage.getHeight());
                         stage.setTitle("Manage Users");
                         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
                         stage.setScene(scene);

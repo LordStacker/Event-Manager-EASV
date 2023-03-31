@@ -46,6 +46,12 @@ public enum ViewType {
         public String getFXMLView(){
             return "views/display-tickets-view.fxml";
         }
+    },
+    MANAGE_USERS {
+        @Override
+        public String getFXMLView(){
+            return "views/manage-users-view.fxml";
+        }
     };
 
 
