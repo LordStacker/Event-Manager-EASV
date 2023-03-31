@@ -6,6 +6,7 @@ module dk.easv.eventticketseasvbar {
     requires com.microsoft.sqlserver.jdbc;
     requires MaterialFX;
     requires qrgen;
+    requires pdfbox;
 
 
     opens dk.easv to javafx.fxml;
