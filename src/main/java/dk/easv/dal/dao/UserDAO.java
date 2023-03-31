@@ -84,4 +84,15 @@ public class UserDAO {
         }
         return usersPlanners;
     }
+
+    public int deleteUser(int id){
+        try (Connection con = cm.getConnection()){
+            PreparedStatement ps = con.prepareStatement("DELETE FROM dbo.[User] WHERE id = ? ");
+            ps.setInt(1, id);
+            return ps.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

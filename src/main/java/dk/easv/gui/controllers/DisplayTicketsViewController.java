@@ -111,7 +111,7 @@ public class DisplayTicketsViewController implements Initializable {
             stage.centerOnScreen();
             stage.show();
             value.setEventId(eventId);
-            controller.initialed(value, model);
+            //controller.initialed(value, model);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

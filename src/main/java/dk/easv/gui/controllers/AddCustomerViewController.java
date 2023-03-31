@@ -2,6 +2,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.be.Ticket;
+import dk.easv.bll.LogicManager;
 import dk.easv.gui.models.EventModel;
 import dk.easv.gui.models.TicketViewModel;
 import dk.easv.util.AlertHelper;
@@ -25,21 +26,21 @@ public class AddCustomerViewController implements Initializable {
     private TicketViewModel model = new TicketViewModel();
     private EventModel eventModel;
 
+    private LogicManager bll = new LogicManager();
     @FXML
-    private void submitButtonAction(ActionEvent actionEvent) {
+    private void createButtonAction(ActionEvent actionEvent) {
         if (isInputValid()) {
-            model.assignTicketToCustomer(nameTextField.getText(), emailTextField.getText(), ticket);
-            eventModel.getAllTickets(ticket.getEventId());
-
+            bll.createCustomer(nameTextField.getText().toString(), emailTextField.getText().toString());
+            System.out.println("Succesfully created!");
             stage.close();
         }
     }
 
     private boolean isInputValid(){
         if (emailTextField == null || emailTextField.getText().trim().isEmpty()) {
-            AlertHelper.showDefaultAlert("Please enter customer E-mail before submitting!", Alert.AlertType.WARNING);
+            AlertHelper.showDefaultAlert("Please enter customer E-mail before Creating!", Alert.AlertType.WARNING);
         } else if (nameTextField == null || nameTextField.getText().trim().isEmpty()) {
-            AlertHelper.showDefaultAlert("Please enter customer name before submitting!", Alert.AlertType.WARNING);
+            AlertHelper.showDefaultAlert("Please enter customer name before Creating!", Alert.AlertType.WARNING);
         } else
             return true;
         return false;
@@ -49,21 +50,7 @@ public class AddCustomerViewController implements Initializable {
         stage.close();
     }
 
-    @FXML
-    private void removeCustomerData(ActionEvent actionEvent){
-        model.deassignTicket(ticket.getTicketID());
-        nameTextField.setText("");
-        emailTextField.setText("");
-    }
-
-    public void initialed(Ticket ticket, EventModel eventModel) {
-        this.ticket = ticket;
-        this.eventModel = eventModel;
-        if (ticket.getCustomerId() != 0) {
-            Customer customer = model.getCustomer(ticket.getCustomerId());
-            nameTextField.setText(customer.getCustomerName());
-            emailTextField.setText(customer.getCustomerEmail());
-        }
+    public void initialed() {
         this.stage = (Stage) nameTextField.getScene().getWindow();
     }
 

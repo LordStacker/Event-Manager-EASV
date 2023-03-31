@@ -136,7 +136,7 @@ public class MainWindowController implements Initializable {
     }
 
     private void initEventsHBox() {
-        for (int i = 1; i < model.getObsFutureEvents().size(); i++) {
+        for (int i = 0; i < model.getObsFutureEvents().size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/upcoming-event-view.fxml"));
             try {
                 AnchorPane anchorPane = fxmlLoader.load();

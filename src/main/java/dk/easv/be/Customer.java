@@ -12,6 +12,11 @@ public class Customer {
         this.customerName = customerName;
     }
 
+    public Customer(String customerName, String customerEmail){
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+    }
+
 
     public String getCustomerName() {
         return customerName;

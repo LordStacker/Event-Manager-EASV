@@ -20,6 +20,10 @@ public class UserModel {
         return bll.createUser(user);
     }
 
+    public int deleteUser(int id){
+        return bll.deleteUser(id);
+    }
+
     public ObservableList<User> usersPlanners(Roles roles){
         return bll.usersPlanners(roles);
     }

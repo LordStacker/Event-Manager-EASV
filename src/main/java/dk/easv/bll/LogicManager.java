@@ -53,6 +53,8 @@ public class LogicManager {
         return userDAO.createUser(user);
     }
 
+    public int deleteUser(int id){return userDAO.deleteUser(id);  }
+
     public ObservableList<User> usersPlanners(Roles roles){return userDAO.usersPlanners(roles); }
     public int addEvent(Event event) {
         return eventDAO.createEvent(event);
@@ -141,6 +143,9 @@ public class LogicManager {
         return customerDAO.getCustomer(customerId);
     }
 
+    public int createCustomer(String customerName, String customerEmail){
+        return customerDAO.createCustomer(new Customer(customerName, customerEmail));
+    }
     public void deassignTicket(UUID ticketId){
         ticketDAO.deassignTicket(ticketId);
     }
