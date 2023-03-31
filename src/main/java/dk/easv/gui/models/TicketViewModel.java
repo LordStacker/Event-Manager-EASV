@@ -2,7 +2,6 @@ package dk.easv.gui.models;
 
 import dk.easv.be.Customer;
 import dk.easv.be.Ticket;
-import dk.easv.be.TicketType;
 import dk.easv.bll.LogicManager;
 import javafx.scene.image.Image;
 

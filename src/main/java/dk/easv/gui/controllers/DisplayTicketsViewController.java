@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Ticket;
 import dk.easv.gui.models.EventModel;
+import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,18 +14,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 
 import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+
+import java.io.File;
 import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -37,6 +46,8 @@ public class DisplayTicketsViewController implements Initializable {
     private TableColumn<Ticket, String> ticketId, ticketType;
     @FXML
     private TableColumn<Ticket, Integer> ticketNumber;
+    @FXML
+    private TableColumn<Ticket, String> qrCodeColumn;
     @FXML
     private MFXButton cancelButton;
     @FXML
@@ -119,6 +130,7 @@ public class DisplayTicketsViewController implements Initializable {
 
      */
 
+    /*
     public void printTicket(Ticket panel) {
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(new Printable() {
@@ -142,11 +154,20 @@ public class DisplayTicketsViewController implements Initializable {
 
 
 
+     */
+
+
+
+    
+
+
+
+
 
     private void assignTicket(Ticket value) {
         try {
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/addCustomerView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/assignCustomerView.fxml"));
             Parent root = fxmlLoader.load();
             AddCustomerViewController controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
@@ -159,6 +180,14 @@ public class DisplayTicketsViewController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        qrCodeColumn.setCellValueFactory(cellData -> {
+            MFXButton qrCodeButton = new MFXButton("QR Code");
+            qrCodeButton.setOnAction(event -> showQrCode("Free stuff for ticket with id: " + cellData.getValue().getTicketID()));
+            return new SimpleObjectProperty(qrCodeButton);
+        });
+
+        ticketTableView.setItems(model.getObsTickets());
     }
 
     public void setEventId(int newEventId) {
@@ -167,6 +196,23 @@ public class DisplayTicketsViewController implements Initializable {
 
     private void cancelButtonClicked() {
         stage.close();
+    }
+
+    private void showQrCode(String codedText){
+        // GENERATE QR CODE
+        ByteArrayOutputStream preparedQrCode = QRCode.from(codedText).to(ImageType.PNG).withSize(200, 200).stream();
+        ByteArrayInputStream createdQrCode = new ByteArrayInputStream(preparedQrCode.toByteArray());
+
+        // SHOW QR CODE
+        BorderPane root = new BorderPane();
+        Image image = new Image(createdQrCode);
+        ImageView view = new ImageView(image);
+        view.setStyle("-fx-stroke-width: 2; -fx-stroke: blue");
+        root.setCenter(view);
+        Scene scene = new Scene(root, 200, 200);
+        Stage primaryStage = new Stage();
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     @FXML
@@ -187,6 +233,14 @@ public class DisplayTicketsViewController implements Initializable {
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.centerOnScreen();
+            stage.onCloseRequestProperty().setValue(e -> {
+                File file = new File("src/main/resources/dk/easv/tmp/tmp-ticket.png");
+                if (file.exists()) {
+                    if (!file.delete()) {
+                        AlertHelper.showDefaultAlert("Could not delete file", Alert.AlertType.ERROR);
+                    }
+                }
+            });
             stage.show();
             ticketViewController.initialed(ticket, eventId);
         } catch (IOException e) {

@@ -52,7 +52,6 @@ public class LogicManager {
     public List<Event> getAllEvents() {
         return eventDAO.getAllEvents();
     }
-
     public int deleteEvent(int id) {
         return eventDAO.deleteEvent(id);
     }
@@ -82,13 +81,18 @@ public class LogicManager {
             graphics.setBackground(Color.WHITE);
             graphics.setFont(new Font("Arial", Font.PLAIN, 30));
             graphics.setColor(Color.BLACK);
-            graphics.drawString("Name Surname", 30, 30);
-            graphics.drawString("mail@mail.com", 30, 70);
+            Customer customer = customerDAO.getCustomer(ticket.getCustomerId());
+            if (customer != null) {
+                graphics.drawString(customer.getCustomerName(), 30, 40);
+                graphics.drawString(customer.getCustomerEmail(), 30, 80);
+            } else {
+                graphics.drawString("Not assigned", 30, 40);
+            }
             ByteArrayInputStream qr = new ByteArrayInputStream(QRCode.from(ticket.getTicketID().toString()).to(ImageType.PNG).withSize(400, 400).stream().toByteArray());
             image = ImageIO.read(qr);
             graphics.drawImage(image, 30, 110, null);
             graphics.setFont(new Font("Arial", Font.PLAIN, 20));
-            graphics.drawString(ticket.getTicketID().toString(), 30, 510);
+            graphics.drawString(ticket.getTicketID().toString(), 45, 500);
             graphics.setFont(new Font("Arial", Font.PLAIN, 30));
             graphics.drawString("Ticket number: " + ticket.getTicketNumber(), 30, 580);
             graphics.drawString(ticket.getTicketType(), 30, 620);
