@@ -26,21 +26,21 @@ public class AddCustomerViewController implements Initializable {
     private TicketViewModel model = new TicketViewModel();
     private EventModel eventModel;
 
-    private LogicManager bll = new LogicManager();
     @FXML
-    private void createButtonAction(ActionEvent actionEvent) {
+    private void submitButtonAction(ActionEvent actionEvent) {
         if (isInputValid()) {
-            bll.createCustomer(nameTextField.getText().toString(), emailTextField.getText().toString());
-            System.out.println("Succesfully created!");
+            model.assignTicketToCustomer(nameTextField.getText(), emailTextField.getText(), ticket);
+            eventModel.getAllTickets(ticket.getEventId());
+
             stage.close();
         }
     }
 
     private boolean isInputValid(){
         if (emailTextField == null || emailTextField.getText().trim().isEmpty()) {
-            AlertHelper.showDefaultAlert("Please enter customer E-mail before Creating!", Alert.AlertType.WARNING);
+            AlertHelper.showDefaultAlert("Please enter customer E-mail before submitting!", Alert.AlertType.WARNING);
         } else if (nameTextField == null || nameTextField.getText().trim().isEmpty()) {
-            AlertHelper.showDefaultAlert("Please enter customer name before Creating!", Alert.AlertType.WARNING);
+            AlertHelper.showDefaultAlert("Please enter customer name before submitting!", Alert.AlertType.WARNING);
         } else
             return true;
         return false;
@@ -50,7 +50,21 @@ public class AddCustomerViewController implements Initializable {
         stage.close();
     }
 
-    public void initialed() {
+    @FXML
+    private void removeCustomerData(ActionEvent actionEvent){
+        model.deassignTicket(ticket.getTicketID());
+        nameTextField.setText("");
+        emailTextField.setText("");
+    }
+
+    public void initialed(Ticket ticket, EventModel eventModel) {
+        this.ticket = ticket;
+        this.eventModel = eventModel;
+        if (ticket.getCustomerId() != 0) {
+            Customer customer = model.getCustomer(ticket.getCustomerId());
+            nameTextField.setText(customer.getCustomerName());
+            emailTextField.setText(customer.getCustomerEmail());
+        }
         this.stage = (Stage) nameTextField.getScene().getWindow();
     }
 

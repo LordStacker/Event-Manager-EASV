@@ -76,27 +76,4 @@ public class manageUsersController implements Initializable {
         });
         usersTableView.setItems(userPlanners);
     }
-    @FXML
-    public void openUserCreation(ActionEvent actionEvent) {
-        try{
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/addCustomerView.fxml"));
-            Parent root = fxmlLoader.load();
-            AddCustomerViewController controller = fxmlLoader.getController();
-            Scene scene = new Scene(root);
-            stage.setTitle("Create Customer");
-            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.setResizable(false);
-            controller.initialed();
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void openCoordinatorCreation(ActionEvent actionEvent) {
-        System.out.println("here coordinator creation");
-    }
 }
