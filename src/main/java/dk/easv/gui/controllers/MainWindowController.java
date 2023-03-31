@@ -35,13 +35,14 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends RootController implements Initializable {
+    final ControllerFactory controllerFactory = new ControllerFactory();
     @FXML
     private HBox upcomingEventsHBox;
     @FXML
     private AnchorPane nextEventPane;
 
     private final ArrayList<AnchorPane> upcomingEvents = new ArrayList<>();
-    private int currentVolume = 1;
+    private int currentVolume;
 
     private Stage stage;
     @FXML
@@ -129,18 +130,20 @@ public class MainWindowController extends RootController implements Initializabl
     }
 
     private void initEventsHBox() {
-        final ControllerFactory controllerFactory = new ControllerFactory();
-        for (int i = 1; i < model.getObsFutureEvents().size(); i++) {
-            try {
-                UpcomingEventController controller = (UpcomingEventController) controllerFactory.loadFxmlFile(ViewType.UPCOMING_EVENT);
-                AnchorPane anchorPane = (AnchorPane) controller.getView();
-                controller.setEvent(model.getObsFutureEvents().get(i).getEventName());
-                upcomingEvents.add(anchorPane);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (model.getObsFutureEvents().size() > 1) {
+            for (int i = 1; i < model.getObsFutureEvents().size(); i++) {
+                try {
+                    UpcomingEventController controller = (UpcomingEventController) controllerFactory.loadFxmlFile(ViewType.UPCOMING_EVENT);
+                    AnchorPane anchorPane = (AnchorPane) controller.getView();
+                    controller.setEvent(model.getObsFutureEvents().get(i).getEventName());
+                    upcomingEvents.add(anchorPane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        } else {
+            upcomingEvents.add(new AnchorPane(new Label("No upcoming events")));
         }
-        upcomingEventsHBox.getChildren().addAll(upcomingEvents.subList(0, currentVolume));
     }
 
     private void setupHBoxListener(){
@@ -157,6 +160,7 @@ public class MainWindowController extends RootController implements Initializabl
             pastEventsTable.resizeColumn(pastNameColumn, newValue.doubleValue() - oldValue.doubleValue());
             upcomingEventsTable.resizeColumn(upcomingNameColumn, newValue.doubleValue() - oldValue.doubleValue());
         });
+        stage.setWidth(stage.getWidth() + 1);
     }
 
     public void setNextEvent(String s, int eventID) {
@@ -206,7 +210,6 @@ public class MainWindowController extends RootController implements Initializabl
     }
 
     private AddEventViewController addEventLoader() throws IOException {
-        final ControllerFactory controllerFactory = new ControllerFactory();
         Stage stage = new Stage();
         AddEventViewController addEventViewController = (AddEventViewController) controllerFactory.loadFxmlFile(ViewType.ADD_EVENT);
         Scene scene = new Scene(addEventViewController.getView(), this.stage.getWidth(), this.stage.getHeight());
@@ -223,7 +226,6 @@ public class MainWindowController extends RootController implements Initializabl
     @FXML
     private void logOutAction(ActionEvent actionEvent) {
         try {
-            final ControllerFactory controllerFactory = new ControllerFactory();
             LoginController loginController = (LoginController) controllerFactory.loadFxmlFile(ViewType.LOGIN);
             stage.setScene(new Scene(loginController.getView()));
             loginController.setStage(stage);
@@ -234,7 +236,6 @@ public class MainWindowController extends RootController implements Initializabl
 
     public void openDisplayTicket(int eventId){
         try {
-            final ControllerFactory controllerFactory = new ControllerFactory();
             Stage stage = new Stage();
             DisplayTicketsViewController displayTicketsViewController = (DisplayTicketsViewController) controllerFactory.loadFxmlFile(ViewType.DISPLAY_TICKETS);
             Scene scene = new Scene(displayTicketsViewController.getView(), this.stage.getWidth(), this.stage.getHeight());
