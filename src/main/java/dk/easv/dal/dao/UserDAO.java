@@ -62,13 +62,13 @@ public class UserDAO {
         }
     }
 
-    public static ObservableList<User> usersPlanners(Roles roles){
+    public static ObservableList<User> usersPlanners(Roles role){
         ObservableList<User> usersPlanners = FXCollections.observableArrayList();
         try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("" +
                     "select * from dbo.[User] WHERE " +
                     "(role= ?);");
-            ps.setString(1, roles.toString());
+            ps.setString(1, role.toString());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int dbId = rs.getInt("id");

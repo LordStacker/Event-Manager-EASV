@@ -179,6 +179,7 @@ public class MainWindowController implements Initializable {
                 button.minHeight(108.0);
                 button.setOnAction(event -> {
                     userPlanners = userModel.usersPlanners(Roles.EVENT_COORDINATOR);
+                    //TODO Refactor @Patrik Factory manegement
                     try {
                         Stage stage = new Stage();
                         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/manage-users-view.fxml"));
