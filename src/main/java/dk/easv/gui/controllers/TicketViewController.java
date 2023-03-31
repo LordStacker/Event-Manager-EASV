@@ -1,6 +1,7 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.be.Ticket;
+import dk.easv.gui.controllers.abstractController.RootController;
 import dk.easv.gui.models.TicketViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,7 +14,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TicketViewController implements Initializable {
+public class TicketViewController extends RootController implements Initializable {
 
     @FXML
     private AnchorPane bgAnchor;

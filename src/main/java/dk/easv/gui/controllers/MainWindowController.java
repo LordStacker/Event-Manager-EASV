@@ -2,6 +2,9 @@ package dk.easv.gui.controllers;
 
 import dk.easv.Main;
 import dk.easv.be.Event;
+import dk.easv.bll.helpers.ViewType;
+import dk.easv.gui.controllers.abstractController.RootController;
+import dk.easv.gui.controllers.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.EventModel;
 import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -10,17 +13,19 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -29,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class MainWindowController implements Initializable {
+public class MainWindowController extends RootController implements Initializable {
     @FXML
     private HBox upcomingEventsHBox;
     @FXML
@@ -124,12 +129,12 @@ public class MainWindowController implements Initializable {
     }
 
     private void initEventsHBox() {
+        final ControllerFactory controllerFactory = new ControllerFactory();
         for (int i = 1; i < model.getObsFutureEvents().size(); i++) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/upcoming-event-view.fxml"));
             try {
-                AnchorPane anchorPane = fxmlLoader.load();
-                UpcomingEventController upcomingEventController = fxmlLoader.getController();
-                upcomingEventController.setEvent(model.getObsFutureEvents().get(i).getEventName());
+                UpcomingEventController controller = (UpcomingEventController) controllerFactory.loadFxmlFile(ViewType.UPCOMING_EVENT);
+                AnchorPane anchorPane = (AnchorPane) controller.getView();
+                controller.setEvent(model.getObsFutureEvents().get(i).getEventName());
                 upcomingEvents.add(anchorPane);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -184,16 +189,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private void addEventAction(ActionEvent actionEvent) {
         try {
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
-            Parent root = fxmlLoader.load();
-            AddEventViewController addEventViewController = fxmlLoader.getController();
-            Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
-            stage.setTitle("Add Event");
-            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
-            stage.setScene(scene);
-            stage.show();
-            addEventViewController.initialed(model);
+            addEventLoader().initialed(model);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -203,19 +199,21 @@ public class MainWindowController implements Initializable {
     @FXML
     private void editEventAction(ActionEvent actionEvent) {
         try {
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/add-event-view.fxml"));
-            Parent root = fxmlLoader.load();
-            AddEventViewController addEventViewController = fxmlLoader.getController();
-            Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
-            stage.setTitle("Add Event");
-            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
-            stage.setScene(scene);
-            stage.show();
-            addEventViewController.editing(model, upcomingEventsTable.getSelectionModel().getSelectedItem());
+            addEventLoader().editing(model, upcomingEventsTable.getSelectionModel().getSelectedItem());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private AddEventViewController addEventLoader() throws IOException {
+        final ControllerFactory controllerFactory = new ControllerFactory();
+        Stage stage = new Stage();
+        AddEventViewController addEventViewController = (AddEventViewController) controllerFactory.loadFxmlFile(ViewType.ADD_EVENT);
+        Scene scene = new Scene(addEventViewController.getView(), this.stage.getWidth(), this.stage.getHeight());
+        stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
+        stage.setScene(scene);
+        stage.show();
+        return addEventViewController;
     }
 
     @FXML
@@ -225,10 +223,9 @@ public class MainWindowController implements Initializable {
     @FXML
     private void logOutAction(ActionEvent actionEvent) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Login.fxml")));
-            Parent parent = fxmlLoader.load();
-            LoginController loginController = fxmlLoader.getController();
-            stage.setScene(new Scene(parent));
+            final ControllerFactory controllerFactory = new ControllerFactory();
+            LoginController loginController = (LoginController) controllerFactory.loadFxmlFile(ViewType.LOGIN);
+            stage.setScene(new Scene(loginController.getView()));
             loginController.setStage(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -237,11 +234,10 @@ public class MainWindowController implements Initializable {
 
     public void openDisplayTicket(int eventId){
         try {
+            final ControllerFactory controllerFactory = new ControllerFactory();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/display-tickets-view.fxml"));
-            Parent root = fxmlLoader.load();
-            DisplayTicketsViewController displayTicketsViewController = fxmlLoader.getController();
-            Scene scene = new Scene(root, this.stage.getWidth(), this.stage.getHeight());
+            DisplayTicketsViewController displayTicketsViewController = (DisplayTicketsViewController) controllerFactory.loadFxmlFile(ViewType.DISPLAY_TICKETS);
+            Scene scene = new Scene(displayTicketsViewController.getView(), this.stage.getWidth(), this.stage.getHeight());
             stage.setTitle("Tickets");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);

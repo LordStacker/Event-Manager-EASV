@@ -1,6 +1,7 @@
 package dk.easv.gui.controllers;
 import dk.easv.be.Event;
 import dk.easv.be.TicketType;
+import dk.easv.gui.controllers.abstractController.RootController;
 import dk.easv.util.AlertHelper;
 import dk.easv.gui.models.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -22,7 +23,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.ResourceBundle;
 
-public class AddEventViewController implements Initializable {
+public class AddEventViewController extends RootController implements Initializable {
     @FXML
     private MFXButton submitButton;
     @FXML
@@ -86,6 +87,7 @@ public class AddEventViewController implements Initializable {
         this.stage = (Stage) submitButton.getScene().getWindow();
         stage.setMinWidth(600);
         stage.setMinHeight(450);
+        stage.setTitle("Add event");
     }
 
     public boolean isInputValid(){
@@ -171,6 +173,7 @@ public class AddEventViewController implements Initializable {
         submitButton.setOnAction(e -> editButtonClicked(selectedItem));
         submitButton.setText("Edit");
         addTicketButton.setVisible(false);
+        stage.setTitle("Edit event");
     }
 
     private void createTicketTypesFields(List<TicketType> ticketTypes) {

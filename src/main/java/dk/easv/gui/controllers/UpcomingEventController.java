@@ -1,5 +1,6 @@
 package dk.easv.gui.controllers;
 
+import dk.easv.gui.controllers.abstractController.RootController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -8,7 +9,7 @@ import javafx.scene.layout.Pane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UpcomingEventController implements Initializable {
+public class UpcomingEventController extends RootController implements Initializable {
     @FXML
     private Label eventLabel;
     @FXML
