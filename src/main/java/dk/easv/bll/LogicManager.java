@@ -7,8 +7,6 @@ import javafx.collections.ObservableList;
 import dk.easv.Main;
 import dk.easv.be.Event;
 import dk.easv.dal.dao.CustomerDAO;
-import io.github.palexdev.materialfx.utils.SwingFXUtils;
-import javafx.scene.image.Image;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -25,10 +23,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 public class LogicManager {
     private final TicketDAO ticketDAO = new TicketDAO();
@@ -81,7 +77,7 @@ public class LogicManager {
         eventDAO.updateEvent(new Event(eventId, name, location, startDate, endDate, directions, extraNotes));
     }
 
-    public Image generateTicketImage(Ticket ticket, int eventId) {
+    public BufferedImage generateTicketImage(Ticket ticket, int eventId) {
         try {
             BufferedImage image = ImageIO.read(Objects.requireNonNull(Main.class.getResource("ticket.png")).openStream());
             int width = image.getWidth();
@@ -131,13 +127,13 @@ public class LogicManager {
 
             ImageIO.write(bufferedImage, "png", new File("src/main/resources/dk/easv/tmp/tmp-ticket.png"));
 
-            return SwingFXUtils.toFXImage(bufferedImage, null);
+            return bufferedImage;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void generatePDFFromImage(BufferedImage bufferedImage){
+    public void generatePDFFromImage(BufferedImage bufferedImage, File selectedDirectory, Ticket ticket){
         try (PDDocument pdDocument = new PDDocument()) {
             PDRectangle ticketPage = new PDRectangle(bufferedImage.getWidth(), bufferedImage.getHeight());
             PDPage page = new PDPage(ticketPage);
@@ -146,7 +142,7 @@ public class LogicManager {
             try (PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
                 contentStream.drawImage(pdImage, 0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
             }
-            pdDocument.save("src/main/resources/dk/easv/tmp/tmp-ticket.pdf");
+            pdDocument.save(selectedDirectory.getAbsolutePath()+ "/" + ticket.getTicketID() + ".pdf");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -10,8 +10,11 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,6 +26,7 @@ public class TicketViewController extends RootController implements Initializabl
     private ImageView imgView;
 
     private final TicketViewModel model = new TicketViewModel();
+    private Stage stage;
 
 
     @Override
@@ -31,7 +35,7 @@ public class TicketViewController extends RootController implements Initializabl
 
     public void initialed(Ticket ticket, int eventId){
         double imgScale = 0.5;
-        Stage stage = (Stage) bgAnchor.getScene().getWindow();
+        this.stage = (Stage) bgAnchor.getScene().getWindow();
         Image image = model.getTicketImage(ticket, eventId);
         stage.setMinWidth(image.getWidth()*imgScale);
         stage.setMinHeight(image.getHeight()*imgScale+80);
@@ -48,6 +52,11 @@ public class TicketViewController extends RootController implements Initializabl
     @FXML
     private void saveAsPDFAction(ActionEvent actionEvent) {
         //TODO: Save as PDF
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Choose a directory to save the ticket");
+        File selectedDirectory = directoryChooser.showDialog(stage);
+        model.saveAsPDF(selectedDirectory);
+
     }
 
     @FXML
