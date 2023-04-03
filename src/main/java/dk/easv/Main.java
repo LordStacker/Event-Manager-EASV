@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +17,10 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 public class Main extends Application {
+    public static void main(String[] args) {
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         final IControllerFactory controllerFactory = new ControllerFactory();
@@ -40,19 +45,12 @@ public class Main extends Application {
     }
 
     @Override
-    public void stop(){
-        System.out.println("Closing application");
+    public void stop() {
         Path file = Path.of("src/main/resources/dk/easv/tmp");
-        if (Files.exists(file)) {
-            try {
-                Files.delete(file);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+        try {
+            FileUtils.deleteDirectory(file.toFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }
