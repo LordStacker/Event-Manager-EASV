@@ -19,6 +19,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.print.PrinterJob;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -146,6 +147,12 @@ public class LogicManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void printTicket(){
+        PrinterJob pj = PrinterJob.getPrinterJob();
+        pj.setJobName(" Print Component ");
+        pj.printDialog();
     }
 
     public void assignTicketToCustomer(String name, String email, Ticket ticket) {

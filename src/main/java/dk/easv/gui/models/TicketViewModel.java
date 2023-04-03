@@ -37,4 +37,8 @@ public class TicketViewModel {
     public void saveAsPDF(File selectedDirectory) {
         bll.generatePDFFromImage(image, selectedDirectory, ticket);
     }
+
+    public void printTicket() {
+        bll.printTicket();
+    }
 }

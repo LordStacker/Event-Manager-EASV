@@ -61,6 +61,6 @@ public class TicketViewController extends RootController implements Initializabl
 
     @FXML
     private void printAction(ActionEvent actionEvent) {
-        //TODO: Print
+        model.printTicket();
     }
 }
