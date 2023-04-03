@@ -5,16 +5,18 @@ import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
 import javafx.collections.ObservableList;
 import dk.easv.Main;
-import dk.easv.be.*;
 import dk.easv.be.Event;
 import dk.easv.dal.dao.CustomerDAO;
-import dk.easv.dal.dao.EventDAO;
-import dk.easv.dal.dao.TicketDAO;
-import dk.easv.dal.dao.UserDAO;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.scene.image.Image;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -130,6 +132,21 @@ public class LogicManager {
             ImageIO.write(bufferedImage, "png", new File("src/main/resources/dk/easv/tmp/tmp-ticket.png"));
 
             return SwingFXUtils.toFXImage(bufferedImage, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void generatePDFFromImage(BufferedImage bufferedImage){
+        try (PDDocument pdDocument = new PDDocument()) {
+            PDRectangle ticketPage = new PDRectangle(bufferedImage.getWidth(), bufferedImage.getHeight());
+            PDPage page = new PDPage(ticketPage);
+            pdDocument.addPage(page);
+            PDImageXObject pdImage = LosslessFactory.createFromImage(pdDocument, bufferedImage);
+            try (PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+                contentStream.drawImage(pdImage, 0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
+            }
+            pdDocument.save("src/main/resources/dk/easv/tmp/tmp-ticket.pdf");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
