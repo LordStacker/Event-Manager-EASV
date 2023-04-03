@@ -2,7 +2,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.be.Ticket;
-import dk.easv.bll.LogicManager;
+import dk.easv.gui.controllers.abstractController.RootController;
 import dk.easv.gui.models.EventModel;
 import dk.easv.gui.models.TicketViewModel;
 import dk.easv.util.AlertHelper;
@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddCustomerViewController implements Initializable {
+public class AddCustomerViewController extends RootController implements Initializable {
     @FXML
     private MFXTextField nameTextField;
     @FXML

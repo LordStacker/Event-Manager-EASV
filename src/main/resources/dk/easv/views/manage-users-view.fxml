@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" prefHeight="538.0" prefWidth="830.0" styleClass="backgroundPane" stylesheets="@../css/display.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.manageUsersController">
+<BorderPane fx:id="borderPane" prefHeight="538.0" prefWidth="830.0" styleClass="backgroundPane" stylesheets="@../css/display.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.ManageUsersController">
     <center>
         <MFXScrollPane fitToHeight="true" fitToWidth="true" prefHeight="554.0" prefWidth="830.0" style="-fx-background-color: transparent;">
             <content>

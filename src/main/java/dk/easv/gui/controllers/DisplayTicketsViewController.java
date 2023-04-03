@@ -2,6 +2,9 @@ package dk.easv.gui.controllers;
 
 import dk.easv.Main;
 import dk.easv.be.Ticket;
+import dk.easv.bll.helpers.ViewType;
+import dk.easv.gui.controllers.abstractController.RootController;
+import dk.easv.gui.controllers.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.EventModel;
 import dk.easv.util.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -10,9 +13,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
@@ -32,7 +33,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class DisplayTicketsViewController implements Initializable {
+public class DisplayTicketsViewController extends RootController implements Initializable {
 
     @FXML
     MFXLegacyTableView<Ticket> ticketTableView;
@@ -99,19 +100,18 @@ public class DisplayTicketsViewController implements Initializable {
         ticketTableView.setItems(model.getObsTickets());
     }
 
-    private void assignTicket(Ticket value) {
+    private void assignTicket(Ticket ticket) {
         try {
+            final ControllerFactory controllerFactory = new ControllerFactory();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/addCustomerView.fxml"));
-            Parent root = fxmlLoader.load();
-            AddCustomerViewController controller = fxmlLoader.getController();
-            Scene scene = new Scene(root);
+            AddCustomerViewController controller = (AddCustomerViewController) controllerFactory.loadFxmlFile(ViewType.ASSIGN_CUSTOMER);
+            Scene scene = new Scene(controller.getView());
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
-            value.setEventId(eventId);
-            controller.initialed(value, model);
+            ticket.setEventId(eventId);
+            controller.initialed(ticket, model);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -160,11 +160,10 @@ public class DisplayTicketsViewController implements Initializable {
 
     private void showTicket(Ticket ticket, int eventId) {
         try {
+            final ControllerFactory controllerFactory = new ControllerFactory();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/ticket-view.fxml"));
-            Parent root = fxmlLoader.load();
-            TicketViewController ticketViewController = fxmlLoader.getController();
-            Scene scene = new Scene(root);
+            TicketViewController ticketViewController = (TicketViewController) controllerFactory.loadFxmlFile(ViewType.TICKET_VIEW);
+            Scene scene = new Scene(ticketViewController.getView());
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
             stage.centerOnScreen();
