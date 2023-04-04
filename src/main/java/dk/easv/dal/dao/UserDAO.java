@@ -3,7 +3,7 @@ package dk.easv.dal.dao;
 import dk.easv.be.Roles;
 import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
-import dk.easv.dal.IDAO;
+import dk.easv.dal.daoInterfaces.IUserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,16 +14,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO implements IDAO {
+public class UserDAO implements IUserDAO {
 
-    private static ConnectionManager cm;
+    private final ConnectionManager cm = new ConnectionManager();
 
 
-    public UserDAO() {
-        cm = new ConnectionManager();
-    }
-
-    public static List<User> checkUserLog(String username, String password){
+    @Override
+    public List<User> checkUserLog(String username, String password){
         List<User> users = new ArrayList<>();
         try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("" +
@@ -47,6 +44,7 @@ public class UserDAO implements IDAO {
         return users;
     }
 
+    @Override
     public int createUser(User user){
         try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -65,7 +63,8 @@ public class UserDAO implements IDAO {
         }
     }
 
-    public static ObservableList<User> usersPlanners(Roles role){
+    @Override
+    public ObservableList<User> usersPlanners(Roles role){
         ObservableList<User> usersPlanners = FXCollections.observableArrayList();
         try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("" +
@@ -88,6 +87,7 @@ public class UserDAO implements IDAO {
         return usersPlanners;
     }
 
+    @Override
     public int deleteUser(int id){
         try (Connection con = cm.getConnection()){
             PreparedStatement ps = con.prepareStatement("DELETE FROM dbo.[User] WHERE id = ? ");

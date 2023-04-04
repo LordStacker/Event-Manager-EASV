@@ -5,6 +5,10 @@ import dk.easv.dal.DataAccessObjects;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
+import dk.easv.dal.daoInterfaces.ICustomerDAO;
+import dk.easv.dal.daoInterfaces.IEventDAO;
+import dk.easv.dal.daoInterfaces.ITicketDAO;
+import dk.easv.dal.daoInterfaces.IUserDAO;
 import javafx.collections.ObservableList;
 import dk.easv.Main;
 import dk.easv.be.Event;
@@ -30,10 +34,10 @@ import java.util.*;
 import java.util.List;
 
 public class LogicManager {
-    private final TicketDAO ticketDAO = (TicketDAO) DAOFactory.getDAO(DataAccessObjects.TICKET_DAO);
-    private final EventDAO eventDAO = (EventDAO) DAOFactory.getDAO(DataAccessObjects.EVENT_DAO);
-    private final UserDAO userDAO = (UserDAO) DAOFactory.getDAO(DataAccessObjects.USER_DAO);
-    private final CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDAO(DataAccessObjects.CUSTOMER_DAO);
+    private final ITicketDAO ticketDAO = (TicketDAO) DAOFactory.getDAO(DataAccessObjects.TICKET_DAO);
+    private final IEventDAO eventDAO = (EventDAO) DAOFactory.getDAO(DataAccessObjects.EVENT_DAO);
+    private final IUserDAO userDAO = (UserDAO) DAOFactory.getDAO(DataAccessObjects.USER_DAO);
+    private final ICustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDAO(DataAccessObjects.CUSTOMER_DAO);
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
         addTickets(eventId, ticketType, price, numberOfTickets, 1, 0);
     }

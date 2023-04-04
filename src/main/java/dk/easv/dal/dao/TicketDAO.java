@@ -3,7 +3,7 @@ package dk.easv.dal.dao;
 import dk.easv.be.Ticket;
 import dk.easv.be.TicketType;
 import dk.easv.dal.ConnectionManager;
-import dk.easv.dal.IDAO;
+import dk.easv.dal.daoInterfaces.ITicketDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,8 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class TicketDAO implements IDAO {
+public class TicketDAO implements ITicketDAO {
     private final ConnectionManager cm = new ConnectionManager();
+    @Override
     public void addTickets(List<Ticket> tickets, int eventId){
         try (Connection con = cm.getConnection()){
             HashMap<String, Integer> ticketTypes = new HashMap<>();
@@ -45,11 +46,12 @@ public class TicketDAO implements IDAO {
         }
     }
 
+    @Override
     public List<Ticket> getAllTickets(int eventId){
         List<Ticket> tickets = new ArrayList<>();
         try (Connection con = cm.getConnection()){
-            PreparedStatement ps = con.prepareStatement("SELECT Tickets.ticket_UUID, Tickets.ticket_number, ticket_type.ticket_type, ticket_type.ticket_price, ticket_type.type_id, Tickets.customer_id\n" +
-                    "FROM Tickets INNER JOIN ticket_type ON Tickets.ticket_type_id = ticket_type.type_id\n" +
+            PreparedStatement ps = con.prepareStatement("SELECT Tickets.ticket_UUID, Tickets.ticket_number, ticket_type.ticket_type, ticket_type.ticket_price, ticket_type.type_id, Tickets.customer_id " +
+                    "FROM Tickets INNER JOIN ticket_type ON Tickets.ticket_type_id = ticket_type.type_id " +
                     "WHERE ticket_type.event_id = ? ORDER BY Tickets.ticket_number");
             ps.setInt(1, eventId);
             ResultSet rs = ps.executeQuery();
@@ -69,6 +71,7 @@ public class TicketDAO implements IDAO {
         return tickets;
     }
 
+    @Override
     public List<TicketType> getTicketTypes(int eventId){
         List<TicketType> ticketTypes = new ArrayList<>();
         try (Connection con = cm.getConnection()){
@@ -89,6 +92,7 @@ public class TicketDAO implements IDAO {
         return ticketTypes;
     }
 
+    @Override
     public void assignTicketToCustomer(String name, String email, Ticket ticket) {
         try (Connection con = cm.getConnection()){
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Customer WHERE email = ?");
@@ -117,6 +121,7 @@ public class TicketDAO implements IDAO {
         }
     }
 
+    @Override
     public void deassignTicket(UUID ticketId) {
         try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("UPDATE Tickets SET customer_id = NULL WHERE ticket_UUID = ?");
