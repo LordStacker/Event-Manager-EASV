@@ -14,6 +14,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -51,7 +52,6 @@ public class TicketViewController extends RootController implements Initializabl
 
     @FXML
     private void saveAsPDFAction(ActionEvent actionEvent) {
-        //TODO: Save as PDF
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Choose a directory to save the ticket");
         File selectedDirectory = directoryChooser.showDialog(stage);
@@ -60,7 +60,7 @@ public class TicketViewController extends RootController implements Initializabl
     }
 
     @FXML
-    private void printAction(ActionEvent actionEvent) {
+    private void printAction(ActionEvent actionEvent) throws PrinterException {
         model.printTicket();
     }
 }

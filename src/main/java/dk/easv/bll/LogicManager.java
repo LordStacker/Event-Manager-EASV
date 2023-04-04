@@ -3,10 +3,12 @@ import dk.easv.be.*;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
+import dk.easv.util.AlertHelper;
 import javafx.collections.ObservableList;
 import dk.easv.Main;
 import dk.easv.be.Event;
 import dk.easv.dal.dao.CustomerDAO;
+import javafx.scene.control.Alert;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -17,8 +19,14 @@ import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import javax.imageio.ImageIO;
+import javax.print.attribute.Attribute;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -143,16 +151,46 @@ public class LogicManager {
             try (PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
                 contentStream.drawImage(pdImage, 0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
             }
-            pdDocument.save(selectedDirectory.getAbsolutePath()+ "/" + ticket.getTicketID() + ".pdf");
+            if(selectedDirectory != null){
+                pdDocument.save(selectedDirectory.getAbsolutePath()+ "/" + ticket.getTicketID() + ".pdf");
+            }
+            else {
+                AlertHelper.showDefaultAlert("You must choose a folder to download PDF", Alert.AlertType.WARNING);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void printTicket(){
-        PrinterJob pj = PrinterJob.getPrinterJob();
-        pj.setJobName(" Print Component ");
-        pj.printDialog();
+    public void printTicket(BufferedImage image, Ticket ticket) throws PrinterException {
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(new Printable() {
+            @Override
+            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+                if (pageIndex != 0) {
+                    return NO_SUCH_PAGE;
+                }
+                Graphics2D g2d = (Graphics2D) graphics;
+                g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+                double pageWidth = pageFormat.getImageableWidth();
+                double pageHeight = pageFormat.getImageableHeight();
+                double imageWidth = image.getWidth();
+                double imageHeight = image.getHeight();
+
+                double scaleX = pageWidth / imageWidth;
+                double scaleY = pageHeight / imageHeight;
+                double scale = Math.min(scaleX, scaleY);
+                g2d.scale(scale, scale);
+
+                double x = (pageWidth / scale - imageWidth) / 2;
+                double y = (pageHeight / scale - imageHeight) / 2;
+                g2d.drawImage(image, (int)x, (int)y, null);
+                return PAGE_EXISTS;
+            }
+        });
+        job.setJobName(ticket.getTicketID().toString());
+        job.printDialog();
+        job.print();
     }
 
     public void assignTicketToCustomer(String name, String email, Ticket ticket) {
