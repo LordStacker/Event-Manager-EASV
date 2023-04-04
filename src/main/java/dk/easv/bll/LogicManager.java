@@ -1,5 +1,7 @@
 package dk.easv.bll;
 import dk.easv.be.*;
+import dk.easv.dal.DAOFactory;
+import dk.easv.dal.DataAccessObjects;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
@@ -28,10 +30,10 @@ import java.util.*;
 import java.util.List;
 
 public class LogicManager {
-    private final TicketDAO ticketDAO = new TicketDAO();
-    private final EventDAO eventDAO = new EventDAO();
-    private final UserDAO userDAO = new UserDAO();
-    private final CustomerDAO customerDAO = new CustomerDAO();
+    private final TicketDAO ticketDAO = (TicketDAO) DAOFactory.getDAO(DataAccessObjects.TICKET_DAO);
+    private final EventDAO eventDAO = (EventDAO) DAOFactory.getDAO(DataAccessObjects.EVENT_DAO);
+    private final UserDAO userDAO = (UserDAO) DAOFactory.getDAO(DataAccessObjects.USER_DAO);
+    private final CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDAO(DataAccessObjects.CUSTOMER_DAO);
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
         addTickets(eventId, ticketType, price, numberOfTickets, 1, 0);
     }

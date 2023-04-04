@@ -1,9 +1,9 @@
 package dk.easv.dal.dao;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Ticket;
 import dk.easv.be.TicketType;
 import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.IDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class TicketDAO {
-    private ConnectionManager cm = new ConnectionManager();
+public class TicketDAO implements IDAO {
+    private final ConnectionManager cm = new ConnectionManager();
     public void addTickets(List<Ticket> tickets, int eventId){
         try (Connection con = cm.getConnection()){
             HashMap<String, Integer> ticketTypes = new HashMap<>();

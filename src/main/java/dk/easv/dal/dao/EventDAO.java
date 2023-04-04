@@ -2,13 +2,13 @@ package dk.easv.dal.dao;
 
 import dk.easv.be.Event;
 import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.IDAO;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventDAO {
+public class EventDAO implements IDAO {
     private final ConnectionManager cm = new ConnectionManager();
 
     public int createEvent(Event event) {
@@ -93,7 +93,7 @@ public class EventDAO {
                     "FROM Event LEFT OUTER JOIN ticket_type ON Event.id = ticket_type.event_id\n" +
                     "LEFT OUTER JOIN Tickets ON ticket_type.type_id = Tickets.ticket_type_id\n" +
                     "WHERE Event.id = ?\n" +
-                    "GROUP BY Event.id, Event.event_name, event_description, event_location, event_start_date, event_end_date, event_guidance ORDER BY event_start_date ASC");
+                    "GROUP BY Event.id, Event.event_name, event_description, event_location, event_start_date, event_end_date, event_guidance ORDER BY event_start_date");
             ps.setInt(1, eventId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

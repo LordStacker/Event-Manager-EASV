@@ -1,17 +1,20 @@
 package dk.easv.dal.dao;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Roles;
 import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.IDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO implements IDAO {
 
     private static ConnectionManager cm;
 
