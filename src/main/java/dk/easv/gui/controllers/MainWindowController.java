@@ -39,7 +39,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends RootController implements Initializable {
-    final ControllerFactory controllerFactory = new ControllerFactory();
     @FXML
     private HBox upcomingEventsHBox;
     @FXML
@@ -144,7 +143,7 @@ public class MainWindowController extends RootController implements Initializabl
         if (model.getObsFutureEvents().size() > 1) {
             for (int i = 1; i < model.getObsFutureEvents().size(); i++) {
                 try {
-                    UpcomingEventController controller = (UpcomingEventController) controllerFactory.loadFxmlFile(ViewType.UPCOMING_EVENT);
+                    UpcomingEventController controller = (UpcomingEventController) ControllerFactory.loadFxmlFile(ViewType.UPCOMING_EVENT);
                     AnchorPane anchorPane = (AnchorPane) controller.getView();
                     controller.setEvent(model.getObsFutureEvents().get(i).getEventName());
                     upcomingEvents.add(anchorPane);
@@ -189,7 +188,7 @@ public class MainWindowController extends RootController implements Initializabl
                     userPlanners = userModel.usersPlanners(Roles.EVENT_COORDINATOR);
                     try {
                         Stage stage = new Stage();
-                        ManageUsersController manageUsersController = (ManageUsersController) controllerFactory.loadFxmlFile(ViewType.MANAGE_USERS);
+                        ManageUsersController manageUsersController = (ManageUsersController) ControllerFactory.loadFxmlFile(ViewType.MANAGE_USERS);
                         Scene scene = new Scene(manageUsersController.getView(), this.stage.getWidth(), this.stage.getHeight());
                         stage.setTitle("Manage Users");
                         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
@@ -250,7 +249,7 @@ public class MainWindowController extends RootController implements Initializabl
 
     private AddEventViewController addEventLoader() throws IOException {
         Stage stage = new Stage();
-        AddEventViewController addEventViewController = (AddEventViewController) controllerFactory.loadFxmlFile(ViewType.ADD_EVENT);
+        AddEventViewController addEventViewController = (AddEventViewController) ControllerFactory.loadFxmlFile(ViewType.ADD_EVENT);
         Scene scene = new Scene(addEventViewController.getView(), this.stage.getWidth(), this.stage.getHeight());
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
         stage.setScene(scene);
@@ -265,7 +264,7 @@ public class MainWindowController extends RootController implements Initializabl
     @FXML
     private void logOutAction(ActionEvent actionEvent) {
         try {
-            LoginController loginController = (LoginController) controllerFactory.loadFxmlFile(ViewType.LOGIN);
+            LoginController loginController = (LoginController) ControllerFactory.loadFxmlFile(ViewType.LOGIN);
             stage.setScene(new Scene(loginController.getView()));
             loginController.setStage(stage);
         } catch (IOException e) {
@@ -276,7 +275,7 @@ public class MainWindowController extends RootController implements Initializabl
     public void openDisplayTicket(int eventId){
         try {
             Stage stage = new Stage();
-            DisplayTicketsViewController displayTicketsViewController = (DisplayTicketsViewController) controllerFactory.loadFxmlFile(ViewType.DISPLAY_TICKETS);
+            DisplayTicketsViewController displayTicketsViewController = (DisplayTicketsViewController) ControllerFactory.loadFxmlFile(ViewType.DISPLAY_TICKETS);
             Scene scene = new Scene(displayTicketsViewController.getView(), this.stage.getWidth(), this.stage.getHeight());
             stage.setTitle("Tickets");
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));

@@ -41,7 +41,6 @@ public class LoginController extends RootController implements Initializable {
 
 
     public void loginButton(ActionEvent actionEvent) throws IOException {
-        final ControllerFactory controllerFactory = new ControllerFactory();
         if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
             AlertHelper.showDefaultAlert("Fill the next fields "+ (usernameTextField.getText().isEmpty() ? "username" : passwordTextField.getText().isEmpty() ? "password" : " "), Alert.AlertType.WARNING );
             return;
@@ -49,7 +48,7 @@ public class LoginController extends RootController implements Initializable {
         user = userModel.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
         if(user != null) {
             if(user.role() != null){
-                MainWindowController controller = (MainWindowController) controllerFactory.loadFxmlFile(ViewType.MAIN);
+                MainWindowController controller = (MainWindowController) ControllerFactory.loadFxmlFile(ViewType.MAIN);
                 stage.setScene(new Scene(controller.getView()));
                 int stageWidth = (int) stage.getWidth();
                 int stageHeight = (int) stage.getHeight();
