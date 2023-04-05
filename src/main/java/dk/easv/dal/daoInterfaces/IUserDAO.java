@@ -5,10 +5,8 @@ import dk.easv.be.User;
 import dk.easv.dal.IDAO;
 import javafx.collections.ObservableList;
 
-import java.util.List;
-
 public interface IUserDAO extends IDAO {
-    List<User> checkUserLog(String username, String password);
+    User checkUserLog(String username, String password);
 
     int createUser(User user);
 

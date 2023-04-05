@@ -50,7 +50,7 @@ public class LogicManager {
         ticketDAO.addTickets(tickets, eventId);
     }
 
-    public List<User> checkUserLog(String username, String password){
+    public User checkUserLog(String username, String password){
         return userDAO.checkUserLog(username,password);
     }
 
