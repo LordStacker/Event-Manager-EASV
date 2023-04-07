@@ -18,8 +18,8 @@ public class EventDAO implements IEventDAO {
                     "event_end_date, event_location, event_guidance) OUTPUT inserted.id VALUES (?, ?, ?, ?, ?, ?)");
             ps.setString(1, event.getEventName());
             ps.setString(2, event.getEventNotes());
-            ps.setDate(3, Date.valueOf(event.getEventStartDate()));
-            ps.setDate(4, event.getEventEndDate() == null ? null : Date.valueOf(event.getEventEndDate()));
+            ps.setTimestamp(3, Timestamp.valueOf(event.getEventStartDate()));
+            ps.setTimestamp(4, event.getEventEndDate() == null ? null : Timestamp.valueOf(event.getEventEndDate()));
             ps.setString(5, event.getEventLocation());
             ps.setString(6, event.getEventGuidance());
             ResultSet rs = ps.executeQuery();
@@ -44,13 +44,13 @@ public class EventDAO implements IEventDAO {
                 int id = rs.getInt("id");
                 String name = rs.getString("event_name");
                 String description = rs.getString("event_description");
-                Date startDate = rs.getDate("event_start_date");
-                Date endDate = rs.getDate("event_end_date");
+                Timestamp startDate = rs.getTimestamp("event_start_date");
+                Timestamp endDate = rs.getTimestamp("event_end_date");
                 String location = rs.getString("event_location");
                 String guidance = rs.getString("event_guidance");
                 int totalTickets = rs.getInt("TotalTickets");
                 int soldTickets = rs.getInt("SoldTickets");
-                Event event = new Event(id, name, description, startDate.toLocalDate(), endDate == null ? null : endDate.toLocalDate(), location, guidance, totalTickets, soldTickets);
+                Event event = new Event(id, name, description, startDate.toLocalDateTime(), endDate == null ? null : endDate.toLocalDateTime(), location, guidance, totalTickets, soldTickets);
                 events.add(event);
             }
             return events;
@@ -67,8 +67,8 @@ public class EventDAO implements IEventDAO {
             PreparedStatement ps = con.prepareStatement("UPDATE Event SET event_name = ?, event_description = ?, event_start_date = ?, event_end_date = ?, event_location = ?, event_guidance = ? WHERE id = ?");
             ps.setString(1, event.getEventName());
             ps.setString(2, event.getEventNotes());
-            ps.setDate(3, Date.valueOf(event.getEventStartDate()));
-            ps.setDate(4, event.getEventEndDate() == null ? null : Date.valueOf(event.getEventEndDate()));
+            ps.setTimestamp(3, Timestamp.valueOf(event.getEventStartDate()));
+            ps.setTimestamp(4, event.getEventEndDate() == null ? null : Timestamp.valueOf(event.getEventEndDate()));
             ps.setString(5, event.getEventLocation());
             ps.setString(6, event.getEventGuidance());
             ps.setInt(7, event.getEventID());
@@ -105,13 +105,13 @@ public class EventDAO implements IEventDAO {
                 int id = rs.getInt("id");
                 String name = rs.getString("event_name");
                 String description = rs.getString("event_description");
-                Date startDate = rs.getDate("event_start_date");
-                Date endDate = rs.getDate("event_end_date");
+                Timestamp startDate = rs.getTimestamp("event_start_date");
+                Timestamp endDate = rs.getTimestamp("event_end_date");
                 String location = rs.getString("event_location");
                 String guidance = rs.getString("event_guidance");
                 int totalTickets = rs.getInt("TotalTickets");
                 int soldTickets = rs.getInt("SoldTickets");
-                return new Event(id, name, description, startDate.toLocalDate(), endDate == null ? null : endDate.toLocalDate(), location, guidance, totalTickets, soldTickets);
+                return new Event(id, name, description, startDate.toLocalDateTime(), endDate == null ? null : endDate.toLocalDateTime(), location, guidance, totalTickets, soldTickets);
             }
             return null;
         } catch (SQLException e) {

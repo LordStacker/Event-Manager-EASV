@@ -1,6 +1,5 @@
 package dk.easv.be;
 
-import javax.xml.stream.Location;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -10,18 +9,18 @@ public class Event {
 
 
     private String eventName;
-    private LocalDate eventStartDate;
+    private LocalDateTime eventStartDate;
     private String eventNotes;
     private String eventLocation;
 
     //Optional information (must be supported but may not be used for all events)
-    private LocalDate eventEndDate;
+    private LocalDateTime eventEndDate;
     private String eventGuidance;
     private int eventTickets;
     private int eventTicketsSold;
 
 
-    public Event(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes){
+    public Event(String name, String location, LocalDateTime startDate, LocalDateTime endDate, String directions, String extraNotes){
         this.eventName = name;
         this.eventLocation = location;
         this.eventStartDate = startDate;
@@ -30,7 +29,7 @@ public class Event {
         this.eventNotes = extraNotes;
     }
 
-    public Event(int id, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes){
+    public Event(int id, String name, String location, LocalDateTime startDate, LocalDateTime endDate, String directions, String extraNotes){
         this.eventID = id;
         this.eventName = name;
         this.eventLocation = location;
@@ -40,7 +39,7 @@ public class Event {
         this.eventNotes = extraNotes;
     }
 
-    public Event(int id, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes, int tickets, int ticketsSold){
+    public Event(int id, String name, String location, LocalDateTime startDate, LocalDateTime endDate, String directions, String extraNotes, int tickets, int ticketsSold){
         this.eventID = id;
         this.eventName = name;
         this.eventLocation = location;
@@ -67,11 +66,11 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public LocalDate getEventStartDate() {
+    public LocalDateTime getEventStartDate() {
         return eventStartDate;
     }
 
-    public void setEventStartDate(LocalDate eventStartDate) {
+    public void setEventStartDate(LocalDateTime eventStartDate) {
         this.eventStartDate = eventStartDate;
     }
 
@@ -91,11 +90,11 @@ public class Event {
         this.eventLocation = eventLocation;
     }
 
-    public LocalDate getEventEndDate() {
+    public LocalDateTime getEventEndDate() {
         return eventEndDate;
     }
 
-    public void setEventEndDate(LocalDate eventEndDate) {
+    public void setEventEndDate(LocalDateTime eventEndDate) {
         this.eventEndDate = eventEndDate;
     }
 

@@ -30,6 +30,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
@@ -80,7 +81,8 @@ public class LogicManager {
         return ticketDAO.getTicketTypes(eventId);
     }
 
-    public void editEvent(int eventId, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
+    public void editEvent(int eventId, String name, String location, LocalDateTime startDate, LocalDateTime endDate, String directions, String extraNotes) {
+
         eventDAO.updateEvent(new Event(eventId, name, location, startDate, endDate, directions, extraNotes));
     }
 
@@ -122,7 +124,7 @@ public class LogicManager {
             graphics.drawString(event.getEventNotes(), 620, 140);
 
             graphics.drawString("Start date: " + event.getEventStartDate().toString(), 600, 530);
-            LocalDate endDate = event.getEventEndDate();
+            LocalDateTime endDate = event.getEventEndDate();
             if (endDate != null) {
                 graphics.drawString("End date: " + endDate, 600, 570);
             } else {
