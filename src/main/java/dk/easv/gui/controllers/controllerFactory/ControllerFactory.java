@@ -15,9 +15,8 @@ import java.util.Objects;
  * when instantiated and include one method that binds the injector for
  * loader each time it is required to be loaded
  */
-public class ControllerFactory implements IControllerFactory {
-    @Override
-    public RootController loadFxmlFile(ViewType fxmlFile) throws IOException {
+public class ControllerFactory  {
+    public static RootController loadFxmlFile(ViewType fxmlFile) throws IOException {
         Objects.requireNonNull(fxmlFile, "fxmlFile must not be null.");
 
         final URL fxmlFileUrl = Main.class.getResource(fxmlFile.getFXMLView());

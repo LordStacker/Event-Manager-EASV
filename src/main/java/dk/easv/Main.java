@@ -4,7 +4,6 @@ package dk.easv;
 import dk.easv.bll.helpers.ViewType;
 import dk.easv.gui.controllers.LoginController;
 import dk.easv.gui.controllers.controllerFactory.ControllerFactory;
-import dk.easv.gui.controllers.controllerFactory.IControllerFactory;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -23,7 +22,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        final IControllerFactory controllerFactory = new ControllerFactory();
         // checks if config exists
         Path path = Path.of("src/main/resources/dk/easv/config.cfg");
         if (!Files.exists(path)) {
@@ -35,7 +33,7 @@ public class Main extends Application {
             System.exit(1);
         }
 
-        LoginController loginController = (LoginController) controllerFactory.loadFxmlFile(ViewType.LOGIN);
+        LoginController loginController = (LoginController) ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         loginController.setStage(stage);
         Scene scene = new Scene(loginController.getView());
         stage.setTitle("EASV Event Manager");

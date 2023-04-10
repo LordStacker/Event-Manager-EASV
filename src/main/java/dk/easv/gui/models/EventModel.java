@@ -11,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class EventModel {
@@ -32,8 +34,12 @@ public class EventModel {
         return rowsAffected;
     }
 
-    public int addEvent(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
-        return bll.addEvent(new Event(name, location, startDate, endDate, directions, extraNotes));
+    public int addEvent(String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes, String eventStartField, String eventEndFieldText) {
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, LocalTime.parse(eventStartField));
+        LocalDateTime endDateTime = null;
+        if (!eventEndFieldText.isEmpty())
+             endDateTime = LocalDateTime.of(endDate, LocalTime.parse(eventEndFieldText));
+        return bll.addEvent(new Event(name, location, startDateTime, endDateTime, directions, extraNotes));
     }
 
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
@@ -49,7 +55,7 @@ public class EventModel {
         obsPastEvents.clear();
         obsFutureEvents.clear();
         for (Event event : events) {
-            if (event.getEventStartDate().isBefore(LocalDate.now())) {
+            if (event.getEventStartDate().isBefore(LocalDateTime.now())) {
                 obsPastEvents.add(event);
             } else {
                 obsFutureEvents.add(event);
@@ -80,8 +86,12 @@ public class EventModel {
         return bll.getTicketTypes(eventID);
     }
 
-    public void editEvent(int eventId, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
-        bll.editEvent(eventId, name, location, startDate, endDate, directions, extraNotes);
+    public void editEvent(int eventId, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes, String startTextField, String eventEndFieldText) {
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, LocalTime.parse(startTextField));
+        LocalDateTime endDateTime = null;
+        if (!eventEndFieldText.isEmpty())
+            endDateTime = LocalDateTime.of(endDate, LocalTime.parse(eventEndFieldText));
+        bll.editEvent(eventId, name, location, startDateTime, endDateTime, directions, extraNotes);
     }
 
 }

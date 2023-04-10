@@ -31,7 +31,7 @@ public class LoginController extends RootController implements Initializable {
     private GridPane loginGrid;
     private Stage stage;
 
-    private List<User> user;
+    private User user;
 
     private final UserModel userModel = new UserModel();
     @Override
@@ -41,30 +41,28 @@ public class LoginController extends RootController implements Initializable {
 
 
     public void loginButton(ActionEvent actionEvent) throws IOException {
-        final ControllerFactory controllerFactory = new ControllerFactory();
         if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
             AlertHelper.showDefaultAlert("Fill the next fields "+ (usernameTextField.getText().isEmpty() ? "username" : passwordTextField.getText().isEmpty() ? "password" : " "), Alert.AlertType.WARNING );
+            return;
         }
-        if (usernameTextField.getText() != null && passwordTextField.getText() !=null)
-        {
-            user = userModel.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
-        }
-        if(user.size() >= 1){
-            if(user.get(0).role() != null){
-                /*
-                 * Leaving like only Role while we define the view for each Role
-                 */
-                MainWindowController controller = (MainWindowController) controllerFactory.loadFxmlFile(ViewType.MAIN);
+        user = userModel.checkUserLog(usernameTextField.getText(), passwordTextField.getText());
+        if(user != null) {
+            if(user.role() != null){
+                MainWindowController controller = (MainWindowController) ControllerFactory.loadFxmlFile(ViewType.MAIN);
                 stage.setScene(new Scene(controller.getView()));
                 int stageWidth = (int) stage.getWidth();
                 int stageHeight = (int) stage.getHeight();
                 stage.centerOnScreen();
                 stage.close();
                 stage.show();
-                controller.initialed(stage, stageWidth, stageHeight, user.get(0));
+                // defining role by passing the user here
+                controller.initialed(stage, stageWidth, stageHeight, user);
+            } else {
+                AlertHelper.showDefaultAlert("User role not defined", Alert.AlertType.ERROR);
             }
+        } else {
+            AlertHelper.showDefaultAlert("User not found", Alert.AlertType.ERROR);
         }
-
     }
 
     public void setStage(Stage stage) {

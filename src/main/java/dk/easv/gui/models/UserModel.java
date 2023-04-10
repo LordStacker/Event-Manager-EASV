@@ -5,14 +5,12 @@ import dk.easv.be.User;
 import dk.easv.bll.LogicManager;
 import javafx.collections.ObservableList;
 
-import java.util.List;
-
 public class UserModel {
 
     private LogicManager bll = new LogicManager();
 
 
-    public List<User> checkUserLog(String username, String password){
+    public User checkUserLog(String username, String password){
         return bll.checkUserLog(username, password);
     }
 

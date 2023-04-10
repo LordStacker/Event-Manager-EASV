@@ -1,27 +1,24 @@
 package dk.easv.dal.dao;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Roles;
 import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.daoInterfaces.IUserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class UserDAO {
+public class UserDAO implements IUserDAO {
 
-    private static ConnectionManager cm;
+    private final ConnectionManager cm = new ConnectionManager();
 
 
-    public UserDAO() {
-        cm = new ConnectionManager();
-    }
-
-    public static List<User> checkUserLog(String username, String password){
-        List<User> users = new ArrayList<>();
+    @Override
+    public User checkUserLog(String username, String password){
         try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("" +
                     "select * from dbo.[User] WHERE " +
@@ -35,15 +32,15 @@ public class UserDAO {
                 String dbPassword = rs.getString("password");
                 String dbEmail = rs.getString("email");
                 String dbRole = rs.getString("role");
-                User user = new User(Roles.valueOf(dbRole), dbId, dbUsername, dbPassword, dbEmail);
-                users.add(user);
+                return new User(Roles.valueOf(dbRole), dbId, dbUsername, dbPassword, dbEmail);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return users;
+        return null;
     }
 
+    @Override
     public int createUser(User user){
         try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -62,7 +59,8 @@ public class UserDAO {
         }
     }
 
-    public static ObservableList<User> usersPlanners(Roles role){
+    @Override
+    public ObservableList<User> usersPlanners(Roles role){
         ObservableList<User> usersPlanners = FXCollections.observableArrayList();
         try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("" +
@@ -85,6 +83,7 @@ public class UserDAO {
         return usersPlanners;
     }
 
+    @Override
     public int deleteUser(int id){
         try (Connection con = cm.getConnection()){
             PreparedStatement ps = con.prepareStatement("DELETE FROM dbo.[User] WHERE id = ? ");

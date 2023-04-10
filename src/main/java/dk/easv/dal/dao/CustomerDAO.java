@@ -1,16 +1,17 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.Customer;
-import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.daoInterfaces.ICustomerDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CustomerDAO {
-    private ConnectionManager cm = new ConnectionManager();
+public class CustomerDAO implements ICustomerDAO {
+    private final ConnectionManager cm = new ConnectionManager();
+    @Override
     public Customer getCustomer(int id) {
         try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Customer WHERE id = ?");
@@ -27,6 +28,7 @@ public class CustomerDAO {
         }
     }
 
+    @Override
     public int createCustomer(Customer customer){
         try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement(

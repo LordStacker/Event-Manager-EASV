@@ -102,9 +102,8 @@ public class DisplayTicketsViewController extends RootController implements Init
 
     private void assignTicket(Ticket ticket) {
         try {
-            final ControllerFactory controllerFactory = new ControllerFactory();
             Stage stage = new Stage();
-            AddCustomerViewController controller = (AddCustomerViewController) controllerFactory.loadFxmlFile(ViewType.ASSIGN_CUSTOMER);
+            AddCustomerViewController controller = (AddCustomerViewController) ControllerFactory.loadFxmlFile(ViewType.ASSIGN_CUSTOMER);
             Scene scene = new Scene(controller.getView());
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);
@@ -160,9 +159,8 @@ public class DisplayTicketsViewController extends RootController implements Init
 
     private void showTicket(Ticket ticket, int eventId) {
         try {
-            final ControllerFactory controllerFactory = new ControllerFactory();
             Stage stage = new Stage();
-            TicketViewController ticketViewController = (TicketViewController) controllerFactory.loadFxmlFile(ViewType.TICKET_VIEW);
+            TicketViewController ticketViewController = (TicketViewController) ControllerFactory.loadFxmlFile(ViewType.TICKET_VIEW);
             Scene scene = new Scene(ticketViewController.getView());
             stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("icons/calendar-plus.png"))));
             stage.setScene(scene);

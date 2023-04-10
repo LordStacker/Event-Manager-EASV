@@ -65,7 +65,7 @@ public class AddEventViewController extends RootController implements Initializa
     private void submitButtonClicked() {
         if (isInputValid()){
             int eventID = model.addEvent(eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
-                    eventDirectionsField.getText(), eventExtraNotesField.getText());
+                    eventDirectionsField.getText(), eventExtraNotesField.getText(), eventStartField.getText(), eventEndField.getText());
 
             // Loop through all the ticket types
             for (int i = 0; i < ticketTypesVBox.getChildren().size(); i++) {
@@ -165,8 +165,12 @@ public class AddEventViewController extends RootController implements Initializa
 
         eventNameField.setText(selectedItem.getEventName());
         eventLocationField.setText(selectedItem.getEventLocation());
-        startDatePicker.setValue(selectedItem.getEventStartDate());
-        endDatePicker.setValue(selectedItem.getEventEndDate());
+        startDatePicker.setValue(selectedItem.getEventStartDate().toLocalDate());
+        if (selectedItem.getEventEndDate() != null) {
+            endDatePicker.setValue(selectedItem.getEventEndDate().toLocalDate());
+            eventEndField.setText(selectedItem.getEventEndDate().toLocalTime().toString());
+        }
+        eventStartField.setText(selectedItem.getEventStartDate().toLocalTime().toString());
         eventDirectionsField.setText(selectedItem.getEventGuidance());
         eventExtraNotesField.setText(selectedItem.getEventNotes());
         createTicketTypesFields(model.getTicketTypes(selectedItem.getEventID()));
@@ -196,7 +200,7 @@ public class AddEventViewController extends RootController implements Initializa
 
     private void editButtonClicked(Event selectedItem) {
         model.editEvent(selectedItem.getEventID(), eventNameField.getText(), eventLocationField.getText(), startDatePicker.getValue(), endDatePicker.getValue(),
-                eventDirectionsField.getText(), eventExtraNotesField.getText());
+                eventDirectionsField.getText(), eventExtraNotesField.getText(), eventStartField.getText(), eventEndField.getText());
         model.getAllEvents();
         stage.close();
     }

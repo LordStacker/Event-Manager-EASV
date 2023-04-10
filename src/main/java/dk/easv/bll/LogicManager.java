@@ -1,12 +1,21 @@
 package dk.easv.bll;
+
+import dk.easv.Main;
+import dk.easv.be.Event;
 import dk.easv.be.*;
+import dk.easv.dal.DAOFactory;
+import dk.easv.dal.DataAccessObjects;
+import dk.easv.dal.dao.CustomerDAO;
 import dk.easv.dal.dao.EventDAO;
 import dk.easv.dal.dao.TicketDAO;
 import dk.easv.dal.dao.UserDAO;
+import dk.easv.dal.daoInterfaces.ICustomerDAO;
+import dk.easv.dal.daoInterfaces.IEventDAO;
+import dk.easv.dal.daoInterfaces.ITicketDAO;
+import dk.easv.dal.daoInterfaces.IUserDAO;
+import dk.easv.util.AlertHelper;
 import javafx.collections.ObservableList;
-import dk.easv.Main;
-import dk.easv.be.Event;
-import dk.easv.dal.dao.CustomerDAO;
+import javafx.scene.control.Alert;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -19,19 +28,24 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class LogicManager {
-    private final TicketDAO ticketDAO = new TicketDAO();
-    private final EventDAO eventDAO = new EventDAO();
-    private final UserDAO userDAO = new UserDAO();
-    private final CustomerDAO customerDAO = new CustomerDAO();
+    private final ITicketDAO ticketDAO = (TicketDAO) DAOFactory.getDAO(DataAccessObjects.TICKET_DAO);
+    private final IEventDAO eventDAO = (EventDAO) DAOFactory.getDAO(DataAccessObjects.EVENT_DAO);
+    private final IUserDAO userDAO = (UserDAO) DAOFactory.getDAO(DataAccessObjects.USER_DAO);
+    private final ICustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDAO(DataAccessObjects.CUSTOMER_DAO);
     public void addTickets(int eventId, String ticketType, double price, int numberOfTickets) {
         addTickets(eventId, ticketType, price, numberOfTickets, 1, 0);
     }
@@ -44,7 +58,7 @@ public class LogicManager {
         ticketDAO.addTickets(tickets, eventId);
     }
 
-    public List<User> checkUserLog(String username, String password){
+    public User checkUserLog(String username, String password){
         return userDAO.checkUserLog(username,password);
     }
 
@@ -74,7 +88,8 @@ public class LogicManager {
         return ticketDAO.getTicketTypes(eventId);
     }
 
-    public void editEvent(int eventId, String name, String location, LocalDate startDate, LocalDate endDate, String directions, String extraNotes) {
+    public void editEvent(int eventId, String name, String location, LocalDateTime startDate, LocalDateTime endDate, String directions, String extraNotes) {
+
         eventDAO.updateEvent(new Event(eventId, name, location, startDate, endDate, directions, extraNotes));
     }
 
@@ -116,7 +131,7 @@ public class LogicManager {
             graphics.drawString(event.getEventNotes(), 620, 140);
 
             graphics.drawString("Start date: " + event.getEventStartDate().toString(), 600, 530);
-            LocalDate endDate = event.getEventEndDate();
+            LocalDateTime endDate = event.getEventEndDate();
             if (endDate != null) {
                 graphics.drawString("End date: " + endDate, 600, 570);
             } else {
@@ -143,16 +158,46 @@ public class LogicManager {
             try (PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
                 contentStream.drawImage(pdImage, 0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
             }
-            pdDocument.save(selectedDirectory.getAbsolutePath()+ "/" + ticket.getTicketID() + ".pdf");
+            if(selectedDirectory != null){
+                pdDocument.save(selectedDirectory.getAbsolutePath()+ "/" + ticket.getTicketID() + ".pdf");
+            }
+            else {
+                AlertHelper.showDefaultAlert("You must choose a folder to download PDF", Alert.AlertType.WARNING);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void printTicket(){
-        PrinterJob pj = PrinterJob.getPrinterJob();
-        pj.setJobName(" Print Component ");
-        pj.printDialog();
+    public void printTicket(BufferedImage image, Ticket ticket) throws PrinterException {
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(new Printable() {
+            @Override
+            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+                if (pageIndex != 0) {
+                    return NO_SUCH_PAGE;
+                }
+                Graphics2D g2d = (Graphics2D) graphics;
+                g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+                double pageWidth = pageFormat.getImageableWidth();
+                double pageHeight = pageFormat.getImageableHeight();
+                double imageWidth = image.getWidth();
+                double imageHeight = image.getHeight();
+
+                double scaleX = pageWidth / imageWidth;
+                double scaleY = pageHeight / imageHeight;
+                double scale = Math.min(scaleX, scaleY);
+                g2d.scale(scale, scale);
+
+                double x = (pageWidth / scale - imageWidth) / 2;
+                double y = (pageHeight / scale - imageHeight) / 2;
+                g2d.drawImage(image, (int)x, (int)y, null);
+                return PAGE_EXISTS;
+            }
+        });
+        job.setJobName(ticket.getTicketID().toString());
+        job.printDialog();
+        job.print();
     }
 
     public void assignTicketToCustomer(String name, String email, Ticket ticket) {
