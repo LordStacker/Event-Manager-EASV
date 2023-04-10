@@ -7,6 +7,7 @@ import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.scene.image.Image;
 
 import java.awt.image.BufferedImage;
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.util.UUID;
 
@@ -38,7 +39,7 @@ public class TicketViewModel {
         bll.generatePDFFromImage(image, selectedDirectory, ticket);
     }
 
-    public void printTicket() {
-        bll.printTicket();
+    public void printTicket() throws PrinterException {
+        bll.printTicket(image,ticket);
     }
 }
