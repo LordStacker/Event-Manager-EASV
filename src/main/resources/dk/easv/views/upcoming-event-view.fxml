@@ -10,7 +10,7 @@
    <children>
       <Pane id="eventImagePane" fx:id="imgPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label fx:id="eventLabel" styleClass="eventTitle" text="Label" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0" />
-      <MFXButton styleClass="outline-button" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
-      <MFXButton layoutX="10.0" layoutY="10.0" styleClass="outline-button" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" />
+<!--      <MFXButton styleClass="outline-button" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />-->
+<!--      <MFXButton layoutX="10.0" layoutY="10.0" styleClass="outline-button" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" />-->
    </children>
 </AnchorPane>
